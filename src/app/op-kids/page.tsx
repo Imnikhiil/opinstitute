@@ -25,7 +25,7 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { Testimonials } from "@/components/home/Testimonials";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { kidsFeatures, preschoolPrograms } from "@/data/site";
 
 const iconMap: Record<string, LucideIcon> = {

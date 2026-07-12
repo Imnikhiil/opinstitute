@@ -7,7 +7,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { courses, courseCategories } from "@/data/courses";
-import { Testimonials } from "@/components/home/Testimonials";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { cn } from "@/lib/utils";
 
 export default function CoursesPage() {

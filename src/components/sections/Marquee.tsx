@@ -16,7 +16,10 @@ const items = [
 
 export function Marquee() {
   return (
-    <div className="relative overflow-hidden bg-brand-950 py-4 border-y border-white/10">
+    <div className="relative overflow-hidden bg-brand-950 py-4 border-y border-white/10 mt-16 md:mt-20">
+      {/* Soft fade edges */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-28 z-10 bg-gradient-to-r from-brand-950 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-28 z-10 bg-gradient-to-l from-brand-950 to-transparent" />
       <div className="flex whitespace-nowrap animate-marquee">
         {[...items, ...items].map((item, i) => (
           <span key={i} className="flex items-center gap-3 px-6 shrink-0">

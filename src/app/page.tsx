@@ -1,27 +1,27 @@
-import { SplitHero } from "@/components/home/SplitHero";
-import { Marquee } from "@/components/home/Marquee";
-import { TrustBar } from "@/components/home/TrustBar";
-import { LearningJourney } from "@/components/home/LearningJourney";
-import { AboutInstitute } from "@/components/home/AboutInstitute";
-import { AboutKids } from "@/components/home/AboutKids";
-import { WhyChooseUs } from "@/components/home/WhyChooseUs";
-import { CoursesSection } from "@/components/home/CoursesSection";
-import { PreschoolPrograms } from "@/components/home/PreschoolPrograms";
-import { Facilities } from "@/components/home/Facilities";
-import { Achievements } from "@/components/home/Achievements";
-import { GalleryPreview } from "@/components/home/GalleryPreview";
-import { Testimonials } from "@/components/home/Testimonials";
-import { AdmissionProcess } from "@/components/home/AdmissionProcess";
-import { FAQs } from "@/components/home/FAQs";
-import { CTABand } from "@/components/home/CTABand";
-import { ContactSection } from "@/components/home/ContactSection";
+import { SplitHero } from "@/components/sections/SplitHero";
+import { Marquee } from "@/components/sections/Marquee";
+import { TrustBar } from "@/components/sections/TrustBar";
+import { LearningJourney } from "@/components/sections/LearningJourney";
+import { AboutInstitute } from "@/components/sections/AboutInstitute";
+import { AboutKids } from "@/components/sections/AboutKids";
+import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
+import { CoursesSection } from "@/components/sections/CoursesSection";
+import { PreschoolPrograms } from "@/components/sections/PreschoolPrograms";
+import { Facilities } from "@/components/sections/Facilities";
+import { Achievements } from "@/components/sections/Achievements";
+import { GalleryPreview } from "@/components/sections/GalleryPreview";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { AdmissionProcess } from "@/components/sections/AdmissionProcess";
+import { FAQs } from "@/components/sections/FAQs";
+import { CTABand } from "@/components/sections/CTABand";
+import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function HomePage() {
   return (
     <>
       <SplitHero />
-      <Marquee />
       <TrustBar />
+      <Marquee />
       <LearningJourney />
       <AboutInstitute />
       <AboutKids />
