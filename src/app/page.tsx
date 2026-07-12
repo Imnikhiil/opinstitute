@@ -1,6 +1,7 @@
 import { SplitHero } from "@/components/home/SplitHero";
 import { Marquee } from "@/components/home/Marquee";
 import { TrustBar } from "@/components/home/TrustBar";
+import { LearningJourney } from "@/components/home/LearningJourney";
 import { AboutInstitute } from "@/components/home/AboutInstitute";
 import { AboutKids } from "@/components/home/AboutKids";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
@@ -21,6 +22,7 @@ export default function HomePage() {
       <SplitHero />
       <Marquee />
       <TrustBar />
+      <LearningJourney />
       <AboutInstitute />
       <AboutKids />
       <WhyChooseUs />

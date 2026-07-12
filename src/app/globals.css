@@ -62,11 +62,11 @@
   }
 
   .section-padding {
-    @apply py-20 md:py-28 px-4 sm:px-6 lg:px-8;
+    @apply py-20 md:py-28;
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   /* Premium eyebrow label used above section titles */

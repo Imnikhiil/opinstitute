@@ -153,10 +153,10 @@ export function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
+              "w-10 h-10 rounded-xl flex items-center justify-center transition-colors shadow-sm",
               isScrolled
                 ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                : "bg-white/15 text-white"
+                : "bg-white/90 backdrop-blur-sm text-brand-700 dark:bg-gray-900/80 dark:text-white"
             )}
             aria-label="Toggle menu"
           >

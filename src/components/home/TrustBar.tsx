@@ -6,7 +6,7 @@ import { StatCounter } from "@/components/ui/ScrollReveal";
 
 export function TrustBar() {
   return (
-    <section className="relative z-20 -mt-16 px-4 sm:px-6 lg:px-8">
+    <section className="relative z-20 -mt-16">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 40 }}

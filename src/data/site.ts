@@ -298,3 +298,42 @@ export const preschoolPrograms = [
     features: ["Writing skills", "Advanced phonics", "Problem solving", "Confidence building"],
   },
 ];
+
+// The complete learning journey — our unique dual-brand advantage (age 2 to professional)
+export const learningJourney = [
+  {
+    stage: "Early Years",
+    age: "Age 2 – 6",
+    title: "OP Kids Pre School",
+    detail: "Play Group, Nursery, LKG & UKG — a joyful, Montessori-based start.",
+    brand: "kids" as const,
+  },
+  {
+    stage: "Foundation",
+    age: "Class I – VIII",
+    title: "School Tuition",
+    detail: "Strong all-subject foundation with concept-based learning.",
+    brand: "institute" as const,
+  },
+  {
+    stage: "Board Years",
+    age: "Class IX – XII",
+    title: "Board & Commerce",
+    detail: "Focused coaching for boards, Accountancy, Economics & Business Studies.",
+    brand: "institute" as const,
+  },
+  {
+    stage: "Graduation",
+    age: "Degree",
+    title: "B.Com (Pass / Hons)",
+    detail: "Complete university tuition that builds a career-ready base.",
+    brand: "institute" as const,
+  },
+  {
+    stage: "Professional",
+    age: "Career",
+    title: "CA · CS · CMA",
+    detail: "Expert coaching to crack India's top professional exams.",
+    brand: "institute" as const,
+  },
+];
