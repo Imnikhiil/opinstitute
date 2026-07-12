@@ -8,7 +8,7 @@ export const siteConfig = {
   kidsTagline: "Where Kids Love to Learn",
   description:
     "O.P. Institute of Studies (since 2003) — expert coaching for CA, CS, CMA, B.Com (Pass/Hons) and school tuition for Classes I–XII, along with OP Kids Pre School for joyful, safe early childhood learning.",
-  url: "https://opinstitute.edu.in",
+  url: "https://opinstitute.vercel.app",
   phone: "+91 92136 10182",
   phoneRaw: "919213610182",
   phone2: "+91 92208 25187",

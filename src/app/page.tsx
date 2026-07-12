@@ -1,4 +1,5 @@
 import { SplitHero } from "@/components/home/SplitHero";
+import { Marquee } from "@/components/home/Marquee";
 import { TrustBar } from "@/components/home/TrustBar";
 import { AboutInstitute } from "@/components/home/AboutInstitute";
 import { AboutKids } from "@/components/home/AboutKids";
@@ -11,12 +12,14 @@ import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { Testimonials } from "@/components/home/Testimonials";
 import { AdmissionProcess } from "@/components/home/AdmissionProcess";
 import { FAQs } from "@/components/home/FAQs";
+import { CTABand } from "@/components/home/CTABand";
 import { ContactSection } from "@/components/home/ContactSection";
 
 export default function HomePage() {
   return (
     <>
       <SplitHero />
+      <Marquee />
       <TrustBar />
       <AboutInstitute />
       <AboutKids />
@@ -29,6 +32,7 @@ export default function HomePage() {
       <Testimonials />
       <AdmissionProcess />
       <FAQs />
+      <CTABand />
       <ContactSection />
     </>
   );

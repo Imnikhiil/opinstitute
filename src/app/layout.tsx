@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingButtons } from "@/components/layout/FloatingButtons";
 import { BackToTop } from "@/components/layout/BackToTop";
+import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { siteConfig } from "@/data/site";
@@ -70,6 +71,16 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#3f45e4" },
+    { media: "(prefers-color-scheme: dark)", color: "#1d2951" },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -82,9 +93,10 @@ export default function RootLayout({
           <LoadingScreen />
           <ScrollProgress />
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen pb-[4.75rem] lg:pb-0">{children}</main>
           <Footer />
           <FloatingButtons />
+          <MobileActionBar />
           <BackToTop />
         </ThemeProvider>
       </body>

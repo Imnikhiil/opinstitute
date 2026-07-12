@@ -23,7 +23,7 @@ export function FloatingButtons() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.6, y: 20 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col gap-3"
+          className="hidden lg:flex fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex-col gap-3"
         >
           <motion.a
             href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I would like to enquire about admissions at OP Institute.`}
