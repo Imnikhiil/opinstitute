@@ -1,0 +1,33 @@
+import { SplitHero } from "@/components/home/SplitHero";
+import { AboutInstitute } from "@/components/home/AboutInstitute";
+import { AboutKids } from "@/components/home/AboutKids";
+import { WhyChooseUs } from "@/components/home/WhyChooseUs";
+import { CoursesSection } from "@/components/home/CoursesSection";
+import { PreschoolPrograms } from "@/components/home/PreschoolPrograms";
+import { Facilities } from "@/components/home/Facilities";
+import { Achievements } from "@/components/home/Achievements";
+import { GalleryPreview } from "@/components/home/GalleryPreview";
+import { Testimonials } from "@/components/home/Testimonials";
+import { AdmissionProcess } from "@/components/home/AdmissionProcess";
+import { FAQs } from "@/components/home/FAQs";
+import { ContactSection } from "@/components/home/ContactSection";
+
+export default function HomePage() {
+  return (
+    <>
+      <SplitHero />
+      <AboutInstitute />
+      <AboutKids />
+      <WhyChooseUs />
+      <CoursesSection />
+      <PreschoolPrograms />
+      <Facilities />
+      <Achievements />
+      <GalleryPreview />
+      <Testimonials />
+      <AdmissionProcess />
+      <FAQs />
+      <ContactSection />
+    </>
+  );
+}
