@@ -25,6 +25,7 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
+import { Testimonials } from "@/components/home/Testimonials";
 import { kidsFeatures, preschoolPrograms } from "@/data/site";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -191,6 +192,15 @@ export default function OpKidsPage() {
           </div>
         </div>
       </section>
+
+      {/* Parent Testimonials */}
+      <Testimonials
+        filter="preschool"
+        variant="kids"
+        badge="Happy Parents"
+        title="What Parents Say"
+        subtitle="Loved by families who trust us with their little ones"
+      />
 
       {/* CTA */}
       <section className="section-padding bg-kids-gradient">

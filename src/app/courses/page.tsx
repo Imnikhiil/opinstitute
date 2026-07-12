@@ -7,6 +7,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { courses, courseCategories } from "@/data/courses";
+import { Testimonials } from "@/components/home/Testimonials";
 import { cn } from "@/lib/utils";
 
 export default function CoursesPage() {
@@ -92,6 +93,14 @@ export default function CoursesPage() {
           </div>
         </div>
       </section>
+
+      {/* Student Testimonials */}
+      <Testimonials
+        filter="institute"
+        badge="Success Stories"
+        title="What Our Students Say"
+        subtitle="Hear from students who achieved their goals with OP Institute"
+      />
     </>
   );
 }
