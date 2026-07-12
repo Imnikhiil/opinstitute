@@ -203,14 +203,6 @@ export function SplitHero() {
         </motion.div>
       </div>
 
-      {/* Scroll cue */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity }}
-        className="pointer-events-none absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 text-white/70 text-[11px] sm:text-xs font-medium tracking-wide"
-      >
-        Scroll to explore ↓
-      </motion.div>
     </section>
   );
 }

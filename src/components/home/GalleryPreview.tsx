@@ -12,7 +12,7 @@ export function GalleryPreview() {
   const preview = galleryImages.slice(0, 6);
 
   return (
-    <section className="section-padding bg-gray-50 dark:bg-gray-900/50">
+    <section className="section-padding">
       <div className="container-custom">
         <ScrollReveal>
           <SectionHeader

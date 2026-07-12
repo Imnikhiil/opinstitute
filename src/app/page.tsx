@@ -1,4 +1,5 @@
 import { SplitHero } from "@/components/home/SplitHero";
+import { TrustBar } from "@/components/home/TrustBar";
 import { AboutInstitute } from "@/components/home/AboutInstitute";
 import { AboutKids } from "@/components/home/AboutKids";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
@@ -16,6 +17,7 @@ export default function HomePage() {
   return (
     <>
       <SplitHero />
+      <TrustBar />
       <AboutInstitute />
       <AboutKids />
       <WhyChooseUs />

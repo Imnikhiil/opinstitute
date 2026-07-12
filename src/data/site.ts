@@ -49,10 +49,10 @@ export const navLinks = [
 ];
 
 export const stats = [
-  { value: 20, suffix: "+", label: "Years of Excellence" },
-  { value: 5000, suffix: "+", label: "Students Trained" },
-  { value: 98, suffix: "%", label: "Success Rate" },
-  { value: 50, suffix: "+", label: "Expert Faculty" },
+  { value: 20, suffix: "+", label: "Years Since 2003" },
+  { value: 5000, suffix: "+", label: "Students Taught" },
+  { value: 7, suffix: "+", label: "Courses & Programs" },
+  { value: 2, suffix: "", label: "Campuses in Delhi" },
 ];
 
 export const whyChooseUs = [

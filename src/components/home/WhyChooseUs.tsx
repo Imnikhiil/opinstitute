@@ -24,7 +24,7 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function WhyChooseUs() {
   return (
-    <section className="section-padding bg-[#f5f5f7] dark:bg-gray-900/50">
+    <section className="section-padding">
       <div className="container-custom">
         <ScrollReveal>
           <SectionHeader

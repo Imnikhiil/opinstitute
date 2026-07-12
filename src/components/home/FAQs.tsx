@@ -12,7 +12,7 @@ export function FAQs() {
   const [openId, setOpenId] = useState<string | null>("1");
 
   return (
-    <section className="section-padding bg-gray-50 dark:bg-gray-900/50">
+    <section className="section-padding bg-[#f5f5f7] dark:bg-gray-900/40">
       <div className="container-custom max-w-3xl">
         <ScrollReveal>
           <SectionHeader
