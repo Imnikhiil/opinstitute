@@ -96,6 +96,39 @@
   .premium-card:hover {
     @apply border-brand-200 dark:border-brand-800 shadow-card-hover -translate-y-1;
   }
+
+  /* Mobile tap feedback for interactive cards */
+  .tap-card {
+    @apply transition-transform duration-200 active:scale-[0.97];
+  }
+}
+
+@layer utilities {
+  /* Gradient sheen animation for premium accents */
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 6s ease infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer utilities {

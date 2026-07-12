@@ -1,39 +1,54 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Phone, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/data/site";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function FloatingButtons() {
-  return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
-      <motion.a
-        href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I would like to enquire about admissions at OP Institute.`}
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1, type: "spring" }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:shadow-xl transition-shadow"
-        aria-label="Chat on WhatsApp"
-      >
-        <MessageCircle className="w-7 h-7" />
-      </motion.a>
+  const [show, setShow] = useState(false);
 
-      <motion.a
-        href={`tel:${siteConfig.phone}`}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1.2, type: "spring" }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-lg shadow-brand-600/30 hover:shadow-xl transition-shadow"
-        aria-label="Call us"
-      >
-        <Phone className="w-6 h-6" />
-      </motion.a>
-    </div>
+  useEffect(() => {
+    const handleScroll = () => setShow(window.scrollY > 500);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.6, y: 20 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col gap-3"
+        >
+          <motion.a
+            href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I would like to enquire about admissions at OP Institute.`}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-[#25D366]/40"
+            aria-label="Chat on WhatsApp"
+          >
+            <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20" />
+            <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 relative" />
+          </motion.a>
+
+          <motion.a
+            href={`tel:${siteConfig.phone}`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-lg shadow-brand-600/40"
+            aria-label="Call us"
+          >
+            <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+          </motion.a>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

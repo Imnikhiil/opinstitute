@@ -39,8 +39,8 @@ export function WhyChooseUs() {
             const Icon = iconMap[item.icon] || Award;
             return (
               <ScrollReveal key={item.title} delay={index * 0.1}>
-                <div className="group glass-card p-6 h-full hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1">
-                  <div className="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <div className="group premium-card tap-card p-6 h-full">
+                  <div className="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-display font-semibold text-lg mb-2">

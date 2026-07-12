@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingButtons } from "@/components/layout/FloatingButtons";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { siteConfig } from "@/data/site";
 
 const inter = Inter({
@@ -79,6 +80,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
         <ThemeProvider>
           <LoadingScreen />
+          <ScrollProgress />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />

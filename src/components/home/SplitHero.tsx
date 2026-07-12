@@ -32,14 +32,20 @@ export function SplitHero() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="group relative flex-1 min-h-[50svh] lg:min-h-full overflow-hidden"
       >
-        <Image
-          src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1000&q=80"
-          alt="Happy children learning at OP Kids Pre School"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 60vw"
-          className="object-cover scale-105 group-hover:scale-110 transition-transform duration-[1200ms]"
-        />
+        <motion.div
+          className="absolute inset-0"
+          animate={{ scale: [1.08, 1.16, 1.08] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1000&q=80"
+            alt="Happy children learning at OP Kids Pre School"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 60vw"
+            className="object-cover"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-br from-kids-500/90 via-accent-pink/85 to-accent-purple/90" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_55%)]" />
 
@@ -112,14 +118,20 @@ export function SplitHero() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="group relative flex-1 min-h-[50svh] lg:min-h-full overflow-hidden"
       >
-        <Image
-          src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1000&q=80"
-          alt="Students at O.P. Institute of Studies"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 60vw"
-          className="object-cover scale-105 group-hover:scale-110 transition-transform duration-[1200ms]"
-        />
+        <motion.div
+          className="absolute inset-0"
+          animate={{ scale: [1.16, 1.08, 1.16] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1000&q=80"
+            alt="Students at O.P. Institute of Studies"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 60vw"
+            className="object-cover"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-bl from-brand-900/95 via-brand-800/90 to-brand-950/95" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(126,131,255,0.35),transparent_55%)]" />
 
@@ -184,6 +196,11 @@ export function SplitHero() {
         >
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-white/30 blur-xl" />
+            <motion.span
+              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
+              className="absolute inset-0 rounded-full border-2 border-white"
+            />
             <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
               <Image
                 src="/logos/op-institute-logo.png"

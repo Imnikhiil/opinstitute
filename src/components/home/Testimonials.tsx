@@ -21,7 +21,7 @@ export function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, index) => (
             <ScrollReveal key={t.id} delay={index * 0.1}>
-              <div className="glass-card p-6 h-full flex flex-col hover:shadow-card-hover transition-shadow relative">
+              <div className="premium-card tap-card p-6 h-full flex flex-col relative">
                 <Quote className="w-8 h-8 text-brand-200 dark:text-brand-800 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-4">
                   {[...Array(t.rating)].map((_, i) => (

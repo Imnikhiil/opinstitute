@@ -13,11 +13,26 @@ interface ScrollRevealProps {
 }
 
 const variants = {
-  up: { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } },
-  down: { hidden: { opacity: 0, y: -40 }, visible: { opacity: 1, y: 0 } },
-  left: { hidden: { opacity: 0, x: -40 }, visible: { opacity: 1, x: 0 } },
-  right: { hidden: { opacity: 0, x: 40 }, visible: { opacity: 1, x: 0 } },
-  none: { hidden: { opacity: 0 }, visible: { opacity: 1 } },
+  up: {
+    hidden: { opacity: 0, y: 48, filter: "blur(6px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  },
+  down: {
+    hidden: { opacity: 0, y: -48, filter: "blur(6px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  },
+  left: {
+    hidden: { opacity: 0, x: -48, filter: "blur(6px)" },
+    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+  },
+  right: {
+    hidden: { opacity: 0, x: 48, filter: "blur(6px)" },
+    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+  },
+  none: {
+    hidden: { opacity: 0, scale: 0.96, filter: "blur(6px)" },
+    visible: { opacity: 1, scale: 1, filter: "blur(0px)" },
+  },
 };
 
 export function ScrollReveal({
@@ -25,11 +40,11 @@ export function ScrollReveal({
   className,
   delay = 0,
   direction = "up",
-  duration = 0.6,
+  duration = 0.7,
   once = true,
 }: ScrollRevealProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once, margin: "-80px" });
+  const isInView = useInView(ref, { once, margin: "-60px" });
 
   return (
     <motion.div
@@ -37,7 +52,7 @@ export function ScrollReveal({
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={variants[direction]}
-      transition={{ duration, delay, ease: [0.25, 0.4, 0.25, 1] }}
+      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}

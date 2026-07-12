@@ -24,7 +24,7 @@ export function CoursesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featured.map((course, index) => (
             <ScrollReveal key={course.id} delay={index * 0.1}>
-              <div className="group premium-card p-7 h-full flex flex-col relative overflow-hidden">
+              <div className="group premium-card tap-card p-7 h-full flex flex-col relative overflow-hidden">
                 <span
                   className="font-display text-5xl font-bold text-gray-100 dark:text-white/5 absolute top-5 right-6 select-none transition-colors group-hover:text-brand-100 dark:group-hover:text-brand-900/40"
                   aria-hidden
