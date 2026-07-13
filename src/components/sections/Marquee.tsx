@@ -3,9 +3,7 @@
 import { GraduationCap, Baby, Sparkles } from "lucide-react";
 
 const items = [
-  "CA – Chartered Accountancy",
-  "CS – Company Secretary",
-  "CMA",
+  "CMA – Cost & Management Accountancy",
   "B.Com (Pass / Hons)",
   "Class I – XII Tuition",
   "Play Group – UKG",

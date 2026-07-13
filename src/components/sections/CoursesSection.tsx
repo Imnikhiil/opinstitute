@@ -17,7 +17,7 @@ export function CoursesSection({ courses }: { courses: Course[] }) {
           <SectionHeader
             badge="Programs & Courses"
             title="Professional & Academic Coaching"
-            subtitle="From CA, CS, CMA and B.Com to school tuition for Classes I–XII — structured programs built for real results."
+            subtitle="From CMA and B.Com to school tuition for Classes I–XII — structured programs built for real results."
           />
         </ScrollReveal>
 

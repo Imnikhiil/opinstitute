@@ -23,9 +23,9 @@ export const testimonials: Testimonial[] = [
   {
     id: "2",
     name: "Arjun Mehta",
-    role: "CA Student – OP Institute",
+    role: "CMA Student – OP Institute",
     content:
-      "The faculty at OP Institute is exceptional. Their concept clarity in Accounts and Law and the regular test series helped me clear my CA exams. The personal attention made all the difference.",
+      "The faculty at OP Institute is exceptional. Their concept clarity in Costing and Financial Management and the regular test series helped me clear my CMA exams. The personal attention made all the difference.",
     rating: 5,
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
@@ -94,9 +94,9 @@ export const testimonials: Testimonial[] = [
   {
     id: "9",
     name: "Neha Agarwal",
-    role: "CS Student – OP Institute",
+    role: "CMA Student – OP Institute",
     content:
-      "Clearing CS felt achievable because of the structured guidance here. The corporate law classes were detailed and the mentors were always available for doubts. Truly grateful.",
+      "Clearing CMA felt achievable because of the structured guidance here. The cost accounting and management classes were detailed and the mentors were always available for doubts. Truly grateful.",
     rating: 5,
     category: "institute",
   },

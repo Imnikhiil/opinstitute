@@ -18,7 +18,7 @@ import {
 type Side = "kids" | "institute" | null;
 
 const kidsHighlights = ["Play Group – UKG", "Montessori Based", "CCTV Secured"];
-const instituteHighlights = ["CA • CS • CMA", "B.Com & Class I–XII", "Since 2003"];
+const instituteHighlights = ["CMA Coaching", "B.Com & Class I–XII", "Since 2003"];
 
 export function SplitHero() {
   const [active, setActive] = useState<Side>(null);
@@ -56,13 +56,6 @@ export function SplitHero() {
         {/* Light sweep on hover */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -inset-y-10 -left-1/3 w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 blur-md transition-all duration-700 ease-out group-hover:left-[120%] group-hover:opacity-100" />
-        </div>
-
-        {/* Corner index label */}
-        <div className="absolute top-24 left-6 sm:left-12 lg:left-16 z-10 flex items-center gap-2 text-white/70">
-          <span className="font-display text-sm font-semibold tracking-[0.25em]">01</span>
-          <span className="h-px w-8 bg-white/40" />
-          <span className="text-[11px] uppercase tracking-[0.2em]">Early Years</span>
         </div>
 
         {/* Floating playful accents (hidden on small screens to reduce clutter) */}
@@ -170,13 +163,6 @@ export function SplitHero() {
           <div className="absolute -inset-y-10 -left-1/3 w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 blur-md transition-all duration-700 ease-out group-hover:left-[120%] group-hover:opacity-100" />
         </div>
 
-        {/* Corner index label */}
-        <div className="absolute top-24 right-6 sm:right-12 lg:right-16 z-10 flex items-center gap-2 text-white/60">
-          <span className="text-[11px] uppercase tracking-[0.2em]">Institute</span>
-          <span className="h-px w-8 bg-white/30" />
-          <span className="font-display text-sm font-semibold tracking-[0.25em]">02</span>
-        </div>
-
         <motion.span
           animate={{ y: [0, -12, 0] }}
           transition={{ duration: 6, repeat: Infinity }}
@@ -194,7 +180,7 @@ export function SplitHero() {
           >
             <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-400/25 backdrop-blur-sm text-brand-100 text-xs sm:text-sm font-semibold mb-4 sm:mb-5">
               <GraduationCap className="w-4 h-4" />
-              Class I – XII · CA / CS / CMA
+              Class I – XII · CMA
             </span>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
               O.P. Institute
@@ -203,7 +189,7 @@ export function SplitHero() {
               </span>
             </h2>
             <p className="mt-3 sm:mt-4 text-white/80 text-base sm:text-lg font-medium">
-              Excellence since 2003 — CA, CS, CMA, B.Com & school tuition.
+              Excellence since 2003 — CMA, B.Com & school tuition.
             </p>
 
             <div className="mt-4 sm:mt-6 flex flex-wrap gap-2 lg:justify-end">

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "OP Kids Pre School — joyful, safe and playful early childhood education. Play Group, Nursery, LKG & UKG in Mahavir Enclave, New Delhi.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function Page() {
   const testimonials = await getTestimonials();

@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public-client";
 import { courses as staticCourses, type Course } from "@/data/courses";
 import { faculty as staticFaculty, type FacultyMember } from "@/data/faculty";
 import { testimonials as staticTestimonials, type Testimonial } from "@/data/testimonials";
@@ -73,7 +73,7 @@ function mapGallery(row: Row): GalleryImage {
 
 async function fetchTable(table: string): Promise<Row[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data, error } = await supabase
       .from(table)
       .select("*")
@@ -114,7 +114,7 @@ export type SiteConfig = typeof staticSiteConfig;
 
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data } = await supabase
       .from("site_settings")
       .select("*")

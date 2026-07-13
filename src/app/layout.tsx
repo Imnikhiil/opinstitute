@@ -8,8 +8,8 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingButtons } from "@/components/layout/FloatingButtons";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
-import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { PageTransition } from "@/components/ui/PageTransition";
 import { siteConfig } from "@/data/site";
 import { getSiteConfig } from "@/lib/supabase/public-data";
 
@@ -36,8 +36,6 @@ export const metadata: Metadata = {
   keywords: [
     "OP Institute of Studies",
     "OP Kids Pre School",
-    "CA coaching",
-    "CS coaching",
     "CMA coaching",
     "B.Com tuition",
     "commerce coaching Delhi",
@@ -83,7 +81,7 @@ export const viewport = {
   ],
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function RootLayout({
   children,
@@ -97,10 +95,11 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
         <ThemeProvider>
           <SiteConfigProvider config={config}>
-            <LoadingScreen />
             <ScrollProgress />
             <Navbar />
-            <main className="min-h-screen pb-[4.75rem] lg:pb-0">{children}</main>
+            <main className="min-h-screen pb-[4.75rem] lg:pb-0">
+              <PageTransition>{children}</PageTransition>
+            </main>
             <Footer />
             <FloatingButtons />
             <MobileActionBar />

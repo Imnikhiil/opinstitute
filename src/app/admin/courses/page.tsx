@@ -10,7 +10,7 @@ const config: CrudConfig = {
   titleField: "name",
   subtitleField: "description",
   fields: [
-    { name: "name", label: "Course Name", type: "text", required: true, placeholder: "CA – Chartered Accountancy" },
+    { name: "name", label: "Course Name", type: "text", required: true, placeholder: "CMA – Cost & Management Accountancy" },
     { name: "description", label: "Description", type: "textarea", placeholder: "Short description" },
     { name: "duration", label: "Duration", type: "text", placeholder: "Foundation / Inter / Final" },
     { name: "eligibility", label: "Eligibility", type: "text", placeholder: "Class 12 pass" },

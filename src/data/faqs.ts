@@ -17,7 +17,7 @@ export const faqs: FAQ[] = [
     id: "2",
     question: "What courses do you offer at O.P. Institute of Studies?",
     answer:
-      "We offer expert coaching for professional courses — CA (Chartered Accountancy), CS (Company Secretary) and CMA (Cost & Management Accountancy) — along with B.Com (Pass & Honours) and school tuition for Classes I–XII. Each program includes study material, regular tests, doubt sessions, and personal mentorship.",
+      "We offer expert coaching for CMA (Cost & Management Accountancy), along with B.Com (Pass & Honours) and school tuition for Classes I–XII. Each program includes study material, regular tests, doubt sessions, and personal mentorship.",
     category: "courses",
   },
   {

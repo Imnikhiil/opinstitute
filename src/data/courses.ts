@@ -11,39 +11,6 @@ export interface Course {
 
 export const courses: Course[] = [
   {
-    id: "ca",
-    name: "CA – Chartered Accountancy",
-    description:
-      "Complete coaching for the Chartered Accountancy course — Foundation, Intermediate and Final levels — with concept clarity, practical training, and regular test series.",
-    duration: "Foundation / Inter / Final",
-    eligibility: "Class 12 pass (any stream) & graduates",
-    features: [
-      "Accounts, Law, Taxation & Costing",
-      "ICAI-based study material",
-      "Regular chapter-wise tests",
-      "Doubt-clearing sessions",
-      "Experienced commerce faculty",
-    ],
-    category: "professional",
-    popular: true,
-  },
-  {
-    id: "cs",
-    name: "CS – Company Secretary",
-    description:
-      "Structured coaching for the Company Secretary program covering all stages, with focus on corporate law, governance, and thorough exam preparation.",
-    duration: "CSEET / Executive / Professional",
-    eligibility: "Class 12 pass & graduates",
-    features: [
-      "Corporate & business law",
-      "Governance & compliance",
-      "Mock tests & revisions",
-      "Personal mentorship",
-      "Updated study notes",
-    ],
-    category: "professional",
-  },
-  {
     id: "cma",
     name: "CMA – Cost & Management Accountancy",
     description:
@@ -58,6 +25,7 @@ export const courses: Course[] = [
       "One-on-one guidance",
     ],
     category: "professional",
+    popular: true,
   },
   {
     id: "bcom",
@@ -113,7 +81,7 @@ export const courses: Course[] = [
     id: "school-11-12",
     name: "Class XI & XII (Commerce)",
     description:
-      "Specialized coaching for Class 11 & 12 Commerce students — Accountancy, Business Studies, Economics — building the base for CA/CS/CMA & B.Com.",
+      "Specialized coaching for Class 11 & 12 Commerce students — Accountancy, Business Studies, Economics — building the base for CMA & B.Com.",
     duration: "1 – 2 Years",
     eligibility: "Class 11 & 12 Commerce students",
     features: [
@@ -129,7 +97,7 @@ export const courses: Course[] = [
 
 export const courseCategories = [
   { id: "all", label: "All Courses" },
-  { id: "professional", label: "Professional (CA/CS/CMA)" },
+  { id: "professional", label: "Professional (CMA)" },
   { id: "degree", label: "B.Com Degree" },
   { id: "school", label: "School Tuition" },
 ];

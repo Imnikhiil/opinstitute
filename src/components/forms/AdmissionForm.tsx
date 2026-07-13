@@ -14,8 +14,6 @@ const programs = [
   "OP Kids - Nursery",
   "OP Kids - LKG",
   "OP Kids - UKG",
-  "CA - Chartered Accountancy",
-  "CS - Company Secretary",
   "CMA - Cost & Management Accountancy",
   "B.Com (Pass / Honours)",
   "School Tuition (Class I-VIII)",

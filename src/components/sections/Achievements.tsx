@@ -7,8 +7,8 @@ import { Trophy, Medal, Star, Target } from "lucide-react";
 const achievements = [
   {
     icon: Trophy,
-    title: "CA / CS / CMA Success",
-    description: "Students clearing professional exams every year",
+    title: "CMA Success",
+    description: "Students clearing the CMA professional exams every year",
   },
   {
     icon: Medal,

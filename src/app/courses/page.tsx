@@ -5,10 +5,10 @@ import { CoursesPageClient } from "./CoursesPageClient";
 export const metadata: Metadata = {
   title: "Courses",
   description:
-    "CA, CS, CMA, B.Com and school tuition programs at OP Institute of Studies — structured coaching for academic and career success.",
+    "CMA, B.Com and school tuition programs at OP Institute of Studies — structured coaching for academic and career success.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function CoursesPage() {
   const [courses, testimonials] = await Promise.all([

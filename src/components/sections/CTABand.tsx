@@ -31,7 +31,7 @@ export function CTABand() {
                 Learning Journey?
               </h2>
               <p className="mt-4 text-white/85 text-base md:text-lg max-w-xl">
-                From OP Kids Pre School to CA, CS, CMA & B.Com — take the first
+                From OP Kids Pre School to CMA & B.Com — take the first
                 step today. Talk to our team for a free counselling session.
               </p>
             </div>

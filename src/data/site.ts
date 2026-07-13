@@ -4,10 +4,10 @@ export const siteConfig = {
   established: "2003",
   director: "Om Prakash",
   tagline:
-    "Excellence in Education Since 2003 — CA, CS, CMA, B.Com & School Tuition",
+    "Excellence in Education Since 2003 — CMA, B.Com & School Tuition",
   kidsTagline: "Where Kids Love to Learn",
   description:
-    "O.P. Institute of Studies (since 2003) — expert coaching for CA, CS, CMA, B.Com (Pass/Hons) and school tuition for Classes I–XII, along with OP Kids Pre School for joyful, safe early childhood learning.",
+    "O.P. Institute of Studies (since 2003) — expert coaching for CMA, B.Com (Pass/Hons) and school tuition for Classes I–XII, along with OP Kids Pre School for joyful, safe early childhood learning.",
   url: "https://opinstitute.vercel.app",
   phone: "+91 92136 10182",
   phoneRaw: "919213610182",
@@ -157,13 +157,13 @@ export const admissionSteps = [
 
 export const aboutContent = {
   history:
-    "Founded in 2003 with a vision to transform education, O.P. Institute of Studies has been a trusted name in commerce and school education for over two decades. From professional courses like CA, CS, CMA and B.Com to school tuition for Classes I–XII, we help students build strong careers. With the launch of OP Kids Pre School, we now nurture learners from their earliest years right through to professional success.",
+    "Founded in 2003 with a vision to transform education, O.P. Institute of Studies has been a trusted name in commerce and school education for over two decades. From professional courses like CMA and B.Com to school tuition for Classes I–XII, we help students build strong careers. With the launch of OP Kids Pre School, we now nurture learners from their earliest years right through to professional success.",
   vision:
     "To be the most trusted educational institution, empowering students of all ages to achieve their fullest potential through innovative teaching, caring mentorship, and a culture of excellence.",
   mission:
     "To provide quality education that combines academic rigor with holistic development, fostering curious minds, confident learners, and successful professionals who contribute positively to society.",
   directorMessage:
-    "Education is the most powerful tool we can use to change the world. At OP Institute of Studies, we are committed to nurturing every student's unique potential — from a child's first day at OP Kids to cracking professional exams like CA, CS and CMA. Our dedicated team works tirelessly to create an environment where learning is joyful, meaningful, and transformative. I invite you to join our family and experience the difference.",
+    "Education is the most powerful tool we can use to change the world. At OP Institute of Studies, we are committed to nurturing every student's unique potential — from a child's first day at OP Kids to cracking professional exams like CMA. Our dedicated team works tirelessly to create an environment where learning is joyful, meaningful, and transformative. I invite you to join our family and experience the difference.",
   directorName: "Om Prakash",
   directorTitle: "Founder & Director, O.P. Institute of Studies",
   principalMessage:
@@ -400,8 +400,8 @@ export const learningJourney = [
   {
     stage: "Professional",
     age: "Career",
-    title: "CA · CS · CMA",
-    detail: "Expert coaching to crack India's top professional exams.",
+    title: "CMA",
+    detail: "Expert coaching to crack the CMA professional exams.",
     brand: "institute" as const,
   },
 ];

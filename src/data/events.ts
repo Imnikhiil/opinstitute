@@ -30,10 +30,10 @@ export const events: Event[] = [
   },
   {
     id: "3",
-    title: "CA / CS / CMA Test Series",
+    title: "CMA Test Series",
     date: "Every Sunday",
     description:
-      "Full-length mock tests for CA, CS and CMA students with detailed analysis and performance feedback.",
+      "Full-length mock tests for CMA students with detailed analysis and performance feedback.",
     image:
       "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80",
     type: "academic",

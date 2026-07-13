@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Meet our expert faculty at OP Institute — highly qualified teachers with years of experience in CA, CS, CMA, B.Com, school subjects, and early childhood education.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function FacultyPage() {
   const faculty = await getFaculty();

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Contact OP Institute of Studies and OP Kids Pre School. Address, phone, email, WhatsApp, and contact form.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function ContactPage() {
   const siteConfig = await getSiteConfig();

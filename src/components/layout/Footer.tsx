@@ -58,8 +58,8 @@ export function Footer() {
             </div>
             <p className="text-sm leading-relaxed text-gray-400">
               Empowering students and nurturing young minds with excellence in
-              education since 2003 — from joyful preschool at OP Kids to CA, CS,
-              CMA, B.Com and school tuition success.
+              education since 2003 — from joyful preschool at OP Kids to CMA,
+              B.Com and school tuition success.
             </p>
             <div className="flex gap-3">
               {Object.entries(siteConfig.social).map(([key, url]) => {
@@ -112,7 +112,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/courses" className="hover:text-brand-400 transition-colors">
-                  CA / CS / CMA Coaching
+                  CMA Coaching
                 </Link>
               </li>
               <li>

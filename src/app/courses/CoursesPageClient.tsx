@@ -32,7 +32,7 @@ export function CoursesPageClient({
             Our Courses
           </h1>
           <p className="text-[#666666] text-lg max-w-2xl">
-            CA, CS, CMA, B.Com and school tuition programs designed for academic
+            CMA, B.Com and school tuition programs designed for academic
             excellence and career success.
           </p>
         </div>

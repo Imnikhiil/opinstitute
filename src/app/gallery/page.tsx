@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Photo gallery of OP Institute of Studies and OP Kids Pre School — campus, classrooms, events, and achievements.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function GalleryPage() {
   const images = await getGalleryImages();

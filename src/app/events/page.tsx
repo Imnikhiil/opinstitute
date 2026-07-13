@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Upcoming and past events at OP Institute — academic programs, cultural celebrations, sports day, and OP Kids activities.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 const typeColors: Record<string, string> = {
   academic: "bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300",

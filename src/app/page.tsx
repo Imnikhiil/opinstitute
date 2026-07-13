@@ -21,7 +21,7 @@ import {
   getTestimonials,
 } from "@/lib/supabase/public-data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [courses, testimonials, gallery] = await Promise.all([
