@@ -36,10 +36,9 @@ export const siteConfig = {
   },
 };
 
-export const navLinks = [
+export const navLinks: { href: string; label: string; highlight?: boolean }[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/op-kids", label: "OP Kids", highlight: true },
   { href: "/courses", label: "Courses" },
   { href: "/faculty", label: "Faculty" },
   { href: "/gallery", label: "Gallery" },
@@ -297,6 +296,75 @@ export const preschoolPrograms = [
     description: "School readiness program preparing children for formal primary education.",
     features: ["Writing skills", "Advanced phonics", "Problem solving", "Confidence building"],
   },
+];
+
+// Quick feel-good numbers shown on the OP Kids page
+export const kidsStats = [
+  { value: 500, suffix: "+", label: "Happy Little Learners", emoji: "😊" },
+  { value: 20, suffix: "+", label: "Years of Loving Care", emoji: "💛" },
+  { value: 4, suffix: "", label: "Age-wise Programs", emoji: "🎒" },
+  { value: 100, suffix: "%", label: "Safe & CCTV Secured", emoji: "🛡️" },
+];
+
+// What children explore & develop every day at OP Kids
+export const kidsCurriculum = [
+  {
+    emoji: "🔤",
+    title: "Language & Literacy",
+    description: "Phonics, storytelling, rhymes and joyful early reading & writing.",
+    color: "from-rose-400 to-pink-500",
+  },
+  {
+    emoji: "🔢",
+    title: "Numeracy & Logic",
+    description: "Numbers, shapes, patterns and playful hands-on problem solving.",
+    color: "from-sky-400 to-blue-500",
+  },
+  {
+    emoji: "🎨",
+    title: "Art & Creativity",
+    description: "Drawing, craft, colours and free imaginative self-expression.",
+    color: "from-amber-400 to-orange-500",
+  },
+  {
+    emoji: "🤸",
+    title: "Physical Development",
+    description: "Motor skills, yoga, dance and active, safe outdoor play.",
+    color: "from-emerald-400 to-teal-500",
+  },
+  {
+    emoji: "🧠",
+    title: "Cognitive Skills",
+    description: "Puzzles, memory games and Montessori-based discovery.",
+    color: "from-violet-400 to-purple-500",
+  },
+  {
+    emoji: "🤝",
+    title: "Social & Emotional",
+    description: "Sharing, empathy, confidence and making new little friends.",
+    color: "from-fuchsia-400 to-pink-500",
+  },
+];
+
+// A typical joyful day at OP Kids Pre School
+export const kidsDayRoutine = [
+  { time: "9:00 AM", title: "Warm Welcome", detail: "Cheerful greetings, free play and settling in.", emoji: "👋" },
+  { time: "9:30 AM", title: "Circle Time", detail: "Prayer, rhymes, calendar and the day's fun theme.", emoji: "⭕" },
+  { time: "10:00 AM", title: "Learning Activity", detail: "Montessori-based, hands-on concept learning.", emoji: "📚" },
+  { time: "10:45 AM", title: "Snack & Hygiene", detail: "Healthy snack break and good-habit routines.", emoji: "🍎" },
+  { time: "11:15 AM", title: "Creative Play", detail: "Art, craft, music, dance and story time.", emoji: "🎨" },
+  { time: "12:00 PM", title: "Outdoor Fun", detail: "Safe playground games and physical activity.", emoji: "⚽" },
+  { time: "12:45 PM", title: "Happy Goodbye", detail: "Recap, goodbye song and joyful home time.", emoji: "🎈" },
+];
+
+// Common questions from parents about OP Kids
+export const kidsFaqs = [
+  { q: "What age groups do you accept?", a: "We welcome children aged 2 to 6 years across Play Group, Nursery, LKG and UKG." },
+  { q: "What are the school timings?", a: "OP Kids Pre School runs Monday to Saturday, from 9:00 AM to 1:00 PM." },
+  { q: "How safe is the campus?", a: "Full CCTV surveillance, verified staff, secure entry/exit points and a fenced play area keep every child safe." },
+  { q: "What is the child–teacher ratio?", a: "We keep small groups with a low child–teacher ratio so every child gets individual attention and care." },
+  { q: "Do you follow Montessori methods?", a: "Yes — our curriculum blends Montessori-based, play-way and activity learning for joyful, natural growth." },
+  { q: "How do I enrol my child?", a: "Fill the enquiry form or visit our campus. Carry the birth certificate, photographs and address proof at registration." },
 ];
 
 // The complete learning journey — our unique dual-brand advantage (age 2 to professional)

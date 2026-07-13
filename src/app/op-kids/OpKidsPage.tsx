@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -20,13 +21,22 @@ import {
   Sparkles,
   Users,
   Lock,
+  ChevronDown,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { motion, AnimatePresence } from "framer-motion";
+import { ScrollReveal, StatCounter } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { kidsFeatures, preschoolPrograms } from "@/data/site";
+import {
+  kidsFeatures,
+  preschoolPrograms,
+  kidsStats,
+  kidsCurriculum,
+  kidsDayRoutine,
+  kidsFaqs,
+} from "@/data/site";
+import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -92,6 +102,8 @@ const floatingEmojis = [
 ];
 
 export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
   return (
     <>
       {/* Colorful Hero */}
@@ -177,6 +189,36 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
           >
             <path d="M0,64 C240,120 480,0 720,32 C960,64 1200,120 1440,72 L1440,120 L0,120 Z" />
           </svg>
+        </div>
+      </section>
+
+      {/* Quick stats band */}
+      <section className="relative -mt-2 pb-4">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {kidsStats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -6 }}
+                className="group relative rounded-3xl bg-white dark:bg-gray-900 p-5 sm:p-6 text-center shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
+              >
+                <div className="absolute inset-x-0 top-0 h-1 bg-kids-gradient" />
+                <div className="text-3xl sm:text-4xl mb-2 select-none transition-transform duration-300 group-hover:scale-110">
+                  {stat.emoji}
+                </div>
+                <div className="font-display text-2xl sm:text-3xl font-bold kids-gradient-text">
+                  <StatCounter end={stat.value} suffix={stat.suffix} />
+                </div>
+                <p className="mt-1 text-xs sm:text-sm font-medium text-muted-foreground leading-snug">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -315,6 +357,109 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
         </div>
       </section>
 
+      {/* Learning Approach / Curriculum */}
+      <section className="section-padding relative overflow-hidden">
+        <div className="absolute top-16 left-[6%] w-64 h-64 rounded-full bg-kids-300/10 blur-3xl" />
+        <div className="absolute bottom-10 right-[8%] w-72 h-72 rounded-full bg-accent-purple/10 blur-3xl" />
+        <div className="container-custom relative">
+          <ScrollReveal>
+            <SectionHeader
+              badge="Our Approach"
+              title="What Your Child Explores Every Day"
+              subtitle="A balanced, play-based Montessori curriculum that nurtures the whole child"
+              variant="kids"
+            />
+          </ScrollReveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {kidsCurriculum.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 36, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -8 }}
+                className="group relative flex items-start gap-4 rounded-2xl bg-white dark:bg-gray-900 p-5 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
+              >
+                <div
+                  className={cn(
+                    "absolute -top-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500",
+                    item.color
+                  )}
+                />
+                <div
+                  className={cn(
+                    "shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center text-2xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 select-none",
+                    item.color
+                  )}
+                >
+                  {item.emoji}
+                </div>
+                <div className="relative">
+                  <h3 className="font-display font-semibold text-lg mb-1">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* A Day at OP Kids */}
+      <section className="section-padding relative overflow-hidden bg-gradient-to-br from-kids-50 via-pink-50 to-purple-50 dark:from-kids-950/20 dark:via-pink-950/10 dark:to-purple-950/10">
+        <div className="container-custom relative max-w-4xl">
+          <ScrollReveal>
+            <SectionHeader
+              badge="A Day at OP Kids"
+              title="A Joyful Day, Start to Finish"
+              subtitle="Every day is thoughtfully planned to balance learning, play and rest"
+              variant="kids"
+            />
+          </ScrollReveal>
+
+          <div className="relative">
+            {/* Vertical timeline line */}
+            <div className="absolute left-[27px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-kids-400 via-accent-pink to-accent-purple" />
+
+            <div className="space-y-4">
+              {kidsDayRoutine.map((step, i) => (
+                <motion.div
+                  key={step.time}
+                  initial={{ opacity: 0, x: -24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ x: 4 }}
+                  className="relative flex items-center gap-4 sm:gap-5"
+                >
+                  {/* Emoji node */}
+                  <div className="relative z-10 shrink-0 w-14 h-14 rounded-full bg-white dark:bg-gray-900 shadow-lg ring-4 ring-kids-100 dark:ring-kids-900/40 flex items-center justify-center text-2xl select-none">
+                    {step.emoji}
+                  </div>
+
+                  {/* Card */}
+                  <div className="flex-1 rounded-2xl bg-white dark:bg-gray-900 p-4 sm:p-5 shadow-card">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <h3 className="font-display font-semibold text-base sm:text-lg">
+                        {step.title}
+                      </h3>
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-kids-100 text-kids-700 dark:bg-kids-900/40 dark:text-kids-300 text-xs font-semibold">
+                        {step.time}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed mt-1">
+                      {step.detail}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Image showcase */}
       <section className="section-padding relative overflow-hidden">
         <div className="container-custom">
@@ -368,6 +513,59 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
         title="What Parents Say"
         subtitle="Loved by families who trust us with their little ones"
       />
+
+      {/* Parent FAQs */}
+      <section className="section-padding bg-[#f5f5f7] dark:bg-gray-900/40">
+        <div className="container-custom max-w-3xl">
+          <ScrollReveal>
+            <SectionHeader
+              badge="Parent Questions"
+              title="Questions? We've Got Answers"
+              subtitle="Everything parents usually ask before enrolling their little one"
+              variant="kids"
+            />
+          </ScrollReveal>
+
+          <div className="space-y-3">
+            {kidsFaqs.map((faq, i) => {
+              const open = openFaq === i;
+              return (
+                <ScrollReveal key={faq.q} delay={i * 0.05}>
+                  <div className="glass-card overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(open ? null : i)}
+                      className="w-full flex items-center justify-between p-5 text-left"
+                      aria-expanded={open}
+                    >
+                      <span className="font-medium pr-4">{faq.q}</span>
+                      <ChevronDown
+                        className={cn(
+                          "w-5 h-5 shrink-0 text-kids-500 transition-transform duration-300",
+                          open && "rotate-180"
+                        )}
+                      />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {open && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <p className="px-5 pb-5 text-muted-foreground text-sm leading-relaxed">
+                            {faq.a}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="section-padding relative overflow-hidden bg-kids-gradient bg-[length:200%_200%] animate-gradient-x">

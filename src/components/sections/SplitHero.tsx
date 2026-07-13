@@ -10,6 +10,9 @@ import {
   GraduationCap,
   Sparkles,
   Trophy,
+  Star,
+  Users,
+  MousePointerClick,
 } from "lucide-react";
 
 type Side = "kids" | "institute" | null;
@@ -48,6 +51,19 @@ export function SplitHero() {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-br from-kids-500/90 via-accent-pink/85 to-accent-purple/90" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_55%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/30 via-black/5 to-transparent" />
+
+        {/* Light sweep on hover */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -inset-y-10 -left-1/3 w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 blur-md transition-all duration-700 ease-out group-hover:left-[120%] group-hover:opacity-100" />
+        </div>
+
+        {/* Corner index label */}
+        <div className="absolute top-24 left-6 sm:left-12 lg:left-16 z-10 flex items-center gap-2 text-white/70">
+          <span className="font-display text-sm font-semibold tracking-[0.25em]">01</span>
+          <span className="h-px w-8 bg-white/40" />
+          <span className="text-[11px] uppercase tracking-[0.2em]">Early Years</span>
+        </div>
 
         {/* Floating playful accents (hidden on small screens to reduce clutter) */}
         <motion.span
@@ -99,11 +115,24 @@ export function SplitHero() {
 
             <Link
               href="/op-kids"
-              className="mt-6 sm:mt-8 inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-white text-accent-purple font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl hover:gap-3 transition-all duration-300"
+              className="group/btn mt-6 sm:mt-8 inline-flex items-center gap-2.5 pl-5 sm:pl-6 pr-2 py-2 rounded-full bg-white text-accent-purple font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Enter Kids World
-              <ArrowRight className="w-5 h-5" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-purple text-white transition-transform duration-300 group-hover/btn:translate-x-0.5">
+                <ArrowRight className="w-4 h-4" />
+              </span>
             </Link>
+
+            <div className="mt-5 flex items-center gap-2 text-white/90">
+              <span className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
+                ))}
+              </span>
+              <span className="text-xs sm:text-sm font-medium">
+                Loved by 500+ happy families
+              </span>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -134,6 +163,19 @@ export function SplitHero() {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-bl from-brand-900/95 via-brand-800/90 to-brand-950/95" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(126,131,255,0.35),transparent_55%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+
+        {/* Light sweep on hover */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -inset-y-10 -left-1/3 w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 blur-md transition-all duration-700 ease-out group-hover:left-[120%] group-hover:opacity-100" />
+        </div>
+
+        {/* Corner index label */}
+        <div className="absolute top-24 right-6 sm:right-12 lg:right-16 z-10 flex items-center gap-2 text-white/60">
+          <span className="text-[11px] uppercase tracking-[0.2em]">Institute</span>
+          <span className="h-px w-8 bg-white/30" />
+          <span className="font-display text-sm font-semibold tracking-[0.25em]">02</span>
+        </div>
 
         <motion.span
           animate={{ y: [0, -12, 0] }}
@@ -177,11 +219,25 @@ export function SplitHero() {
 
             <Link
               href="/courses"
-              className="mt-6 sm:mt-8 inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-brand-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-900/40 hover:bg-brand-400 hover:gap-3 transition-all duration-300"
+              className="group/btn mt-6 sm:mt-8 inline-flex items-center gap-2.5 pl-5 sm:pl-6 pr-2 py-2 rounded-full bg-brand-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-900/40 hover:bg-brand-400 transition-all duration-300"
             >
               Explore Institute
-              <ArrowRight className="w-5 h-5" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-brand-600 transition-transform duration-300 group-hover/btn:translate-x-0.5">
+                <ArrowRight className="w-4 h-4" />
+              </span>
             </Link>
+
+            <div className="mt-5 flex items-center gap-4 text-white/80 lg:justify-end">
+              <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium">
+                <Trophy className="w-4 h-4 text-gold-400" />
+                20+ Years
+              </span>
+              <span className="h-4 w-px bg-white/25" />
+              <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium">
+                <Users className="w-4 h-4 text-brand-300" />
+                5000+ Students
+              </span>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -217,8 +273,37 @@ export function SplitHero() {
               One Family · Two Worlds
             </p>
           </div>
+
+          {/* Hover hint (desktop) */}
+          <motion.div
+            animate={{ opacity: active ? 0 : 1, y: active ? 6 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="hidden lg:flex mt-3 items-center gap-1.5 text-white/80 text-xs font-medium"
+          >
+            <MousePointerClick className="w-3.5 h-3.5" />
+            Hover a side to explore
+          </motion.div>
         </motion.div>
       </div>
+
+      {/* Scroll-to-explore cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.6 }}
+        className="pointer-events-none absolute bottom-5 left-1/2 z-20 -translate-x-1/2 flex-col items-center gap-1.5 hidden lg:flex"
+      >
+        <span className="text-[10px] uppercase tracking-[0.25em] text-white/70">
+          Scroll
+        </span>
+        <span className="flex h-8 w-5 items-start justify-center rounded-full border border-white/40 p-1">
+          <motion.span
+            animate={{ y: [0, 10, 0], opacity: [1, 0.3, 1] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="h-1.5 w-1 rounded-full bg-white"
+          />
+        </span>
+      </motion.div>
 
     </section>
   );
