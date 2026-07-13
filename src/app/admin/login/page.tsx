@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
         password,
       });
       if (error) {
-        setError("Galat email ya password. Dobara koshish karein.");
+        setError("Incorrect email or password. Please try again.");
         setLoading(false);
         return;
       }
@@ -33,7 +33,7 @@ export default function AdminLoginPage() {
       router.refresh();
     } catch {
       setError(
-        "Login nahi ho paya. Supabase setup / internet check karein."
+        "Unable to log in. Please check your connection and try again."
       );
       setLoading(false);
     }
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          Sirf authorized staff ke liye. Access ke liye administrator se sampark karein.
+          For authorized staff only. Please contact the administrator for access.
         </p>
       </div>
     </div>

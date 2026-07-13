@@ -14,10 +14,10 @@ const config: CrudConfig = {
     { name: "image_url", label: "Photo (optional)", type: "image" },
     { name: "name", label: "Name", type: "text", required: true, placeholder: "Mrs. Rekha Patel" },
     { name: "role", label: "Role", type: "text", placeholder: "Parent – OP Kids Nursery" },
-    { name: "content", label: "Review", type: "textarea", required: true, fullWidth: true, placeholder: "Unka review yahan likhein…" },
+    { name: "content", label: "Review", type: "textarea", required: true, fullWidth: true, placeholder: "Write their review here…" },
     { name: "rating", label: "Rating (1-5)", type: "number", placeholder: "5" },
     { name: "category", label: "Category", type: "select", options: ["preschool", "institute"] },
-    { name: "sort_order", label: "Order (chhota pehle)", type: "number" },
+    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
 
@@ -25,7 +25,7 @@ export default async function AdminTestimonialsPage() {
   const rows = await fetchRows("testimonials");
   return (
     <div>
-      <PageHeader title="Testimonials" subtitle="Parents aur students ke reviews manage karein." />
+      <PageHeader title="Testimonials" subtitle="Manage reviews from parents and students." />
       <CrudManager config={config} initialRows={rows} />
     </div>
   );

@@ -76,7 +76,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
   };
 
   const remove = async (id: string) => {
-    if (!confirm("Ye query delete karein? Wapas nahi aayegi.")) return;
+    if (!confirm("Delete this query? This cannot be undone.")) return;
     setBusy(id);
     const supabase = createClient();
     const { error } = await supabase.from("queries").delete().eq("id", id);
@@ -114,7 +114,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
       {filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
           <Inbox className="w-10 h-10 mx-auto text-muted-foreground mb-3" />
-          <p className="text-muted-foreground">Koi query nahi mili.</p>
+          <p className="text-muted-foreground">No queries found.</p>
         </div>
       ) : (
         <div className="space-y-4">

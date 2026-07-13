@@ -16,8 +16,8 @@ const config: CrudConfig = {
     { name: "eligibility", label: "Eligibility", type: "text", placeholder: "Class 12 pass" },
     { name: "features", label: "Features", type: "tags", fullWidth: true, placeholder: "Feature 1, Feature 2, Feature 3" },
     { name: "category", label: "Category", type: "select", options: ["professional", "degree", "school"] },
-    { name: "popular", label: "Popular?", type: "boolean", placeholder: "Homepage par featured dikhaye" },
-    { name: "sort_order", label: "Order (chhota pehle)", type: "number" },
+    { name: "popular", label: "Popular?", type: "boolean", placeholder: "Feature on homepage" },
+    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
 
@@ -25,7 +25,7 @@ export default async function AdminCoursesPage() {
   const rows = await fetchRows("courses");
   return (
     <div>
-      <PageHeader title="Courses" subtitle="Institute ke courses add / edit / delete karein." />
+      <PageHeader title="Courses" subtitle="Add, edit or delete the institute's courses." />
       <CrudManager config={config} initialRows={rows} />
     </div>
   );

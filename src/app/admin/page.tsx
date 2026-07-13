@@ -60,9 +60,9 @@ export default async function AdminDashboard() {
             Setup incomplete
           </div>
           <p className="text-sm text-muted-foreground">
-            Database connection nahi mila. Please Supabase env variables
-            (.env.local) set karein aur schema.sql run karein. Setup steps ke
-            liye developer se sampark karein.
+            Database connection not found. Please set the Supabase environment
+            variables (.env.local) and run schema.sql. Contact the developer for
+            setup steps.
           </p>
         </div>
       </div>
@@ -91,7 +91,7 @@ export default async function AdminDashboard() {
       <div className="mb-8">
         <h1 className="font-display text-2xl sm:text-3xl font-bold">Dashboard</h1>
         <p className="text-muted-foreground mt-1">
-          Website ka poora control yahan se. Namaste! 👋
+          Manage your entire website from here. Welcome back!
         </p>
       </div>
 
@@ -104,10 +104,10 @@ export default async function AdminDashboard() {
             <Inbox className="w-6 h-6" />
             <div>
               <p className="font-semibold">
-                {counts.newQueries} nayi{" "}
-                {counts.newQueries === 1 ? "query" : "queries"} aayi hain
+                {counts.newQueries} new{" "}
+                {counts.newQueries === 1 ? "query" : "queries"} received
               </p>
-              <p className="text-white/80 text-sm">Abhi dekhein aur reply karein</p>
+              <p className="text-white/80 text-sm">View and reply now</p>
             </div>
           </div>
           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

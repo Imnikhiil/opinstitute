@@ -16,7 +16,7 @@ const config: CrudConfig = {
     { name: "event_date", label: "Date", type: "text", placeholder: "December 15, 2025" },
     { name: "description", label: "Description", type: "textarea", fullWidth: true },
     { name: "type", label: "Type", type: "select", options: ["academic", "cultural", "sports", "preschool"] },
-    { name: "sort_order", label: "Order (chhota pehle)", type: "number" },
+    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
 
@@ -24,7 +24,7 @@ export default async function AdminEventsPage() {
   const rows = await fetchRows("events");
   return (
     <div>
-      <PageHeader title="Events" subtitle="School events aur activities manage karein." />
+      <PageHeader title="Events" subtitle="Manage school events and activities." />
       <CrudManager config={config} initialRows={rows} />
     </div>
   );

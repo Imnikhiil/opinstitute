@@ -14,7 +14,7 @@ const config: CrudConfig = {
     { name: "image_url", label: "Photo", type: "image", required: true },
     { name: "alt", label: "Caption / Description", type: "text", placeholder: "Annual day celebration" },
     { name: "category", label: "Category", type: "select", options: ["campus", "classroom", "preschool", "events", "achievements"] },
-    { name: "sort_order", label: "Order (chhota pehle)", type: "number" },
+    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
 
@@ -22,7 +22,7 @@ export default async function AdminGalleryPage() {
   const rows = await fetchRows("gallery");
   return (
     <div>
-      <PageHeader title="Gallery" subtitle="Website ki photos upload / manage karein." />
+      <PageHeader title="Gallery" subtitle="Upload and manage the website photos." />
       <CrudManager config={config} initialRows={rows} />
     </div>
   );

@@ -21,7 +21,7 @@ export default async function QueriesPage() {
       <div className="mb-6">
         <h1 className="font-display text-2xl sm:text-3xl font-bold">Queries</h1>
         <p className="text-muted-foreground mt-1">
-          Contact aur Admission forms se aayi saari enquiries.
+          All enquiries received from the Contact and Admission forms.
         </p>
       </div>
       <QueriesClient initialQueries={queries} />

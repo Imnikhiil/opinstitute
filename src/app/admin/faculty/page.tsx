@@ -17,7 +17,7 @@ const config: CrudConfig = {
     { name: "experience", label: "Experience", type: "text", placeholder: "8 Years" },
     { name: "subject", label: "Subject / Role", type: "text", placeholder: "OP Kids – Preschool" },
     { name: "linkedin", label: "LinkedIn URL", type: "text", placeholder: "https://..." },
-    { name: "sort_order", label: "Order (chhota pehle)", type: "number" },
+    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
 
@@ -25,7 +25,7 @@ export default async function AdminFacultyPage() {
   const rows = await fetchRows("faculty");
   return (
     <div>
-      <PageHeader title="Faculty" subtitle="Teachers ki details aur photos manage karein." />
+      <PageHeader title="Faculty" subtitle="Manage teacher details and photos." />
       <CrudManager config={config} initialRows={rows} />
     </div>
   );
