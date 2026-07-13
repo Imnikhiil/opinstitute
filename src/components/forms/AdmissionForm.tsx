@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
 
 const programs = [
   "OP Kids - Play Group",
@@ -35,8 +36,22 @@ export function AdmissionForm({ className }: { className?: string }) {
   });
 
   const onSubmit = async (data: AdmissionFormData) => {
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log("Admission form:", data);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from("queries").insert({
+        type: "admission",
+        name: data.studentName,
+        parent_name: data.parentName,
+        email: data.email,
+        phone: data.phone,
+        program: data.program,
+        age: data.age,
+        message: data.message,
+      });
+      if (error) console.error("Admission save failed:", error.message);
+    } catch (err) {
+      console.error("Admission save error:", err);
+    }
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 5000);

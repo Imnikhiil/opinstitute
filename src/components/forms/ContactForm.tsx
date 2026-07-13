@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
 
 interface ContactFormProps {
   className?: string;
@@ -25,8 +26,20 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log("Contact form:", data);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from("queries").insert({
+        type: "contact",
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        subject: data.subject,
+        message: data.message,
+      });
+      if (error) console.error("Query save failed:", error.message);
+    } catch (err) {
+      console.error("Query save error:", err);
+    }
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 5000);
