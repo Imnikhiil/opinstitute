@@ -32,11 +32,16 @@
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] antialiased;
+    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
+    position: relative;
   }
 }
 
