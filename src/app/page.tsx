@@ -15,8 +15,21 @@ import { AdmissionProcess } from "@/components/sections/AdmissionProcess";
 import { FAQs } from "@/components/sections/FAQs";
 import { CTABand } from "@/components/sections/CTABand";
 import { ContactSection } from "@/components/sections/ContactSection";
+import {
+  getCourses,
+  getGalleryImages,
+  getTestimonials,
+} from "@/lib/supabase/public-data";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [courses, testimonials, gallery] = await Promise.all([
+    getCourses(),
+    getTestimonials(),
+    getGalleryImages(),
+  ]);
+
   return (
     <>
       <SplitHero />
@@ -26,12 +39,12 @@ export default function HomePage() {
       <AboutInstitute />
       <AboutKids />
       <WhyChooseUs />
-      <CoursesSection />
+      <CoursesSection courses={courses} />
       <PreschoolPrograms />
       <Facilities />
       <Achievements />
-      <GalleryPreview />
-      <Testimonials />
+      <GalleryPreview images={gallery} />
+      <Testimonials testimonials={testimonials} />
       <AdmissionProcess />
       <FAQs />
       <CTABand />

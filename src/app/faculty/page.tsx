@@ -3,7 +3,7 @@ import Image from "next/image";
 import { LinkedinIcon } from "@/components/ui/SocialIcons";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { faculty } from "@/data/faculty";
+import { getFaculty } from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "Faculty",
@@ -11,7 +11,11 @@ export const metadata: Metadata = {
     "Meet our expert faculty at OP Institute — highly qualified teachers with years of experience in CA, CS, CMA, B.Com, school subjects, and early childhood education.",
 };
 
-export default function FacultyPage() {
+export const dynamic = "force-dynamic";
+
+export default async function FacultyPage() {
+  const faculty = await getFaculty();
+
   return (
     <>
       <section className="page-hero">

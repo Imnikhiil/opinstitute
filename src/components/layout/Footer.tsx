@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,7 +13,8 @@ import {
   YoutubeIcon,
   LinkedinIcon,
 } from "@/components/ui/SocialIcons";
-import { siteConfig, navLinks } from "@/data/site";
+import { navLinks } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 const socialIcons = {
   facebook: FacebookIcon,
@@ -21,6 +24,8 @@ const socialIcons = {
 };
 
 export function Footer() {
+  const siteConfig = useSiteConfig();
+
   return (
     <footer className="bg-gray-950 text-gray-300">
       <div className="container-custom section-padding pb-8">

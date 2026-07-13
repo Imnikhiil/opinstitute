@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { siteConfig } from "@/data/site";
+import { getSiteConfig } from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -10,7 +10,11 @@ export const metadata: Metadata = {
     "Contact OP Institute of Studies and OP Kids Pre School. Address, phone, email, WhatsApp, and contact form.",
 };
 
-export default function ContactPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ContactPage() {
+  const siteConfig = await getSiteConfig();
+
   return (
     <>
       <section className="page-hero">

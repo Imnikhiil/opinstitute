@@ -4,9 +4,11 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { siteConfig } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 export function ContactSection() {
+  const siteConfig = useSiteConfig();
+
   return (
     <section id="contact" className="section-padding">
       <div className="container-custom">

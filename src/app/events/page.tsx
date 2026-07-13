@@ -3,13 +3,15 @@ import Image from "next/image";
 import { Calendar } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { events } from "@/data/events";
+import { getEvents } from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "Events",
   description:
     "Upcoming and past events at OP Institute — academic programs, cultural celebrations, sports day, and OP Kids activities.",
 };
+
+export const dynamic = "force-dynamic";
 
 const typeColors: Record<string, string> = {
   academic: "bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300",
@@ -18,7 +20,9 @@ const typeColors: Record<string, string> = {
   preschool: "bg-kids-100 text-kids-700 dark:bg-kids-900/30 dark:text-kids-300",
 };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const events = await getEvents();
+
   return (
     <>
       <section className="page-hero">

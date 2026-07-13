@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { Phone, MessageCircle, GraduationCap } from "lucide-react";
-import { siteConfig } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 export function MobileActionBar() {
+  const siteConfig = useSiteConfig();
+
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t border-gray-200/80 dark:border-white/10 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl safe-area-pb">
       <div className="grid grid-cols-3 divide-x divide-gray-200/80 dark:divide-white/10">

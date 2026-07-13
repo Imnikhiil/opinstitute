@@ -6,12 +6,14 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
-import { navLinks, siteConfig } from "@/data/site";
+import { navLinks } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
+  const siteConfig = useSiteConfig();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();

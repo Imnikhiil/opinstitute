@@ -6,10 +6,10 @@ import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { galleryImages } from "@/data/gallery";
+import type { GalleryImage } from "@/data/gallery";
 
-export function GalleryPreview() {
-  const preview = galleryImages.slice(0, 6);
+export function GalleryPreview({ images }: { images: GalleryImage[] }) {
+  const preview = images.slice(0, 6);
 
   return (
     <section className="section-padding">

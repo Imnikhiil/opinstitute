@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Phone, MessageCircle } from "lucide-react";
-import { siteConfig } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function FloatingButtons() {
+  const siteConfig = useSiteConfig();
   const [show, setShow] = useState(false);
 
   useEffect(() => {

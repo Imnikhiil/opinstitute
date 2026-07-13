@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Phone, MessageCircle, ArrowRight, CalendarCheck } from "lucide-react";
-import { siteConfig } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function CTABand() {
+  const siteConfig = useSiteConfig();
+
   return (
     <section className="relative overflow-hidden bg-accent-gradient animate-gradient-x">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_50%)]" />

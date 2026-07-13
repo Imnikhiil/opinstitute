@@ -5,9 +5,9 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { courses } from "@/data/courses";
+import type { Course } from "@/data/courses";
 
-export function CoursesSection() {
+export function CoursesSection({ courses }: { courses: Course[] }) {
   const featured = courses.filter((c) => c.popular).slice(0, 3);
 
   return (

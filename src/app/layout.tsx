@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { SiteConfigProvider } from "@/components/providers/SiteConfigProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingButtons } from "@/components/layout/FloatingButtons";
@@ -10,6 +11,7 @@ import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { siteConfig } from "@/data/site";
+import { getSiteConfig } from "@/lib/supabase/public-data";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -81,23 +83,29 @@ export const viewport = {
   ],
 };
 
-export default function RootLayout({
+export const dynamic = "force-dynamic";
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const config = await getSiteConfig();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
         <ThemeProvider>
-          <LoadingScreen />
-          <ScrollProgress />
-          <Navbar />
-          <main className="min-h-screen pb-[4.75rem] lg:pb-0">{children}</main>
-          <Footer />
-          <FloatingButtons />
-          <MobileActionBar />
-          <BackToTop />
+          <SiteConfigProvider config={config}>
+            <LoadingScreen />
+            <ScrollProgress />
+            <Navbar />
+            <main className="min-h-screen pb-[4.75rem] lg:pb-0">{children}</main>
+            <Footer />
+            <FloatingButtons />
+            <MobileActionBar />
+            <BackToTop />
+          </SiteConfigProvider>
         </ThemeProvider>
       </body>
     </html>

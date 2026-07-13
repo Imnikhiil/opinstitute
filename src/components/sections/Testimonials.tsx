@@ -6,10 +6,12 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { testimonials as allTestimonials } from "@/data/testimonials";
+import type { Testimonial } from "@/data/testimonials";
+import { testimonials as fallbackTestimonials } from "@/data/testimonials";
 import { cn } from "@/lib/utils";
 
 interface TestimonialsProps {
+  testimonials?: Testimonial[];
   filter?: "preschool" | "institute";
   badge?: string;
   title?: string;
@@ -33,6 +35,7 @@ function useItemsPerView() {
 }
 
 export function Testimonials({
+  testimonials = fallbackTestimonials,
   filter,
   badge = "Testimonials",
   title = "What Parents & Students Say",
@@ -42,8 +45,8 @@ export function Testimonials({
 }: TestimonialsProps) {
   const data = useMemo(
     () =>
-      filter ? allTestimonials.filter((t) => t.category === filter) : allTestimonials,
-    [filter]
+      filter ? testimonials.filter((t) => t.category === filter) : testimonials,
+    [filter, testimonials]
   );
 
   const itemsPerView = useItemsPerView();
