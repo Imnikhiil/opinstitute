@@ -197,7 +197,6 @@ export function resolveBrandChannels(config: typeof siteConfig) {
 export const navLinks: { href: string; label: string; highlight?: boolean }[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/op-kids", label: "OP Kids", highlight: true },
   { href: "/courses", label: "Courses" },
   { href: "/faculty", label: "Faculty" },
   { href: "/gallery", label: "Gallery" },
