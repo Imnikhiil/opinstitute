@@ -13,6 +13,7 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { getSiteConfig } from "@/lib/supabase/public-data";
 import { campuses } from "@/data/site";
 import { cn } from "@/lib/utils";
+import { BrandSocialLinks } from "@/components/ui/BrandSocialLinks";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -116,6 +117,28 @@ export default async function ContactPage() {
                     </div>
 
                     <div className="flex items-start gap-3">
+                      <Mail
+                        className={cn(
+                          "w-5 h-5 shrink-0 mt-0.5",
+                          campus.accent === "brand"
+                            ? "text-brand-600"
+                            : "text-kids-600"
+                        )}
+                      />
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-0.5">
+                          Email
+                        </p>
+                        <a
+                          href={`mailto:${campus.email}`}
+                          className="text-sm font-semibold text-foreground hover:underline break-all"
+                        >
+                          {campus.email}
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
                       <Clock
                         className={cn(
                           "w-5 h-5 shrink-0 mt-0.5",
@@ -132,7 +155,7 @@ export default async function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 pt-2">
+                    <div className="flex flex-wrap items-center gap-3 pt-1">
                       <a
                         href={campus.mapsUrl}
                         target="_blank"
@@ -154,6 +177,16 @@ export default async function ContactPage() {
                         <Phone className="w-3.5 h-3.5" />
                         Call
                       </a>
+                      <BrandSocialLinks
+                        social={campus.social}
+                        accent={campus.accent}
+                        size="sm"
+                        className={
+                          campus.accent === "brand"
+                            ? "[&_a]:bg-brand-50 [&_a]:text-brand-700 dark:[&_a]:bg-brand-950/40 dark:[&_a]:text-brand-300"
+                            : "[&_a]:bg-kids-50 [&_a]:text-kids-700 dark:[&_a]:bg-kids-950/30 dark:[&_a]:text-kids-300"
+                        }
+                      />
                     </div>
                   </div>
 

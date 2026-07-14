@@ -15,7 +15,9 @@ export const siteConfig = {
   phone2Raw: "919220825187",
   kidsPhone: "+91 92208 25187",
   email: "opinstituteofstudies@gmail.com",
+  kidsEmail: "opkidspreschool@gmail.com",
   whatsapp: "919213610182",
+  kidsWhatsapp: "919220825187",
   /** O.P. Institute — Google Business listing */
   address:
     "A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
@@ -33,13 +35,55 @@ export const siteConfig = {
     sunday: "Sunday: Closed",
     preschool: "OP Kids: Open · Closes 6:00 PM",
   },
+  /** Institute social (legacy shape — also in brandChannels) */
   social: {
-    facebook: "https://facebook.com/opinstitute",
-    instagram: "https://instagram.com/opinstitute",
-    youtube: "https://youtube.com/@opinstitute",
-    linkedin: "https://linkedin.com/company/opinstitute",
+    facebook: "https://www.facebook.com/opinstitute",
+    instagram: "https://www.instagram.com/op_institute",
+    youtube: "https://www.youtube.com/@o.p.instituteofstudies3990",
+  },
+  kidsSocial: {
+    facebook: "https://www.facebook.com/om.prakash.310948",
+    instagram: "https://www.instagram.com/opkidspreschool",
+    youtube: "https://www.youtube.com/@opkidspreschool",
   },
 };
+
+/**
+ * Clean dual-brand channels — Institute vs Kids.
+ * Used in Footer / Contact so each brand stays clear (no stacked messy icons).
+ */
+export const brandChannels = [
+  {
+    id: "institute" as const,
+    name: "O.P. Institute of Studies",
+    shortName: "OP Institute",
+    accent: "brand" as const,
+    phone: "+91 92136 10182",
+    phoneRaw: "919213610182",
+    email: "opinstituteofstudies@gmail.com",
+    whatsapp: "919213610182",
+    social: {
+      instagram: "https://www.instagram.com/op_institute",
+      facebook: "https://www.facebook.com/opinstitute",
+      youtube: "https://www.youtube.com/@o.p.instituteofstudies3990",
+    },
+  },
+  {
+    id: "kids" as const,
+    name: "OP Kids Pre School",
+    shortName: "OP Kids",
+    accent: "kids" as const,
+    phone: "+91 92208 25187",
+    phoneRaw: "919220825187",
+    email: "opkidspreschool@gmail.com",
+    whatsapp: "919220825187",
+    social: {
+      instagram: "https://www.instagram.com/opkidspreschool",
+      facebook: "https://www.facebook.com/om.prakash.310948",
+      youtube: "https://www.youtube.com/@opkidspreschool",
+    },
+  },
+];
 
 /** Real Google Business locations shown on Contact & campus sections */
 export const campuses = [
@@ -52,6 +96,7 @@ export const campuses = [
       "A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
     phone: "+91 92136 10182",
     phoneRaw: "919213610182",
+    email: "opinstituteofstudies@gmail.com",
     hours: "Open · Closes 9:00 PM",
     ratingNote: "4.7★ on Google",
     mapEmbed:
@@ -59,6 +104,7 @@ export const campuses = [
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=O.P.+Institute+of+studies+Mahavir+Enclave+Part+2+New+Delhi",
     accent: "brand" as const,
+    social: brandChannels[0].social,
   },
   {
     id: "kids",
@@ -69,6 +115,7 @@ export const campuses = [
       "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
     phone: "+91 92208 25187",
     phoneRaw: "919220825187",
+    email: "opkidspreschool@gmail.com",
     hours: "Open · Closes 6:00 PM",
     ratingNote: "5.0★ on Google",
     mapEmbed:
@@ -76,6 +123,7 @@ export const campuses = [
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=OP+KIDS+PRE+SCHOOL+Mahavir+Enclave+Part+2+New+Delhi",
     accent: "kids" as const,
+    social: brandChannels[1].social,
   },
 ];
 

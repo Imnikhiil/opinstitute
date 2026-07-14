@@ -134,7 +134,12 @@ export async function getSiteConfig(): Promise<SiteConfig> {
       phone2Raw: str(row.phone2, staticSiteConfig.phone2).replace(/[^0-9]/g, ""),
       kidsPhone: str(row.kids_phone, staticSiteConfig.kidsPhone),
       email: str(row.email, staticSiteConfig.email),
+      kidsEmail: str(row.kids_email, staticSiteConfig.kidsEmail),
       whatsapp: str(row.whatsapp, staticSiteConfig.whatsapp),
+      kidsWhatsapp: str(
+        row.kids_whatsapp,
+        staticSiteConfig.kidsWhatsapp
+      ).replace(/[^0-9]/g, "") || staticSiteConfig.kidsWhatsapp,
       address: str(row.address, staticSiteConfig.address),
       branchAddress: str(row.branch_address, staticSiteConfig.branchAddress),
       kidsAddress: str(row.kids_address, staticSiteConfig.kidsAddress),
@@ -147,7 +152,14 @@ export async function getSiteConfig(): Promise<SiteConfig> {
         facebook: str(row.facebook, staticSiteConfig.social.facebook),
         instagram: str(row.instagram, staticSiteConfig.social.instagram),
         youtube: str(row.youtube, staticSiteConfig.social.youtube),
-        linkedin: str(row.linkedin, staticSiteConfig.social.linkedin),
+      },
+      kidsSocial: {
+        facebook: str(row.kids_facebook, staticSiteConfig.kidsSocial.facebook),
+        instagram: str(
+          row.kids_instagram,
+          staticSiteConfig.kidsSocial.instagram
+        ),
+        youtube: str(row.kids_youtube, staticSiteConfig.kidsSocial.youtube),
       },
     };
   } catch {

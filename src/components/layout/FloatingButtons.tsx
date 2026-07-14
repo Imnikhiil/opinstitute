@@ -1,13 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Phone, MessageCircle } from "lucide-react";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function FloatingButtons() {
   const siteConfig = useSiteConfig();
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
+  const isKids = pathname.startsWith("/op-kids");
+  const phone = isKids ? siteConfig.kidsPhone : siteConfig.phone;
+  const wa = isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp;
+  const waText = isKids
+    ? "Hi, I would like to enquire about OP Kids Pre School."
+    : "Hi, I would like to enquire about admissions at OP Institute.";
 
   useEffect(() => {
     const handleScroll = () => setShow(window.scrollY > 500);
@@ -27,7 +35,7 @@ export function FloatingButtons() {
           className="hidden lg:flex fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 flex-col gap-3"
         >
           <motion.a
-            href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I would like to enquire about admissions at OP Institute.`}
+            href={`https://wa.me/${wa}?text=${encodeURIComponent(waText)}`}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1 }}
@@ -40,10 +48,14 @@ export function FloatingButtons() {
           </motion.a>
 
           <motion.a
-            href={`tel:${siteConfig.phone}`}
+            href={`tel:${phone}`}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-lg shadow-brand-600/40"
+            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-lg ${
+              isKids
+                ? "bg-kids-500 shadow-kids-500/40"
+                : "bg-brand-600 shadow-brand-600/40"
+            }`}
             aria-label="Call us"
           >
             <Phone className="w-5 h-5 sm:w-6 sm:h-6" />

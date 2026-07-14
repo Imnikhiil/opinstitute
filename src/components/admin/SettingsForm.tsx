@@ -6,62 +6,101 @@ import { createClient } from "@/lib/supabase/client";
 
 type Settings = Record<string, string | null>;
 
-const groups: { title: string; fields: { name: string; label: string; placeholder?: string }[] }[] = [
+const groups: {
+  title: string;
+  fields: { name: string; label: string; placeholder?: string }[];
+}[] = [
   {
-    title: "Contact Numbers",
+    title: "O.P. Institute — Contact",
     fields: [
-      { name: "phone", label: "Main Phone", placeholder: "+91 92136 10182" },
-      { name: "phone2", label: "Second Phone", placeholder: "+91 92208 25187" },
-      { name: "kids_phone", label: "OP Kids Phone", placeholder: "+91 92208 25187" },
+      { name: "phone", label: "Phone", placeholder: "+91 92136 10182" },
       { name: "whatsapp", label: "WhatsApp (numbers only)", placeholder: "919213610182" },
       { name: "email", label: "Email", placeholder: "opinstituteofstudies@gmail.com" },
-    ],
-  },
-  {
-    title: "Addresses",
-    fields: [
       {
         name: "address",
-        label: "O.P. Institute Address",
+        label: "Address",
         placeholder:
           "A-374, Street No. 11, Mahavir Enclave Part 2, New Delhi 110059",
       },
+    ],
+  },
+  {
+    title: "O.P. Institute — Social",
+    fields: [
       {
-        name: "kids_address",
-        label: "OP Kids Address",
-        placeholder:
-          "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, New Delhi 110059",
+        name: "instagram",
+        label: "Instagram",
+        placeholder: "https://www.instagram.com/op_institute",
       },
       {
-        name: "branch_address",
-        label: "Other Branch (optional)",
-        placeholder: "Leave blank if not applicable",
+        name: "facebook",
+        label: "Facebook",
+        placeholder: "https://www.facebook.com/opinstitute",
+      },
+      {
+        name: "youtube",
+        label: "YouTube",
+        placeholder: "https://www.youtube.com/@o.p.instituteofstudies3990",
       },
     ],
   },
   {
-    title: "Timings",
+    title: "OP Kids — Contact",
+    fields: [
+      { name: "kids_phone", label: "Phone", placeholder: "+91 92208 25187" },
+      { name: "phone2", label: "Alt phone (optional)", placeholder: "+91 92208 25187" },
+      {
+        name: "kids_email",
+        label: "Email",
+        placeholder: "opkidspreschool@gmail.com",
+      },
+      {
+        name: "kids_address",
+        label: "Address",
+        placeholder:
+          "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, New Delhi 110059",
+      },
+    ],
+  },
+  {
+    title: "OP Kids — Social",
+    fields: [
+      {
+        name: "kids_instagram",
+        label: "Instagram",
+        placeholder: "https://www.instagram.com/opkidspreschool",
+      },
+      {
+        name: "kids_facebook",
+        label: "Facebook",
+        placeholder: "https://www.facebook.com/om.prakash.310948",
+      },
+      {
+        name: "kids_youtube",
+        label: "YouTube",
+        placeholder: "https://www.youtube.com/@opkidspreschool",
+      },
+    ],
+  },
+  {
+    title: "Timings & extras",
     fields: [
       {
         name: "weekday_hours",
-        label: "OP Institute",
+        label: "OP Institute hours",
         placeholder: "Monday – Saturday: Open · Closes 9:00 PM",
       },
       { name: "sunday_hours", label: "Sunday", placeholder: "Sunday: Closed" },
       {
         name: "preschool_hours",
-        label: "OP Kids",
+        label: "OP Kids hours",
         placeholder: "OP Kids: Open · Closes 6:00 PM",
       },
-    ],
-  },
-  {
-    title: "Social Media Links",
-    fields: [
-      { name: "facebook", label: "Facebook URL" },
-      { name: "instagram", label: "Instagram URL" },
-      { name: "youtube", label: "YouTube URL" },
-      { name: "linkedin", label: "LinkedIn URL" },
+      {
+        name: "branch_address",
+        label: "Other branch (optional)",
+        placeholder: "Leave blank if not applicable",
+      },
     ],
   },
 ];
@@ -103,8 +142,10 @@ export function SettingsForm({ initial }: { initial: Settings }) {
           </h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {g.fields.map((f) => (
-              <div key={f.name}>
-                <label className="block text-sm font-medium mb-1.5">{f.label}</label>
+              <div key={f.name} className="sm:col-span-2 md:col-span-1">
+                <label className="block text-sm font-medium mb-1.5">
+                  {f.label}
+                </label>
                 <input
                   type="text"
                   value={form[f.name] ?? ""}
@@ -124,7 +165,11 @@ export function SettingsForm({ initial }: { initial: Settings }) {
           disabled={saving}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition disabled:opacity-60 shadow-lg"
         >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+          {saving ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Save className="w-4 h-4" />
+          )}
           {saving ? "Saving…" : "Save Changes"}
         </button>
         {saved && (

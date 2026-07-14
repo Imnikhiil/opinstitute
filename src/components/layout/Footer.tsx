@@ -2,26 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Phone,
-  Mail,
-  MapPin,
-} from "lucide-react";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-  LinkedinIcon,
-} from "@/components/ui/SocialIcons";
-import { navLinks, campuses } from "@/data/site";
+import { Phone, Mail, MapPin } from "lucide-react";
+import { BrandSocialLinks } from "@/components/ui/BrandSocialLinks";
+import { navLinks, campuses, brandChannels } from "@/data/site";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
-
-const socialIcons = {
-  facebook: FacebookIcon,
-  instagram: InstagramIcon,
-  youtube: YoutubeIcon,
-  linkedin: LinkedinIcon,
-};
 
 export function Footer() {
   const siteConfig = useSiteConfig();
@@ -61,23 +45,6 @@ export function Footer() {
               education since 2003 — from joyful preschool at OP Kids to CMA,
               B.Com and school tuition success.
             </p>
-            <div className="flex gap-3">
-              {Object.entries(siteConfig.social).map(([key, url]) => {
-                const Icon = socialIcons[key as keyof typeof socialIcons];
-                return (
-                  <a
-                    key={key}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-brand-600 flex items-center justify-center transition-colors"
-                    aria-label={key}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </a>
-                );
-              })}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -106,22 +73,34 @@ export function Footer() {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/op-kids" className="hover:text-kids-400 transition-colors">
+                <Link
+                  href="/op-kids"
+                  className="hover:text-kids-400 transition-colors"
+                >
                   OP Kids Pre School
                 </Link>
               </li>
               <li>
-                <Link href="/courses" className="hover:text-brand-400 transition-colors">
+                <Link
+                  href="/courses"
+                  className="hover:text-brand-400 transition-colors"
+                >
                   CMA Coaching
                 </Link>
               </li>
               <li>
-                <Link href="/courses" className="hover:text-brand-400 transition-colors">
+                <Link
+                  href="/courses"
+                  className="hover:text-brand-400 transition-colors"
+                >
                   B.Com (Pass / Honours)
                 </Link>
               </li>
               <li>
-                <Link href="/courses" className="hover:text-brand-400 transition-colors">
+                <Link
+                  href="/courses"
+                  className="hover:text-brand-400 transition-colors"
+                >
                   School Tuition (I–XII)
                 </Link>
               </li>
@@ -138,7 +117,9 @@ export function Footer() {
                 <li key={campus.id} className="flex items-start gap-3">
                   <MapPin
                     className={`w-4 h-4 mt-0.5 shrink-0 ${
-                      campus.accent === "kids" ? "text-kids-400" : "text-brand-400"
+                      campus.accent === "kids"
+                        ? "text-kids-400"
+                        : "text-brand-400"
                     }`}
                   />
                   <span>
@@ -149,42 +130,72 @@ export function Footer() {
                   </span>
                 </li>
               ))}
-              {campuses.map((campus) => (
-                <li key={`${campus.id}-phone`}>
-                  <a
-                    href={`tel:${campus.phone}`}
-                    className="flex items-center gap-3 hover:text-brand-400 transition-colors"
-                  >
-                    <Phone
-                      className={`w-4 h-4 ${
-                        campus.accent === "kids" ? "text-kids-400" : "text-brand-400"
-                      }`}
-                    />
-                    {campus.shortName}: {campus.phone}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="flex items-center gap-3 hover:text-brand-400 transition-colors"
-                >
-                  <Mail className="w-4 h-4 text-brand-400" />
-                  {siteConfig.email}
-                </a>
-              </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+        {/* Dual brand channels — clear, not messy */}
+        <div className="mt-12 pt-8 border-t border-gray-800 grid sm:grid-cols-2 gap-6">
+          {brandChannels.map((brand) => (
+            <div
+              key={brand.id}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+            >
+              <p
+                className={`text-xs font-semibold uppercase tracking-[0.14em] mb-1 ${
+                  brand.accent === "kids" ? "text-kids-400" : "text-brand-400"
+                }`}
+              >
+                {brand.shortName}
+              </p>
+              <p className="font-display font-semibold text-white text-sm mb-4">
+                {brand.name}
+              </p>
+
+              <div className="space-y-2.5 text-sm mb-4">
+                <a
+                  href={`tel:${brand.phone}`}
+                  className="flex items-center gap-2.5 hover:text-white transition-colors"
+                >
+                  <Phone
+                    className={`w-3.5 h-3.5 shrink-0 ${
+                      brand.accent === "kids"
+                        ? "text-kids-400"
+                        : "text-brand-400"
+                    }`}
+                  />
+                  {brand.phone}
+                </a>
+                <a
+                  href={`mailto:${brand.email}`}
+                  className="flex items-center gap-2.5 hover:text-white transition-colors break-all"
+                >
+                  <Mail
+                    className={`w-3.5 h-3.5 shrink-0 ${
+                      brand.accent === "kids"
+                        ? "text-kids-400"
+                        : "text-brand-400"
+                    }`}
+                  />
+                  {brand.email}
+                </a>
+              </div>
+
+              <BrandSocialLinks
+                social={brand.social}
+                accent={brand.accent}
+                size="sm"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
             reserved.
           </p>
-          <p>
-            Crafted with excellence for education
-          </p>
+          <p>Crafted with excellence for education</p>
         </div>
       </div>
     </footer>

@@ -88,7 +88,9 @@ create table if not exists public.site_settings (
   phone2        text,
   kids_phone    text,
   email         text,
+  kids_email    text,
   whatsapp      text,
+  kids_whatsapp text,
   address       text,
   branch_address text,
   kids_address  text,
@@ -96,12 +98,22 @@ create table if not exists public.site_settings (
   instagram     text,
   youtube       text,
   linkedin      text,
+  kids_facebook text,
+  kids_instagram text,
+  kids_youtube  text,
   weekday_hours text,
   sunday_hours  text,
   preschool_hours text,
   updated_at    timestamptz not null default now(),
   constraint single_row check (id = 1)
 );
+
+-- Safe upgrades if site_settings already exists
+alter table public.site_settings add column if not exists kids_email text;
+alter table public.site_settings add column if not exists kids_whatsapp text;
+alter table public.site_settings add column if not exists kids_facebook text;
+alter table public.site_settings add column if not exists kids_instagram text;
+alter table public.site_settings add column if not exists kids_youtube text;
 
 insert into public.site_settings (id) values (1) on conflict (id) do nothing;
 
