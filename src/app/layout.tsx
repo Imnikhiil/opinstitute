@@ -3,13 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SiteConfigProvider } from "@/components/providers/SiteConfigProvider";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingButtons } from "@/components/layout/FloatingButtons";
-import { BackToTop } from "@/components/layout/BackToTop";
-import { MobileActionBar } from "@/components/layout/MobileActionBar";
-import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { PageTransition } from "@/components/ui/PageTransition";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { siteConfig } from "@/data/site";
 import { getSiteConfig } from "@/lib/supabase/public-data";
 
@@ -95,15 +89,7 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
         <ThemeProvider>
           <SiteConfigProvider config={config}>
-            <ScrollProgress />
-            <Navbar />
-            <main className="min-h-screen pb-[4.75rem] lg:pb-0">
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
-            <FloatingButtons />
-            <MobileActionBar />
-            <BackToTop />
+            <SiteChrome>{children}</SiteChrome>
           </SiteConfigProvider>
         </ThemeProvider>
       </body>
