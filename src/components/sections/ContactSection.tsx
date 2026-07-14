@@ -5,10 +5,14 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { BrandSocialLinks } from "@/components/ui/BrandSocialLinks";
-import { campuses } from "@/data/site";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { resolveCampuses } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 export function ContactSection() {
+  const siteConfig = useSiteConfig();
+  const campuses = resolveCampuses(siteConfig);
+
   return (
     <section id="contact" className="section-padding">
       <div className="container-custom">
@@ -16,7 +20,7 @@ export function ContactSection() {
           <SectionHeader
             badge="Contact"
             title="Get in Touch"
-            subtitle="Visit our Mahavir Enclave campuses or send an enquiry online."
+            subtitle="Both listings are at Mahavir Enclave Part 2 — pick Institute or OP Kids."
           />
         </ScrollReveal>
 

@@ -61,7 +61,9 @@ export function AdmissionForm({ className }: { className?: string }) {
       }
 
       openWhatsApp(
-        siteConfig.whatsapp,
+        data.program.startsWith("OP Kids")
+          ? siteConfig.kidsWhatsapp
+          : siteConfig.whatsapp,
         formatAdmissionWhatsAppMessage(data)
       );
 

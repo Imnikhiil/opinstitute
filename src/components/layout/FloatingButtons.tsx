@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -44,7 +45,7 @@ export function FloatingButtons() {
             aria-label="Chat on WhatsApp"
           >
             <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20" />
-            <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 relative" />
+            <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7 relative" />
           </motion.a>
 
           <motion.a

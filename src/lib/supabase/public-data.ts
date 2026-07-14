@@ -9,7 +9,9 @@ import { siteConfig as staticSiteConfig } from "@/data/site";
 type Row = Record<string, unknown>;
 
 function str(v: unknown, fallback = ""): string {
-  return typeof v === "string" ? v : fallback;
+  if (typeof v !== "string") return fallback;
+  const trimmed = v.trim();
+  return trimmed.length > 0 ? trimmed : fallback;
 }
 
 function mapCourse(row: Row): Course {
@@ -27,13 +29,16 @@ function mapCourse(row: Row): Course {
 
 function mapFaculty(row: Row): FacultyMember {
   const linkedin = str(row.linkedin);
+  const image = str(row.image_url);
   return {
     id: str(row.id),
     name: str(row.name),
     qualification: str(row.qualification),
     experience: str(row.experience),
     subject: str(row.subject),
-    image: str(row.image_url),
+    image:
+      image ||
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
     social: linkedin ? { linkedin } : undefined,
   };
 }
@@ -52,21 +57,27 @@ function mapTestimonial(row: Row): Testimonial {
 }
 
 function mapEvent(row: Row): Event {
+  const image = str(row.image_url);
   return {
     id: str(row.id),
     title: str(row.title),
     date: str(row.event_date),
     description: str(row.description),
-    image: str(row.image_url),
+    image:
+      image ||
+      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
     type: (row.type as Event["type"]) || "academic",
   };
 }
 
 function mapGallery(row: Row): GalleryImage {
+  const src = str(row.image_url);
   return {
     id: str(row.id),
-    src: str(row.image_url),
-    alt: str(row.alt),
+    src:
+      src ||
+      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
+    alt: str(row.alt, "OP Institute gallery"),
     category: (row.category as GalleryImage["category"]) || "campus",
   };
 }

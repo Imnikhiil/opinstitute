@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, MessageCircle, GraduationCap } from "lucide-react";
+import { Phone, GraduationCap } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 export function MobileActionBar() {
@@ -36,7 +37,7 @@ export function MobileActionBar() {
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center gap-1 py-3 text-[#25D366] active:bg-green-50 transition"
         >
-          <MessageCircle className="w-5 h-5" />
+          <WhatsAppIcon className="w-5 h-5" />
           <span className="text-[10px] font-semibold uppercase tracking-wide">
             WhatsApp
           </span>

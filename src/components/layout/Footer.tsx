@@ -3,13 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin } from "lucide-react";
-import { BrandSocialLinks } from "@/components/ui/BrandSocialLinks";
-import { navLinks, campuses, brandChannels } from "@/data/site";
+import { navLinks, resolveCampuses, resolveBrandChannels } from "@/data/site";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { BrandSocialLinks } from "@/components/ui/BrandSocialLinks";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 
 export function Footer() {
   const siteConfig = useSiteConfig();
-
+  const campuses = resolveCampuses(siteConfig);
+  const channels = resolveBrandChannels(siteConfig);
   return (
     <footer className="bg-gray-950 text-gray-300">
       <div className="container-custom section-padding pb-8">
@@ -136,7 +138,7 @@ export function Footer() {
 
         {/* Dual brand channels — clear, not messy */}
         <div className="mt-12 pt-8 border-t border-gray-800 grid sm:grid-cols-2 gap-6">
-          {brandChannels.map((brand) => (
+          {channels.map((brand) => (
             <div
               key={brand.id}
               className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
@@ -178,6 +180,19 @@ export function Footer() {
                     }`}
                   />
                   {brand.email}
+                </a>
+                <a
+                  href={`https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
+                    brand.id === "kids"
+                      ? "Hi, I would like to enquire about OP Kids Pre School."
+                      : "Hi, I would like to enquire about admissions at OP Institute."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 hover:text-white transition-colors"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5 shrink-0 text-[#25D366]" />
+                  WhatsApp
                 </a>
               </div>
 

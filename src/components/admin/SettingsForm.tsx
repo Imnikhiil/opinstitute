@@ -48,6 +48,11 @@ const groups: {
     title: "OP Kids — Contact",
     fields: [
       { name: "kids_phone", label: "Phone", placeholder: "+91 92208 25187" },
+      {
+        name: "kids_whatsapp",
+        label: "WhatsApp (numbers only)",
+        placeholder: "919220825187",
+      },
       { name: "phone2", label: "Alt phone (optional)", placeholder: "+91 92208 25187" },
       {
         name: "kids_email",

@@ -39,7 +39,13 @@ export function BrandSocialLinks({
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={key}
+            aria-label={
+              key === "instagram"
+                ? "Instagram"
+                : key === "facebook"
+                  ? "Facebook"
+                  : "YouTube"
+            }
             className={cn(
               "rounded-lg flex items-center justify-center transition-colors",
               dim,

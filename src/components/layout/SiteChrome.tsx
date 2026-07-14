@@ -21,10 +21,12 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <ScrollProgress />
       <Navbar />
-      <main className="min-h-screen pb-[4.75rem] lg:pb-0">
-        <PageTransition>{children}</PageTransition>
-      </main>
-      <Footer />
+      <div className="pb-[4.75rem] lg:pb-0">
+        <main className="min-h-screen">
+          <PageTransition>{children}</PageTransition>
+        </main>
+        <Footer />
+      </div>
       <FloatingButtons />
       <MobileActionBar />
       <BackToTop />

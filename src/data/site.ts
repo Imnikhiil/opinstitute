@@ -128,9 +128,76 @@ export const campuses = [
 ];
 
 
+/** Merge live Admin / siteConfig values into campus cards */
+export function resolveCampuses(config: typeof siteConfig) {
+  return campuses.map((campus) => {
+    if (campus.id === "institute") {
+      return {
+        ...campus,
+        address: config.address || campus.address,
+        phone: config.phone || campus.phone,
+        phoneRaw: config.phoneRaw || campus.phoneRaw,
+        email: config.email || campus.email,
+        hours: config.workingHours.weekdays || campus.hours,
+        social: {
+          instagram: config.social.instagram || campus.social.instagram,
+          facebook: config.social.facebook || campus.social.facebook,
+          youtube: config.social.youtube || campus.social.youtube,
+        },
+      };
+    }
+    return {
+      ...campus,
+      address: config.kidsAddress || campus.address,
+      phone: config.kidsPhone || campus.phone,
+      phoneRaw: config.kidsPhone?.replace(/[^0-9]/g, "") || campus.phoneRaw,
+      email: config.kidsEmail || campus.email,
+      hours: config.workingHours.preschool || campus.hours,
+      social: {
+        instagram: config.kidsSocial.instagram || campus.social.instagram,
+        facebook: config.kidsSocial.facebook || campus.social.facebook,
+        youtube: config.kidsSocial.youtube || campus.social.youtube,
+      },
+    };
+  });
+}
+
+/** Merge live Admin / siteConfig into footer brand channel cards */
+export function resolveBrandChannels(config: typeof siteConfig) {
+  return brandChannels.map((brand) => {
+    if (brand.id === "institute") {
+      return {
+        ...brand,
+        phone: config.phone || brand.phone,
+        phoneRaw: config.phoneRaw || brand.phoneRaw,
+        email: config.email || brand.email,
+        whatsapp: config.whatsapp || brand.whatsapp,
+        social: {
+          instagram: config.social.instagram || brand.social.instagram,
+          facebook: config.social.facebook || brand.social.facebook,
+          youtube: config.social.youtube || brand.social.youtube,
+        },
+      };
+    }
+    return {
+      ...brand,
+      phone: config.kidsPhone || brand.phone,
+      phoneRaw: config.kidsPhone?.replace(/[^0-9]/g, "") || brand.phoneRaw,
+      email: config.kidsEmail || brand.email,
+      whatsapp: config.kidsWhatsapp || brand.whatsapp,
+      social: {
+        instagram: config.kidsSocial.instagram || brand.social.instagram,
+        facebook: config.kidsSocial.facebook || brand.social.facebook,
+        youtube: config.kidsSocial.youtube || brand.social.youtube,
+      },
+    };
+  });
+}
+
 export const navLinks: { href: string; label: string; highlight?: boolean }[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/op-kids", label: "OP Kids", highlight: true },
   { href: "/courses", label: "Courses" },
   { href: "/faculty", label: "Faculty" },
   { href: "/gallery", label: "Gallery" },

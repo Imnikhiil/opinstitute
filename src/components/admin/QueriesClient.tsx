@@ -12,6 +12,7 @@ import {
   User,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { cn } from "@/lib/utils";
 
 export interface Query {
@@ -271,7 +272,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#25D366]/10 text-[#128C4A] hover:bg-[#25D366]/20 transition"
                   >
-                    <MessageSquare className="w-3.5 h-3.5" />
+                    <WhatsAppIcon className="w-3.5 h-3.5" />
                     WhatsApp
                   </a>
                   <a

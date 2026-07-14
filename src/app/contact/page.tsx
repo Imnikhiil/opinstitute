@@ -4,16 +4,16 @@ import {
   Mail,
   MapPin,
   Clock,
-  MessageCircle,
   ExternalLink,
   Star,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSiteConfig } from "@/lib/supabase/public-data";
-import { campuses } from "@/data/site";
+import { resolveCampuses } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { BrandSocialLinks } from "@/components/ui/BrandSocialLinks";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -25,7 +25,7 @@ export const revalidate = 60;
 
 export default async function ContactPage() {
   const siteConfig = await getSiteConfig();
-
+  const campuses = resolveCampuses(siteConfig);
   return (
     <>
       <section className="page-hero">
@@ -34,8 +34,8 @@ export default async function ContactPage() {
             Contact Us
           </h1>
           <p className="text-[#666666] text-lg max-w-2xl">
-            Two campuses in Mahavir Enclave Part 2 — reach OP Institute or OP
-            Kids with the details below.
+            Two Google listings at Mahavir Enclave Part 2 — OP Institute and OP
+            Kids, each with its own phone, email, and social links.
           </p>
         </div>
       </section>
@@ -218,7 +218,7 @@ export default async function ContactPage() {
                     href: `mailto:${siteConfig.email}`,
                   },
                   {
-                    icon: MessageCircle,
+                    icon: WhatsAppIcon,
                     label: "WhatsApp",
                     value: "Chat with admissions team",
                     href: `https://wa.me/${siteConfig.whatsapp}`,
@@ -234,7 +234,13 @@ export default async function ContactPage() {
                     className="glass-card p-5 flex items-start gap-4"
                   >
                     <div className="w-10 h-10 rounded-xl bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center shrink-0">
-                      <item.icon className="w-5 h-5 text-brand-600" />
+                      <item.icon
+                        className={
+                          item.label === "WhatsApp"
+                            ? "w-5 h-5 text-[#25D366]"
+                            : "w-5 h-5 text-brand-600"
+                        }
+                      />
                     </div>
                     <div>
                       <p className="font-medium text-sm">{item.label}</p>

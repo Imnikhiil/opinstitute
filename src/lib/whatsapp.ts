@@ -4,10 +4,12 @@ export function buildWhatsAppUrl(phone: string, text: string): string {
   return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
 }
 
-/** Open WhatsApp chat; falls back to same-tab if popup is blocked. */
+      /** Open WhatsApp URL; no-op if phone is empty. Falls back to same-tab if popup is blocked. */
 export function openWhatsApp(phone: string, text: string): void {
   if (typeof window === "undefined") return;
-  const url = buildWhatsAppUrl(phone, text);
+  const digits = phone.replace(/\D/g, "");
+  if (!digits) return;
+  const url = buildWhatsAppUrl(digits, text);
   const win = window.open(url, "_blank", "noopener,noreferrer");
   if (!win) {
     window.location.href = url;

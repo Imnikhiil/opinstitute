@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, MessageCircle, ArrowRight, CalendarCheck } from "lucide-react";
+import { Phone, ArrowRight, CalendarCheck } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
@@ -54,7 +55,7 @@ export function CTABand() {
                   rel="noopener noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-4 rounded-full bg-[#25D366] text-white font-semibold shadow-lg hover:brightness-105 active:scale-95 transition"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <WhatsAppIcon className="w-5 h-5" />
                   WhatsApp
                 </a>
                 <a
