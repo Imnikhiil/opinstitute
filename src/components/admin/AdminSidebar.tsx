@@ -45,9 +45,10 @@ export function AdminSidebar({ email }: { email?: string }) {
           <Link
             key={item.href}
             href={item.href}
+            prefetch
             onClick={() => setOpen(false)}
             className={cn(
-              "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
+              "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-100",
               mobile
                 ? active
                   ? "bg-brand-600 text-white shadow-sm"
@@ -57,12 +58,7 @@ export function AdminSidebar({ email }: { email?: string }) {
                   : "text-white/65 hover:bg-white/10 hover:text-white"
             )}
           >
-            <item.icon
-              className={cn(
-                "w-[18px] h-[18px] shrink-0 transition-transform duration-200",
-                active && "scale-105"
-              )}
-            />
+            <item.icon className="w-[18px] h-[18px] shrink-0" />
             {item.label}
           </Link>
         );

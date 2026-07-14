@@ -14,7 +14,23 @@ import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
-async function getCounts() {
+function adminDisplayName(
+  email?: string | null,
+  meta?: Record<string, unknown> | null
+) {
+  const fromMeta =
+    (typeof meta?.full_name === "string" && meta.full_name) ||
+    (typeof meta?.name === "string" && meta.name) ||
+    (typeof meta?.display_name === "string" && meta.display_name);
+  if (fromMeta && fromMeta.trim()) return fromMeta.trim();
+
+  const local = email?.split("@")[0] ?? "Admin";
+  return local
+    .replace(/[._-]+/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+async function getDashboardData() {
   const supabase = await createClient();
   const tables = [
     "queries",
@@ -25,41 +41,41 @@ async function getCounts() {
     "gallery",
   ] as const;
 
+  const [{ data: userData }, ...tableResults] = await Promise.all([
+    supabase.auth.getUser(),
+    ...tables.map((t) =>
+      supabase.from(t).select("*", { count: "exact", head: true })
+    ),
+    supabase
+      .from("queries")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "new"),
+  ]);
+
   const counts: Record<string, number> = {};
-  await Promise.all(
-    tables.map(async (t) => {
-      const { count } = await supabase
-        .from(t)
-        .select("*", { count: "exact", head: true });
-      counts[t] = count ?? 0;
-    })
+  tables.forEach((t, i) => {
+    counts[t] = tableResults[i].count ?? 0;
+  });
+  counts.newQueries = tableResults[tables.length].count ?? 0;
+
+  const user = userData.user;
+  const adminName = adminDisplayName(
+    user?.email,
+    user?.user_metadata as Record<string, unknown> | null
   );
 
-  const { count: newQueries } = await supabase
-    .from("queries")
-    .select("*", { count: "exact", head: true })
-    .eq("status", "new");
-  counts.newQueries = newQueries ?? 0;
-
-  return counts;
-}
-
-function greeting() {
-  const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 17) return "Good afternoon";
-  return "Good evening";
+  return { counts, adminName };
 }
 
 export default async function AdminDashboard() {
-  let counts: Record<string, number> | null = null;
+  let data: Awaited<ReturnType<typeof getDashboardData>> | null = null;
   try {
-    counts = await getCounts();
+    data = await getDashboardData();
   } catch {
-    counts = null;
+    data = null;
   }
 
-  if (!counts) {
+  if (!data) {
     return (
       <div className="max-w-2xl">
         <div className="rounded-2xl border border-amber-300/80 bg-amber-50 dark:bg-amber-950/20 p-6 shadow-sm">
@@ -77,6 +93,8 @@ export default async function AdminDashboard() {
     );
   }
 
+  const { counts, adminName } = data;
+
   const cards = [
     {
       label: "New Queries",
@@ -85,7 +103,8 @@ export default async function AdminDashboard() {
       href: "/admin/queries",
       icon: Inbox,
       accent: "from-brand-500 to-brand-700",
-      iconBg: "bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400",
+      iconBg:
+        "bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400",
       highlight: counts.newQueries > 0,
     },
     {
@@ -118,7 +137,8 @@ export default async function AdminDashboard() {
       href: "/admin/events",
       icon: CalendarDays,
       accent: "from-amber-500 to-amber-700",
-      iconBg: "bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
+      iconBg:
+        "bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
     },
     {
       label: "Gallery",
@@ -126,7 +146,8 @@ export default async function AdminDashboard() {
       href: "/admin/gallery",
       icon: Images,
       accent: "from-emerald-500 to-emerald-700",
-      iconBg: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
+      iconBg:
+        "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
     },
   ];
 
@@ -144,7 +165,7 @@ export default async function AdminDashboard() {
           Overview
         </p>
         <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#1d2951] dark:text-white">
-          {greeting()}
+          {adminName}
         </h1>
         <p className="text-muted-foreground mt-1.5 text-sm sm:text-[15px]">
           {today} · Manage your website content and enquiries
@@ -154,7 +175,8 @@ export default async function AdminDashboard() {
       {counts.newQueries > 0 && (
         <Link
           href="/admin/queries"
-          className="group relative flex items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-600 via-brand-600 to-brand-700 text-white p-5 sm:p-6 mb-7 shadow-lg shadow-brand-600/25 hover:shadow-xl hover:shadow-brand-600/30 transition-all"
+          prefetch
+          className="group relative flex items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-600 via-brand-600 to-brand-700 text-white p-5 sm:p-6 mb-7 shadow-lg shadow-brand-600/25 hover:shadow-xl hover:shadow-brand-600/30 transition-shadow duration-150"
         >
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.18),transparent_55%)]" />
           <div className="relative flex items-center gap-4">
@@ -172,7 +194,7 @@ export default async function AdminDashboard() {
               </p>
             </div>
           </div>
-          <ArrowRight className="relative w-5 h-5 group-hover:translate-x-1 transition-transform shrink-0" />
+          <ArrowRight className="relative w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-150 shrink-0" />
         </Link>
       )}
 
@@ -181,10 +203,11 @@ export default async function AdminDashboard() {
           <Link
             key={c.label}
             href={c.href}
-            className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900/80 border border-gray-200/80 dark:border-white/10 p-5 hover:border-brand-200 dark:hover:border-brand-800 hover:shadow-lg hover:shadow-brand-900/5 hover:-translate-y-0.5 transition-all duration-200"
+            prefetch
+            className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900/80 border border-gray-200/80 dark:border-white/10 p-5 hover:border-brand-200 dark:hover:border-brand-800 hover:shadow-md transition-[border-color,box-shadow] duration-150"
           >
             <div
-              className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${c.accent} opacity-0 group-hover:opacity-100 transition-opacity`}
+              className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${c.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-150`}
             />
             <div
               className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${c.iconBg}`}
