@@ -8,6 +8,11 @@ import { Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import {
+  formatAdmissionWhatsAppMessage,
+  openWhatsApp,
+} from "@/lib/whatsapp";
 
 const programs = [
   "OP Kids - Play Group",
@@ -23,7 +28,9 @@ const programs = [
 ];
 
 export function AdmissionForm({ className }: { className?: string }) {
+  const siteConfig = useSiteConfig();
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -34,6 +41,7 @@ export function AdmissionForm({ className }: { className?: string }) {
   });
 
   const onSubmit = async (data: AdmissionFormData) => {
+    setSubmitError(null);
     try {
       const supabase = createClient();
       const { error } = await supabase.from("queries").insert({
@@ -46,13 +54,24 @@ export function AdmissionForm({ className }: { className?: string }) {
         age: data.age,
         message: data.message,
       });
-      if (error) console.error("Admission save failed:", error.message);
+      if (error) {
+        console.error("Admission save failed:", error.message);
+        setSubmitError("Could not save your enquiry. Please try again.");
+        return;
+      }
+
+      openWhatsApp(
+        siteConfig.whatsapp,
+        formatAdmissionWhatsAppMessage(data)
+      );
+
+      setSubmitted(true);
+      reset();
+      setTimeout(() => setSubmitted(false), 8000);
     } catch (err) {
       console.error("Admission save error:", err);
+      setSubmitError("Something went wrong. Please try again.");
     }
-    setSubmitted(true);
-    reset();
-    setTimeout(() => setSubmitted(false), 5000);
   };
 
   const inputClass =
@@ -64,7 +83,9 @@ export function AdmissionForm({ className }: { className?: string }) {
         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold mb-2">Enquiry Submitted!</h3>
         <p className="text-muted-foreground">
-          Our admissions team will contact you within 24 hours.
+          Your enquiry is saved in our system. WhatsApp is opening so you can
+          send the details to us directly. Our team will contact you within 24
+          hours.
         </p>
       </div>
     );
@@ -133,6 +154,9 @@ export function AdmissionForm({ className }: { className?: string }) {
           placeholder="Any specific questions or requirements?"
         />
       </div>
+      {submitError && (
+        <p className="text-red-500 text-sm">{submitError}</p>
+      )}
       <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
         {isSubmitting ? "Submitting..." : "Submit Enquiry"}
         <Send className="w-4 h-4" />

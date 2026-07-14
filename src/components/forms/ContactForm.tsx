@@ -8,6 +8,11 @@ import { Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import {
+  formatContactWhatsAppMessage,
+  openWhatsApp,
+} from "@/lib/whatsapp";
 
 interface ContactFormProps {
   className?: string;
@@ -15,7 +20,9 @@ interface ContactFormProps {
 }
 
 export function ContactForm({ className, variant = "default" }: ContactFormProps) {
+  const siteConfig = useSiteConfig();
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -26,6 +33,7 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
   });
 
   const onSubmit = async (data: ContactFormData) => {
+    setSubmitError(null);
     try {
       const supabase = createClient();
       const { error } = await supabase.from("queries").insert({
@@ -36,13 +44,24 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
         subject: data.subject,
         message: data.message,
       });
-      if (error) console.error("Query save failed:", error.message);
+      if (error) {
+        console.error("Query save failed:", error.message);
+        setSubmitError("Could not save your enquiry. Please try again.");
+        return;
+      }
+
+      openWhatsApp(
+        siteConfig.whatsapp,
+        formatContactWhatsAppMessage(data)
+      );
+
+      setSubmitted(true);
+      reset();
+      setTimeout(() => setSubmitted(false), 8000);
     } catch (err) {
       console.error("Query save error:", err);
+      setSubmitError("Something went wrong. Please try again.");
     }
-    setSubmitted(true);
-    reset();
-    setTimeout(() => setSubmitted(false), 5000);
   };
 
   const inputClass = cn(
@@ -63,7 +82,8 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
         <p className="text-muted-foreground">
-          Thank you for contacting us. We&apos;ll get back to you shortly.
+          Your enquiry is saved in our system. WhatsApp is opening so you can
+          send the details to us directly.
         </p>
       </div>
     );
@@ -128,6 +148,9 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
           <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
         )}
       </div>
+      {submitError && (
+        <p className="text-red-500 text-sm">{submitError}</p>
+      )}
       <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
         {isSubmitting ? "Sending..." : "Send Message"}
         <Send className="w-4 h-4" />
