@@ -12,7 +12,7 @@ const groups: { title: string; fields: { name: string; label: string; placeholde
     fields: [
       { name: "phone", label: "Main Phone", placeholder: "+91 92136 10182" },
       { name: "phone2", label: "Second Phone", placeholder: "+91 92208 25187" },
-      { name: "kids_phone", label: "OP Kids Phone", placeholder: "+91 92668 74287" },
+      { name: "kids_phone", label: "OP Kids Phone", placeholder: "+91 92208 25187" },
       { name: "whatsapp", label: "WhatsApp (numbers only)", placeholder: "919213610182" },
       { name: "email", label: "Email", placeholder: "opinstituteofstudies@gmail.com" },
     ],
@@ -20,17 +20,39 @@ const groups: { title: string; fields: { name: string; label: string; placeholde
   {
     title: "Addresses",
     fields: [
-      { name: "address", label: "Main Address" },
-      { name: "branch_address", label: "Branch Address" },
-      { name: "kids_address", label: "OP Kids Address" },
+      {
+        name: "address",
+        label: "O.P. Institute Address",
+        placeholder:
+          "A-374, Street No. 11, Mahavir Enclave Part 2, New Delhi 110059",
+      },
+      {
+        name: "kids_address",
+        label: "OP Kids Address",
+        placeholder:
+          "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, New Delhi 110059",
+      },
+      {
+        name: "branch_address",
+        label: "Other Branch (optional)",
+        placeholder: "Leave blank if not applicable",
+      },
     ],
   },
   {
     title: "Timings",
     fields: [
-      { name: "weekday_hours", label: "Weekdays", placeholder: "Monday – Saturday: 8:00 AM – 7:00 PM" },
+      {
+        name: "weekday_hours",
+        label: "OP Institute",
+        placeholder: "Monday – Saturday: Open · Closes 9:00 PM",
+      },
       { name: "sunday_hours", label: "Sunday", placeholder: "Sunday: Closed" },
-      { name: "preschool_hours", label: "OP Kids", placeholder: "OP Kids: 9:00 AM – 1:00 PM" },
+      {
+        name: "preschool_hours",
+        label: "OP Kids",
+        placeholder: "OP Kids: Open · Closes 6:00 PM",
+      },
     ],
   },
   {

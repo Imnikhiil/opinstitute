@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageCircle,
+  ExternalLink,
+  Star,
+} from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getSiteConfig } from "@/lib/supabase/public-data";
+import { campuses } from "@/data/site";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Contact OP Institute of Studies and OP Kids Pre School. Address, phone, email, WhatsApp, and contact form.",
+    "Visit O.P. Institute of Studies and OP Kids Pre School at Mahavir Enclave Part 2, New Delhi. Call, WhatsApp, or send an enquiry.",
 };
 
 export const revalidate = 60;
@@ -23,33 +33,151 @@ export default async function ContactPage() {
             Contact Us
           </h1>
           <p className="text-[#666666] text-lg max-w-2xl">
-            We&apos;re here to help. Reach out for admissions, enquiries, or schedule a campus visit.
+            Two campuses in Mahavir Enclave Part 2 — reach OP Institute or OP
+            Kids with the details below.
           </p>
         </div>
       </section>
 
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+          {/* Dual campus cards */}
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-12">
+            {campuses.map((campus, i) => (
+              <ScrollReveal key={campus.id} delay={i * 0.08}>
+                <article
+                  className={cn(
+                    "h-full rounded-3xl border bg-white dark:bg-gray-900 overflow-hidden shadow-sm",
+                    campus.accent === "brand"
+                      ? "border-brand-200/80 dark:border-brand-800"
+                      : "border-kids-200/80 dark:border-kids-800/40"
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "px-6 py-4 border-b",
+                      campus.accent === "brand"
+                        ? "bg-gradient-to-r from-brand-600 to-brand-700 text-white border-brand-700"
+                        : "bg-gradient-to-r from-kids-500 to-kids-600 text-white border-kids-600"
+                    )}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/75">
+                      {campus.category}
+                    </p>
+                    <h2 className="font-display text-xl font-bold mt-0.5">
+                      {campus.name}
+                    </h2>
+                    <p className="text-sm text-white/85 mt-1 flex items-center gap-1.5">
+                      <Star className="w-3.5 h-3.5 fill-current" />
+                      {campus.ratingNote}
+                    </p>
+                  </div>
+
+                  <div className="p-6 space-y-4">
+                    <div className="flex items-start gap-3">
+                      <MapPin
+                        className={cn(
+                          "w-5 h-5 shrink-0 mt-0.5",
+                          campus.accent === "brand"
+                            ? "text-brand-600"
+                            : "text-kids-600"
+                        )}
+                      />
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-0.5">
+                          Address
+                        </p>
+                        <p className="text-sm text-foreground leading-relaxed">
+                          {campus.address}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Phone
+                        className={cn(
+                          "w-5 h-5 shrink-0 mt-0.5",
+                          campus.accent === "brand"
+                            ? "text-brand-600"
+                            : "text-kids-600"
+                        )}
+                      />
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-0.5">
+                          Phone
+                        </p>
+                        <a
+                          href={`tel:${campus.phone}`}
+                          className="text-sm font-semibold text-foreground hover:underline"
+                        >
+                          {campus.phone}
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Clock
+                        className={cn(
+                          "w-5 h-5 shrink-0 mt-0.5",
+                          campus.accent === "brand"
+                            ? "text-brand-600"
+                            : "text-kids-600"
+                        )}
+                      />
+                      <div>
+                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-0.5">
+                          Hours
+                        </p>
+                        <p className="text-sm text-foreground">{campus.hours}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <a
+                        href={campus.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition",
+                          campus.accent === "brand"
+                            ? "bg-brand-50 text-brand-700 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-300"
+                            : "bg-kids-50 text-kids-700 hover:bg-kids-100 dark:bg-kids-950/30 dark:text-kids-300"
+                        )}
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        Directions
+                      </a>
+                      <a
+                        href={`tel:${campus.phone}`}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 transition"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        Call
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="h-[220px] border-t border-gray-100 dark:border-white/5">
+                    <iframe
+                      src={campus.mapEmbed}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title={`${campus.name} location map`}
+                    />
+                  </div>
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
             <ScrollReveal direction="left">
               <div className="space-y-4">
                 {[
-                  {
-                    icon: MapPin,
-                    label: "Address",
-                    value: siteConfig.address,
-                  },
-                  {
-                    icon: Phone,
-                    label: "Phone",
-                    value: `${siteConfig.phone}, ${siteConfig.phone2}`,
-                    href: `tel:${siteConfig.phone}`,
-                  },
-                  {
-                    icon: MapPin,
-                    label: "Branch",
-                    value: siteConfig.branchAddress,
-                  },
                   {
                     icon: Mail,
                     label: "Email",
@@ -59,16 +187,19 @@ export default async function ContactPage() {
                   {
                     icon: MessageCircle,
                     label: "WhatsApp",
-                    value: "Chat with us",
+                    value: "Chat with admissions team",
                     href: `https://wa.me/${siteConfig.whatsapp}`,
                   },
                   {
                     icon: Clock,
-                    label: "Working Hours",
-                    value: `${siteConfig.workingHours.weekdays} | ${siteConfig.workingHours.preschool}`,
+                    label: "Weekly schedule",
+                    value: `${siteConfig.workingHours.weekdays} · ${siteConfig.workingHours.preschool} · ${siteConfig.workingHours.sunday}`,
                   },
                 ].map((item) => (
-                  <div key={item.label} className="glass-card p-5 flex items-start gap-4">
+                  <div
+                    key={item.label}
+                    className="glass-card p-5 flex items-start gap-4"
+                  >
                     <div className="w-10 h-10 rounded-xl bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center shrink-0">
                       <item.icon className="w-5 h-5 text-brand-600" />
                     </div>
@@ -77,14 +208,18 @@ export default async function ContactPage() {
                       {item.href ? (
                         <a
                           href={item.href}
-                          target={item.label === "WhatsApp" ? "_blank" : undefined}
+                          target={
+                            item.label === "WhatsApp" ? "_blank" : undefined
+                          }
                           rel="noopener noreferrer"
                           className="text-muted-foreground text-sm hover:text-brand-600 transition-colors"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="text-muted-foreground text-sm">{item.value}</p>
+                        <p className="text-muted-foreground text-sm">
+                          {item.value}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -92,28 +227,15 @@ export default async function ContactPage() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="right" delay={0.2}>
+            <ScrollReveal direction="right" delay={0.15}>
               <div className="glass-card p-6 md:p-8 h-full">
-                <h2 className="font-display text-2xl font-bold mb-6">Send a Message</h2>
+                <h2 className="font-display text-2xl font-bold mb-6">
+                  Send a Message
+                </h2>
                 <ContactForm />
               </div>
             </ScrollReveal>
           </div>
-
-          <ScrollReveal>
-            <div className="rounded-2xl overflow-hidden shadow-premium h-[400px]">
-              <iframe
-                src={siteConfig.mapEmbed}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="OP Institute Location"
-              />
-            </div>
-          </ScrollReveal>
         </div>
       </section>
     </>

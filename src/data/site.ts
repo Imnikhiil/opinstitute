@@ -13,20 +13,25 @@ export const siteConfig = {
   phoneRaw: "919213610182",
   phone2: "+91 92208 25187",
   phone2Raw: "919220825187",
-  kidsPhone: "+91 92668 74287",
+  kidsPhone: "+91 92208 25187",
   email: "opinstituteofstudies@gmail.com",
   whatsapp: "919213610182",
+  /** O.P. Institute — Google Business listing */
   address:
-    "A-374/11, Mahavir Enclave, Part-2, New Delhi - 110059",
-  branchAddress: "Bindapur, DDA Flats, Near Deshraj Office, New Delhi",
+    "A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
+  /** Kept for admin settings compatibility; campus details live in `campuses` */
+  branchAddress: "",
+  /** OP Kids Pre School — Google Business listing */
   kidsAddress:
-    "A-374, Mahavir Enclave, Part-2, Gali No.11, New Delhi - 110059",
+    "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
   mapEmbed:
-    "https://www.google.com/maps?q=Mahavir+Enclave+Part+2+New+Delhi+110059&output=embed",
+    "https://www.google.com/maps?q=O.P.+Institute+of+studies+A-374+Street+No.+11+Mahavir+Enclave+Part+2+New+Delhi+110059&output=embed",
+  kidsMapEmbed:
+    "https://www.google.com/maps?q=OP+KIDS+PRE+SCHOOL+A-374+Street+No.+11+Mahavir+Enclave+Part+2+New+Delhi+110059&output=embed",
   workingHours: {
-    weekdays: "Monday – Saturday: 8:00 AM – 7:00 PM",
+    weekdays: "Monday – Saturday: Open · Closes 9:00 PM",
     sunday: "Sunday: Closed",
-    preschool: "OP Kids: 9:00 AM – 1:00 PM",
+    preschool: "OP Kids: Open · Closes 6:00 PM",
   },
   social: {
     facebook: "https://facebook.com/opinstitute",
@@ -35,6 +40,45 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/company/opinstitute",
   },
 };
+
+/** Real Google Business locations shown on Contact & campus sections */
+export const campuses = [
+  {
+    id: "institute",
+    name: "O.P. Institute of Studies",
+    shortName: "OP Institute",
+    category: "Coaching centre · Delhi",
+    address:
+      "A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
+    phone: "+91 92136 10182",
+    phoneRaw: "919213610182",
+    hours: "Open · Closes 9:00 PM",
+    ratingNote: "4.7★ on Google",
+    mapEmbed:
+      "https://www.google.com/maps?q=O.P.+Institute+of+studies+A-374+Street+No.+11+Mahavir+Enclave+Part+2+New+Delhi+110059&output=embed",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=O.P.+Institute+of+studies+Mahavir+Enclave+Part+2+New+Delhi",
+    accent: "brand" as const,
+  },
+  {
+    id: "kids",
+    name: "OP Kids Pre School",
+    shortName: "OP Kids",
+    category: "Preschool · Delhi",
+    address:
+      "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
+    phone: "+91 92208 25187",
+    phoneRaw: "919220825187",
+    hours: "Open · Closes 6:00 PM",
+    ratingNote: "5.0★ on Google",
+    mapEmbed:
+      "https://www.google.com/maps?q=OP+KIDS+PRE+SCHOOL+A-374+Street+No.+11+Mahavir+Enclave+Part+2+New+Delhi+110059&output=embed",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=OP+KIDS+PRE+SCHOOL+Mahavir+Enclave+Part+2+New+Delhi",
+    accent: "kids" as const,
+  },
+];
+
 
 export const navLinks: { href: string; label: string; highlight?: boolean }[] = [
   { href: "/", label: "Home" },
@@ -360,7 +404,7 @@ export const kidsDayRoutine = [
 // Common questions from parents about OP Kids
 export const kidsFaqs = [
   { q: "What age groups do you accept?", a: "We welcome children aged 2 to 6 years across Play Group, Nursery, LKG and UKG." },
-  { q: "What are the school timings?", a: "OP Kids Pre School runs Monday to Saturday, from 9:00 AM to 1:00 PM." },
+  { q: "What are the school timings?", a: "OP Kids Pre School is open Monday to Saturday and closes at 6:00 PM (as listed on Google). Class activities typically run in the morning; please confirm the exact session time during admission." },
   { q: "How safe is the campus?", a: "Full CCTV surveillance, verified staff, secure entry/exit points and a fenced play area keep every child safe." },
   { q: "What is the child–teacher ratio?", a: "We keep small groups with a low child–teacher ratio so every child gets individual attention and care." },
   { q: "Do you follow Montessori methods?", a: "Yes — our curriculum blends Montessori-based, play-way and activity learning for joyful, natural growth." },

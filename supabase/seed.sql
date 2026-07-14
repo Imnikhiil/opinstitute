@@ -7,19 +7,19 @@
 update public.site_settings set
   phone           = '+91 92136 10182',
   phone2          = '+91 92208 25187',
-  kids_phone      = '+91 92668 74287',
+  kids_phone      = '+91 92208 25187',
   email           = 'opinstituteofstudies@gmail.com',
   whatsapp        = '919213610182',
-  address         = 'A-374/11, Mahavir Enclave, Part-2, New Delhi - 110059',
-  branch_address  = 'Bindapur, DDA Flats, Near Deshraj Office, New Delhi',
-  kids_address    = 'A-374, Mahavir Enclave, Part-2, Gali No.11, New Delhi - 110059',
+  address         = 'A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059',
+  branch_address  = '',
+  kids_address    = 'A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059',
   facebook        = 'https://facebook.com/opinstitute',
   instagram       = 'https://instagram.com/opinstitute',
   youtube         = 'https://youtube.com/@opinstitute',
   linkedin        = 'https://linkedin.com/company/opinstitute',
-  weekday_hours   = 'Monday – Saturday: 8:00 AM – 7:00 PM',
+  weekday_hours   = 'Monday – Saturday: Open · Closes 9:00 PM',
   sunday_hours    = 'Sunday: Closed',
-  preschool_hours = 'OP Kids: 9:00 AM – 1:00 PM',
+  preschool_hours = 'OP Kids: Open · Closes 6:00 PM',
   updated_at      = now()
 where id = 1;
 

@@ -13,7 +13,7 @@ import {
   YoutubeIcon,
   LinkedinIcon,
 } from "@/components/ui/SocialIcons";
-import { navLinks } from "@/data/site";
+import { navLinks, campuses } from "@/data/site";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 const socialIcons = {
@@ -134,28 +134,36 @@ export function Footer() {
               Contact Us
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 mt-0.5 text-brand-400 shrink-0" />
-                <span>{siteConfig.address}</span>
-              </li>
-              <li>
-                <a
-                  href={`tel:${siteConfig.phone}`}
-                  className="flex items-center gap-3 hover:text-brand-400 transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-brand-400" />
-                  {siteConfig.phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`tel:${siteConfig.phone2}`}
-                  className="flex items-center gap-3 hover:text-brand-400 transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-brand-400" />
-                  {siteConfig.phone2}
-                </a>
-              </li>
+              {campuses.map((campus) => (
+                <li key={campus.id} className="flex items-start gap-3">
+                  <MapPin
+                    className={`w-4 h-4 mt-0.5 shrink-0 ${
+                      campus.accent === "kids" ? "text-kids-400" : "text-brand-400"
+                    }`}
+                  />
+                  <span>
+                    <span className="block text-white/90 font-medium mb-0.5">
+                      {campus.shortName}
+                    </span>
+                    {campus.address}
+                  </span>
+                </li>
+              ))}
+              {campuses.map((campus) => (
+                <li key={`${campus.id}-phone`}>
+                  <a
+                    href={`tel:${campus.phone}`}
+                    className="flex items-center gap-3 hover:text-brand-400 transition-colors"
+                  >
+                    <Phone
+                      className={`w-4 h-4 ${
+                        campus.accent === "kids" ? "text-kids-400" : "text-brand-400"
+                      }`}
+                    />
+                    {campus.shortName}: {campus.phone}
+                  </a>
+                </li>
+              ))}
               <li>
                 <a
                   href={`mailto:${siteConfig.email}`}
