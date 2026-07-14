@@ -167,9 +167,9 @@ export const aboutContent = {
   directorName: "Om Prakash",
   directorTitle: "Founder & Director, O.P. Institute of Studies",
   principalMessage:
-    "At OP Kids Pre School, we believe that the early years are the foundation of a lifetime of learning. Our Montessori-based curriculum, caring teachers, and vibrant environment ensure that every child feels safe, loved, and excited to discover the world around them. We partner with parents every step of the way.",
-  principalName: "OP Kids Pre School",
-  principalTitle: "Where Kids Love to Learn",
+    "Alongside our Founder, I oversee the day-to-day management of OP Institute and OP Kids — from primary education and classroom quality to parent coordination and campus operations. With NPTT, B.Ed and CTET qualifications, my focus is strong foundations in the early years and a smoothly run institution where every student and parent feels supported.",
+  principalName: "Meenakshi",
+  principalTitle: "Academic & Management Head",
   values: [
     {
       title: "Excellence",

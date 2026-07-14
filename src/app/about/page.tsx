@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
 import { aboutContent } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about OP Institute of Studies — our history, vision, mission, and values. Meet our leadership team.",
+    "Learn about OP Institute of Studies — our history, vision, mission, and values. Meet Founder Om Prakash and Academic & Management Head Meenakshi.",
 };
 
 export default function AboutPage() {
   return (
     <>
-      {/* Page Hero */}
       <section className="page-hero">
         <div className="container-custom relative z-10">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-900 mb-4">
@@ -26,7 +26,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* History */}
       <section className="section-padding">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -55,7 +54,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Vision & Mission */}
       <section className="section-padding bg-gray-50 dark:bg-gray-900/50">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-8">
@@ -77,53 +75,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Leadership Messages */}
       <section className="section-padding">
         <div className="container-custom">
-          <ScrollReveal>
-            <SectionHeader badge="Leadership" title="Messages from Our Leaders" />
-          </ScrollReveal>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                message: aboutContent.directorMessage,
-                name: aboutContent.directorName,
-                title: aboutContent.directorTitle,
-                image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80",
-              },
-              {
-                message: aboutContent.principalMessage,
-                name: aboutContent.principalName,
-                title: aboutContent.principalTitle,
-                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80",
-              },
-            ].map((leader, i) => (
-              <ScrollReveal key={leader.name} delay={i * 0.1}>
-                <div className="glass-card p-8">
-                  <p className="text-muted-foreground leading-relaxed italic mb-6">
-                    &ldquo;{leader.message}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <Image
-                      src={leader.image}
-                      alt={leader.name}
-                      width={60}
-                      height={60}
-                      className="rounded-full object-cover"
-                    />
-                    <div>
-                      <p className="font-semibold">{leader.name}</p>
-                      <p className="text-sm text-muted-foreground">{leader.title}</p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <LeadershipHighlight
+            badge="Leadership"
+            title="Messages from Our Leaders"
+            subtitle="Founder Om Prakash and Meenakshi — the team that leads and manages OP Institute every day"
+          />
         </div>
       </section>
 
-      {/* Values */}
       <section className="section-padding bg-gray-50 dark:bg-gray-900/50">
         <div className="container-custom">
           <ScrollReveal>

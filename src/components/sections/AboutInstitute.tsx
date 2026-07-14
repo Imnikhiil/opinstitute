@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
+import { LeadershipStrip } from "@/components/sections/LeadershipHighlight";
 import { aboutContent } from "@/data/site";
 
 export function AboutInstitute() {
@@ -43,23 +44,15 @@ export function AboutInstitute() {
             <p className="text-muted-foreground leading-relaxed mb-6">
               {aboutContent.history}
             </p>
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="glass-card p-4">
-                <p className="font-semibold text-brand-600 dark:text-brand-400">Vision</p>
-                <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
-                  {aboutContent.vision.slice(0, 80)}...
-                </p>
-              </div>
-              <div className="glass-card p-4">
-                <p className="font-semibold text-brand-600 dark:text-brand-400">Mission</p>
-                <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
-                  {aboutContent.mission.slice(0, 80)}...
-                </p>
-              </div>
+            <div className="mb-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-600 dark:text-brand-400 mb-3">
+                Led by
+              </p>
+              <LeadershipStrip />
             </div>
             <Link href="/about">
               <Button variant="outline">
-                Learn More
+                Meet Our Leaders
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
