@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { QueriesClient, type Query } from "@/components/admin/QueriesClient";
+import { PageHeader } from "@/components/admin/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -18,12 +19,10 @@ export default async function QueriesPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="font-display text-2xl sm:text-3xl font-bold">Queries</h1>
-        <p className="text-muted-foreground mt-1">
-          All enquiries received from the Contact and Admission forms.
-        </p>
-      </div>
+      <PageHeader
+        title="Queries"
+        subtitle="All enquiries from Contact and Admission forms — reply via WhatsApp or call."
+      />
       <QueriesClient initialQueries={queries} />
     </div>
   );

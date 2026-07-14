@@ -88,22 +88,28 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
 
   return (
     <div>
-      {/* Filter tabs */}
-      <div className="flex flex-wrap gap-2 mb-5">
+      <div className="inline-flex flex-wrap gap-1 p-1 mb-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 shadow-sm">
         {filters.map((f) => (
           <button
             key={f.id}
             onClick={() => setFilter(f.id)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-medium transition",
+              "px-4 py-2 rounded-xl text-sm font-medium transition-all",
               filter === f.id
-                ? "bg-brand-600 text-white"
-                : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-muted-foreground hover:text-foreground"
+                ? "bg-brand-600 text-white shadow-sm"
+                : "text-muted-foreground hover:text-foreground hover:bg-gray-50 dark:hover:bg-gray-800"
             )}
           >
             {f.label}
             {f.id === "new" && newCount > 0 && (
-              <span className="ml-1.5 px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[10px]">
+              <span
+                className={cn(
+                  "ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold",
+                  filter === f.id
+                    ? "bg-white/20 text-white"
+                    : "bg-red-500 text-white"
+                )}
+              >
                 {newCount}
               </span>
             )}
@@ -112,27 +118,32 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
-          <Inbox className="w-10 h-10 mx-auto text-muted-foreground mb-3" />
-          <p className="text-muted-foreground">No queries found.</p>
+        <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-gray-900/40 p-14 text-center">
+          <div className="mx-auto w-14 h-14 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
+            <Inbox className="w-7 h-7 text-muted-foreground" />
+          </div>
+          <p className="font-medium text-foreground">No queries found</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Enquiries from the website will appear here.
+          </p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3.5">
           {filtered.map((q) => (
             <div
               key={q.id}
               className={cn(
-                "rounded-2xl bg-white dark:bg-gray-900 border p-5 transition",
+                "rounded-2xl bg-white dark:bg-gray-900/80 border p-5 sm:p-6 transition-shadow",
                 q.status === "new"
-                  ? "border-brand-300 dark:border-brand-700 shadow-sm"
-                  : "border-gray-200/70 dark:border-white/10"
+                  ? "border-brand-300 dark:border-brand-700 shadow-md shadow-brand-600/5"
+                  : "border-gray-200/80 dark:border-white/10 hover:shadow-sm"
               )}
             >
-              <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+              <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                      "w-11 h-11 rounded-xl flex items-center justify-center shrink-0",
                       q.type === "admission"
                         ? "bg-kids-50 text-kids-600 dark:bg-kids-950/30"
                         : "bg-brand-50 text-brand-600 dark:bg-brand-950/30"
@@ -145,11 +156,11 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                     )}
                   </div>
                   <div>
-                    <p className="font-semibold flex items-center gap-2">
+                    <p className="font-semibold flex flex-wrap items-center gap-2 text-[#1d2951] dark:text-white">
                       {q.name}
                       <span
                         className={cn(
-                          "px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
+                          "px-2 py-0.5 rounded-lg text-[10px] font-semibold uppercase tracking-wide",
                           q.type === "admission"
                             ? "bg-kids-100 text-kids-700 dark:bg-kids-900/40 dark:text-kids-300"
                             : "bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"
@@ -158,17 +169,17 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                         {q.type}
                       </span>
                       {q.status === "new" && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-100 text-red-600 dark:bg-red-950/40">
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-red-100 text-red-600 dark:bg-red-950/40">
                           NEW
                         </span>
                       )}
                       {q.status === "done" && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-100 text-green-700 dark:bg-green-950/40">
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-green-100 text-green-700 dark:bg-green-950/40">
                           DONE
                         </span>
                       )}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {timeAgo(q.created_at)}
                     </p>
                   </div>
@@ -179,7 +190,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                     <button
                       onClick={() => updateStatus(q.id, "done")}
                       disabled={busy === q.id}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-green-50 text-green-700 dark:bg-green-950/30 dark:text-green-400 hover:bg-green-100 transition disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-green-50 text-green-700 dark:bg-green-950/30 dark:text-green-400 hover:bg-green-100 transition disabled:opacity-50"
                     >
                       <Check className="w-3.5 h-3.5" />
                       Done
@@ -189,7 +200,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                     <button
                       onClick={() => updateStatus(q.id, "read")}
                       disabled={busy === q.id}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-800 text-muted-foreground hover:text-foreground transition disabled:opacity-50"
+                      className="px-3 py-1.5 rounded-xl text-xs font-medium bg-gray-100 dark:bg-gray-800 text-muted-foreground hover:text-foreground transition disabled:opacity-50"
                     >
                       Mark read
                     </button>
@@ -197,7 +208,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                   <button
                     onClick={() => remove(q.id)}
                     disabled={busy === q.id}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition disabled:opacity-50"
+                    className="w-8 h-8 rounded-xl flex items-center justify-center text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition disabled:opacity-50"
                     aria-label="Delete"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -205,12 +216,12 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                 </div>
               </div>
 
-              {/* Details */}
-              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
                 {q.parent_name && (
                   <p className="flex items-center gap-2 text-muted-foreground">
                     <User className="w-3.5 h-3.5 shrink-0" />
-                    Parent: <span className="text-foreground">{q.parent_name}</span>
+                    Parent:{" "}
+                    <span className="text-foreground">{q.parent_name}</span>
                   </p>
                 )}
                 {q.phone && (
@@ -240,32 +251,32 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                 )}
                 {q.subject && (
                   <p className="text-muted-foreground">
-                    Subject: <span className="text-foreground">{q.subject}</span>
+                    Subject:{" "}
+                    <span className="text-foreground">{q.subject}</span>
                   </p>
                 )}
               </div>
 
               {q.message && (
-                <p className="mt-3 text-sm bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3 text-foreground/90">
+                <p className="mt-4 text-sm bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3.5 text-foreground/90 border border-gray-100 dark:border-white/5">
                   {q.message}
                 </p>
               )}
 
-              {/* Quick reply */}
               {q.phone && (
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   <a
                     href={`https://wa.me/${q.phone.replace(/[^0-9]/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#25D366]/10 text-[#128C4A] hover:bg-[#25D366]/20 transition"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#25D366]/10 text-[#128C4A] hover:bg-[#25D366]/20 transition"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     WhatsApp
                   </a>
                   <a
                     href={`tel:${q.phone}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-brand-50 text-brand-700 dark:bg-brand-950/30 dark:text-brand-400 hover:bg-brand-100 transition"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950/30 dark:text-brand-400 hover:bg-brand-100 transition"
                   >
                     <Phone className="w-3.5 h-3.5" />
                     Call

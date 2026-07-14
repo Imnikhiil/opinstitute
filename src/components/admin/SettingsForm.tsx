@@ -74,9 +74,11 @@ export function SettingsForm({ initial }: { initial: Settings }) {
       {groups.map((g) => (
         <div
           key={g.title}
-          className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/70 dark:border-white/10 p-5"
+          className="rounded-2xl bg-white dark:bg-gray-900/80 border border-gray-200/80 dark:border-white/10 p-5 sm:p-6 shadow-sm"
         >
-          <h3 className="font-semibold mb-4">{g.title}</h3>
+          <h3 className="font-semibold mb-4 text-[#1d2951] dark:text-white">
+            {g.title}
+          </h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {g.fields.map((f) => (
               <div key={f.name}>

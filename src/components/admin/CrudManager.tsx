@@ -162,7 +162,7 @@ export function CrudManager({
       <div className="flex justify-end mb-5">
         <button
           onClick={openAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 text-white font-semibold text-sm hover:bg-brand-700 transition"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold text-sm hover:from-brand-700 hover:to-brand-800 shadow-md shadow-brand-600/20 transition"
         >
           <Plus className="w-4 h-4" />
           Add {config.singular}
@@ -170,7 +170,7 @@ export function CrudManager({
       </div>
 
       {rows.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center text-muted-foreground">
+        <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-gray-900/40 p-12 text-center text-muted-foreground">
           No {config.singular.toLowerCase()} yet. Click &quot;Add&quot; to create one.
         </div>
       ) : (
@@ -178,7 +178,7 @@ export function CrudManager({
           {rows.map((row) => (
             <div
               key={row.id as string}
-              className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/70 dark:border-white/10 p-4 flex flex-col"
+              className="rounded-2xl bg-white dark:bg-gray-900/80 border border-gray-200/80 dark:border-white/10 p-4 flex flex-col hover:shadow-md hover:border-brand-200 dark:hover:border-brand-800 transition-all"
             >
               {config.imageField && row[config.imageField] ? (
                 <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3 bg-gray-100 dark:bg-gray-800">
@@ -221,15 +221,15 @@ export function CrudManager({
 
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl">
-            <div className="sticky top-0 flex items-center justify-between bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-5 py-4">
-              <h3 className="font-display font-bold text-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white dark:bg-gray-900 shadow-2xl border border-white/10">
+            <div className="sticky top-0 flex items-center justify-between bg-white/95 dark:bg-gray-900/95 backdrop-blur border-b border-gray-200 dark:border-gray-800 px-5 py-4">
+              <h3 className="font-display font-bold text-lg text-[#1d2951] dark:text-white">
                 {editing ? "Edit" : "Add"} {config.singular}
               </h3>
               <button
                 onClick={close}
-                className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition"
               >
                 <X className="w-5 h-5" />
               </button>
