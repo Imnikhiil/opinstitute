@@ -21,7 +21,6 @@ const config: CrudConfig = {
     { name: "batch_handled", label: "Batch Handled", type: "text", placeholder: "CMA inter & final" },
     { name: "achievement", label: "Achievement Badge", type: "text", placeholder: "98% pass result" },
     { name: "quote", label: "Quote", type: "text", placeholder: "Committed to making complex tax concepts simple..." },
-    { name: "linkedin", label: "LinkedIn URL", type: "text", placeholder: "https://..." },
     { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };

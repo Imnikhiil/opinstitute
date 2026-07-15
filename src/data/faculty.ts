@@ -10,10 +10,6 @@ export interface FacultyMember {
   achievement: string;
   quote: string;
   image: string;
-  social?: {
-    linkedin?: string;
-    twitter?: string;
-  };
 }
 
 /**

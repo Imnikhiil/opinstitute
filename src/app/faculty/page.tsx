@@ -6,9 +6,7 @@ import {
   Users,
   Clock,
   MessageSquareQuote,
-  ArrowUpRight,
 } from "lucide-react";
-import { LinkedinIcon } from "@/components/ui/SocialIcons";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
@@ -155,22 +153,6 @@ export default async function FacultyPage() {
                       </div>
                     )}
 
-                    {/* LinkedIn footer */}
-                    {member.social?.linkedin && (
-                      <div className="px-5 pb-5 pt-1">
-                        <a
-                          href={member.social.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 transition-colors"
-                          aria-label={`${member.name} LinkedIn`}
-                        >
-                          <LinkedinIcon className="w-4 h-4" />
-                          LinkedIn
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </a>
-                      </div>
-                    )}
                   </div>
                 </ScrollReveal>
               ))}

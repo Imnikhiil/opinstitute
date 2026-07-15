@@ -1,7 +1,6 @@
 "use client";
 
 import { Award, Briefcase, GraduationCap, Clock } from "lucide-react";
-import { LinkedinIcon } from "@/components/ui/SocialIcons";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { leadership, type Leader } from "@/data/leadership";
@@ -66,22 +65,6 @@ function LeaderCard({ leader, delay = 0 }: { leader: Leader; delay?: number }) {
               {leader.organization}
             </p>
           </div>
-          {leader.linkedin && (
-            <a
-              href={leader.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-                leader.accent === "brand"
-                  ? "bg-brand-50 text-brand-600 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-400"
-                  : "bg-gold-50 text-gold-700 hover:bg-gold-100 dark:bg-gold-950/30 dark:text-gold-400"
-              )}
-              aria-label={`${leader.name} LinkedIn`}
-            >
-              <LinkedinIcon className="w-4 h-4" />
-            </a>
-          )}
         </div>
 
         {/* Credential tags */}

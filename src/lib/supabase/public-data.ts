@@ -28,7 +28,6 @@ function mapCourse(row: Row): Course {
 }
 
 function mapFaculty(row: Row): FacultyMember {
-  const linkedin = str(row.linkedin);
   const image = str(row.image_url);
   return {
     id: str(row.id),
@@ -44,7 +43,6 @@ function mapFaculty(row: Row): FacultyMember {
     image:
       image ||
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-    social: linkedin ? { linkedin } : undefined,
   };
 }
 

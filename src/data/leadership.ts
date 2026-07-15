@@ -14,7 +14,6 @@ export interface Leader {
   since?: string;
   stats: LeaderStat[];
   message: string;
-  linkedin?: string;
   initials: string;
   accent: "brand" | "gold";
 }
@@ -35,7 +34,6 @@ export const leadership: Leader[] = [
     ],
     message:
       "Education is the most powerful tool we can use to change the world. Our team works tirelessly to create an environment where learning is joyful and transformative.",
-    linkedin: "#",
     initials: "OP",
     accent: "brand",
   },
@@ -54,7 +52,6 @@ export const leadership: Leader[] = [
     ],
     message:
       "Alongside our founder, I oversee day-to-day management — from classroom quality to parent coordination and campus operations.",
-    linkedin: "#",
     initials: "M",
     accent: "gold",
   },
