@@ -11,6 +11,8 @@ import {
   Trophy,
   Star,
   Users,
+  Sparkles,
+  MousePointerClick,
 } from "lucide-react";
 
 type Side = "kids" | "institute" | null;
@@ -128,6 +130,20 @@ export function SplitHero() {
         </div>
       </motion.div>
 
+      {/* ---------------- MOBILE DIVIDER + EMBLEM ---------------- */}
+      <div className="relative z-20 flex lg:hidden items-center justify-center -my-7">
+        <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+        <div className="relative w-14 h-14 rounded-full bg-white shadow-xl flex items-center justify-center border-2 border-white">
+          <Image
+            src="/logos/op-institute-logo.png"
+            alt="O.P. Institute of Studies"
+            width={40}
+            height={40}
+            className="w-9 h-9 object-contain"
+          />
+        </div>
+      </div>
+
       {/* ---------------- OP INSTITUTE SIDE ---------------- */}
       <motion.div
         onMouseEnter={() => setActive("institute")}
@@ -225,6 +241,50 @@ export function SplitHero() {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* ---------------- CENTER UNIFYING EMBLEM (Desktop only) ---------------- */}
+      <div className="pointer-events-none absolute inset-0 z-20 hidden lg:flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.4, type: "spring", stiffness: 120 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-white/30 blur-xl" />
+            <motion.span
+              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
+              className="absolute inset-0 rounded-full border-2 border-white"
+            />
+            <div className="relative w-24 h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
+              <Image
+                src="/logos/op-institute-logo.png"
+                alt="O.P. Institute of Studies"
+                width={64}
+                height={64}
+                className="w-14 h-14 object-contain"
+              />
+            </div>
+          </div>
+          <div className="mt-3 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
+            <p className="text-sm font-bold text-brand-900 flex items-center gap-1.5 whitespace-nowrap">
+              <Sparkles className="w-3.5 h-3.5 text-accent-purple" />
+              One Family · Two Worlds
+            </p>
+          </div>
+
+          {/* Hover hint (desktop) */}
+          <motion.div
+            animate={{ opacity: active ? 0 : 1, y: active ? 6 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-3 flex items-center gap-1.5 text-white/80 text-xs font-medium"
+          >
+            <MousePointerClick className="w-3.5 h-3.5" />
+            Hover a side to explore
+          </motion.div>
+        </motion.div>
+      </div>
 
       {/* Scroll-to-explore cue */}
       <motion.div

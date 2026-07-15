@@ -1,6 +1,5 @@
 import { SplitHero } from "@/components/sections/SplitHero";
 import { Marquee } from "@/components/sections/Marquee";
-import { TrustBar } from "@/components/sections/TrustBar";
 import { LearningJourney } from "@/components/sections/LearningJourney";
 import { AboutInstitute } from "@/components/sections/AboutInstitute";
 import { AboutKids } from "@/components/sections/AboutKids";
@@ -33,7 +32,6 @@ export default async function HomePage() {
   return (
     <>
       <SplitHero />
-      <TrustBar />
       <Marquee />
       <LearningJourney />
       <AboutInstitute />
