@@ -600,7 +600,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
               Give Your Child the Best Start
             </h2>
             <p className="text-white/90 mb-6 sm:mb-8 max-w-xl mx-auto text-sm sm:text-base">
-              Limited seats available for 2025-26. Schedule a campus visit today!
+              Limited seats available for 2026-27. Schedule a campus visit today!
             </p>
             <Link href="/admissions">
               <Button size="lg" className="bg-white text-kids-600 hover:bg-white/90 shadow-xl">

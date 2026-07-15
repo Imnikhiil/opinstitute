@@ -12,8 +12,8 @@ const config: CrudConfig = {
   imageField: "image_url",
   fields: [
     { name: "image_url", label: "Photo", type: "image" },
-    { name: "title", label: "Event Title", type: "text", required: true, placeholder: "Annual Day Celebration 2025" },
-    { name: "event_date", label: "Date", type: "text", placeholder: "December 15, 2025" },
+    { name: "title", label: "Event Title", type: "text", required: true, placeholder: "Annual Day Celebration 2026" },
+    { name: "event_date", label: "Date", type: "text", placeholder: "December 15, 2026" },
     { name: "description", label: "Description", type: "textarea", fullWidth: true },
     { name: "type", label: "Type", type: "select", options: ["academic", "cultural", "sports", "preschool"] },
     { name: "sort_order", label: "Order (lower shows first)", type: "number" },

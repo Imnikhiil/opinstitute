@@ -25,7 +25,7 @@ export function CTABand() {
             <div>
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-wider mb-4">
                 <CalendarCheck className="w-4 h-4" />
-                Admissions Open 2025–26
+                Admissions Open 2026–27
               </span>
               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance">
                 Ready to Begin Your <br className="hidden md:block" />

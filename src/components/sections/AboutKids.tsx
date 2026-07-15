@@ -14,7 +14,7 @@ export function AboutKids() {
       <div className="container-custom relative">
         <ScrollReveal>
           <SectionHeader
-            badge="✨ New Launch"
+            badge="OP Kids Pre School"
             title="OP Kids Pre School"
             subtitle="A colorful world where little minds bloom with joy, creativity, and confidence"
             variant="kids"

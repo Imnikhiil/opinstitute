@@ -96,7 +96,7 @@ export function Navbar() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-kids-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-kids-500" />
               </span>
-              Admissions Open 2025-26
+              Admissions Open 2026-27
             </Link>
             <ThemeToggle />
           </div>

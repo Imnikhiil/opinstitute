@@ -29,9 +29,9 @@ export const faqs: FAQ[] = [
   },
   {
     id: "4",
-    question: "Do you provide transport facilities?",
+    question: "Where is the institute located?",
     answer:
-      "Yes, we offer safe and reliable transport services covering major areas of the city. GPS-enabled buses with trained attendants ensure your child's safety.",
+      "Both O.P. Institute of Studies and OP Kids Pre School are located at A-374, Street No. 11, Mahavir Enclave Part 2, New Delhi 110059. We are easily accessible from all surrounding areas.",
     category: "general",
   },
   {
@@ -59,7 +59,7 @@ export const faqs: FAQ[] = [
     id: "8",
     question: "What are the class timings?",
     answer:
-      "Coaching classes run from 8:00 AM to 7:00 PM (Monday-Saturday) with multiple batch options. OP Kids Pre School operates from 9:00 AM to 1:00 PM, Monday through Saturday.",
+      "O.P. Institute of Studies is open Monday to Saturday and closes at 9:00 PM, with multiple batch options available. OP Kids Pre School is open Monday to Saturday and closes at 6:00 PM. Sunday is a holiday for both.",
     category: "general",
   },
 ];

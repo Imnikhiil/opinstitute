@@ -63,7 +63,7 @@ export default async function FacultyPage() {
             <SectionHeader
               badge="Teaching Team"
               title="Meet Our Expert Teachers"
-              subtitle="Faculty members can be updated anytime from the Admin Panel"
+              subtitle="Dedicated educators committed to academic excellence and student success"
             />
           </ScrollReveal>
 
