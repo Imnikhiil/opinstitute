@@ -1,3 +1,8 @@
+export interface LeaderStat {
+  value: string;
+  label: string;
+}
+
 export interface Leader {
   id: string;
   name: string;
@@ -5,9 +10,11 @@ export interface Leader {
   organization: string;
   credentials: string[];
   experience: string;
-  focus: string;
+  education: string;
+  since?: string;
+  stats: LeaderStat[];
   message: string;
-  /** Initials for avatar when no photo is available */
+  linkedin?: string;
   initials: string;
   accent: "brand" | "gold";
 }
@@ -20,10 +27,15 @@ export const leadership: Leader[] = [
     title: "Founder & Director",
     organization: "O.P. Institute of Studies",
     credentials: ["Founder", "Since 2003"],
-    experience: "20+ Years",
-    focus: "Vision, Institution Leadership",
+    experience: "20+ years",
+    education: "M.Com, B.Ed",
+    stats: [
+      { value: "500+", label: "students mentored" },
+      { value: "2", label: "institutes led" },
+    ],
     message:
-      "Education is the most powerful tool we can use to change the world. At OP Institute of Studies, we are committed to nurturing every student's unique potential — from a child's first day at OP Kids to cracking professional exams like CMA. Our dedicated team works tirelessly to create an environment where learning is joyful, meaningful, and transformative. I invite you to join our family and experience the difference.",
+      "Education is the most powerful tool we can use to change the world. Our team works tirelessly to create an environment where learning is joyful and transformative.",
+    linkedin: "#",
     initials: "OP",
     accent: "brand",
   },
@@ -32,15 +44,17 @@ export const leadership: Leader[] = [
     name: "Meenakshi",
     title: "Academic & Management Head",
     organization: "O.P. Institute · OP Kids",
-    credentials: [
-      "NPTT",
-      "B.Ed",
-      "CTET Qualified",
+    credentials: ["NPTT", "B.Ed", "CTET qualified"],
+    experience: "8 years",
+    education: "B.Ed",
+    since: "2018",
+    stats: [
+      { value: "200+", label: "early learners guided" },
+      { value: "3", label: "certifications" },
     ],
-    experience: "8 Years",
-    focus: "Primary Education & Full Management",
     message:
-      "Alongside our Founder, I oversee the day-to-day management of OP Institute and OP Kids — from primary education and classroom quality to parent coordination and campus operations. With NPTT, B.Ed and CTET qualifications, my focus is strong foundations in the early years and a smoothly run institution where every student and parent feels supported.",
+      "Alongside our founder, I oversee day-to-day management — from classroom quality to parent coordination and campus operations.",
+    linkedin: "#",
     initials: "M",
     accent: "gold",
   },

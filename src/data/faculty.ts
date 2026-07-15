@@ -1,9 +1,14 @@
 export interface FacultyMember {
   id: string;
   name: string;
+  department: string;
   qualification: string;
   experience: string;
   subject: string;
+  subjects_taught: string;
+  batch_handled: string;
+  achievement: string;
+  quote: string;
   image: string;
   social?: {
     linkedin?: string;

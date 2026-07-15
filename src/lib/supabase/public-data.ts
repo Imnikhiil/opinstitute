@@ -33,9 +33,14 @@ function mapFaculty(row: Row): FacultyMember {
   return {
     id: str(row.id),
     name: str(row.name),
+    department: str(row.department),
     qualification: str(row.qualification),
     experience: str(row.experience),
     subject: str(row.subject),
+    subjects_taught: str(row.subjects_taught),
+    batch_handled: str(row.batch_handled),
+    achievement: str(row.achievement),
+    quote: str(row.quote),
     image:
       image ||
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
