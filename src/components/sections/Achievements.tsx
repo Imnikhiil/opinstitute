@@ -40,17 +40,17 @@ export function Achievements() {
           />
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {achievements.map((item, index) => (
             <ScrollReveal key={item.title} delay={index * 0.1}>
-              <div className="h-full bg-white/10 backdrop-blur-sm rounded-2xl p-7 border border-white/15 hover:bg-white/15 transition-colors">
-                <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-5">
-                  <item.icon className="w-6 h-6 text-white" />
+              <div className="h-full bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-7 border border-white/15 hover:bg-white/15 transition-colors">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/15 flex items-center justify-center mb-3 sm:mb-5">
+                  <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="font-display font-semibold text-white text-lg mb-1.5">
+                <h3 className="font-display font-semibold text-white text-base sm:text-lg mb-1 sm:mb-1.5">
                   {item.title}
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
                   {item.description}
                 </p>
               </div>

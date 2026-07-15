@@ -106,12 +106,12 @@ export function Navbar() {
       {/* Main navigation row */}
       <nav className="container-custom flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
           <span
             className={cn(
               "flex items-center justify-center rounded-xl transition-all duration-300",
               overHero
-                ? "bg-white/10 ring-1 ring-white/20 p-1"
+                ? "bg-white/10 ring-1 ring-white/20 p-0.5 sm:p-1"
                 : "bg-transparent p-0"
             )}
           >
@@ -121,7 +121,7 @@ export function Navbar() {
               width={48}
               height={48}
               priority
-              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-8 w-8 sm:h-10 sm:w-10 object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </span>
           <div className="hidden sm:block">

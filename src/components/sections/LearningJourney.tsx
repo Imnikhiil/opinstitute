@@ -123,8 +123,8 @@ export function LearningJourney() {
         </div>
 
         <ScrollReveal delay={0.3}>
-          <div className="text-center mt-12 lg:mt-16">
-            <p className="text-white/70 mb-5 text-base md:text-lg">
+          <div className="text-center mt-8 sm:mt-12 lg:mt-16">
+            <p className="text-white/70 mb-4 sm:mb-5 text-sm sm:text-base md:text-lg">
               One institution. Every stage of your child&apos;s success.
             </p>
             <Link

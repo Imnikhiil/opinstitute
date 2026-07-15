@@ -33,7 +33,7 @@ export function SplitHero() {
           flexGrow: active === "kids" ? 1.35 : active === "institute" ? 0.65 : 1,
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="group relative flex-1 min-h-[50svh] lg:min-h-full overflow-hidden"
+        className="group relative flex-1 min-h-[52svh] lg:min-h-full overflow-hidden"
       >
         <motion.div
           className="absolute inset-0"
@@ -74,32 +74,32 @@ export function SplitHero() {
           🧸
         </motion.span>
 
-        <div className="relative z-10 h-full flex flex-col justify-start lg:justify-center px-6 sm:px-12 lg:px-16 pt-24 pb-14 sm:pt-28 lg:py-32">
+        <div className="relative z-10 h-full flex flex-col justify-center px-5 sm:px-12 lg:px-16 pt-20 pb-10 sm:pt-28 sm:pb-14 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="max-w-md"
           >
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/25 backdrop-blur-sm text-white text-xs sm:text-sm font-semibold mb-4 sm:mb-5">
-              <Baby className="w-4 h-4" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/25 backdrop-blur-sm text-white text-[11px] sm:text-sm font-semibold mb-3 sm:mb-5">
+              <Baby className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Ages 2 – 6
             </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-sm">
+            <h2 className="font-display text-[1.75rem] sm:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-sm">
               OP Kids
-              <span className="block text-white/90 text-xl sm:text-2xl lg:text-3xl mt-1">
+              <span className="block text-white/90 text-lg sm:text-2xl lg:text-3xl mt-0.5 sm:mt-1">
                 Pre School
               </span>
             </h2>
-            <p className="mt-3 sm:mt-4 text-white/90 text-base sm:text-lg font-medium">
+            <p className="mt-2 sm:mt-4 text-white/90 text-sm sm:text-lg font-medium leading-relaxed">
               Where kids love to learn — joyful, safe & playful early childhood.
             </p>
 
-            <div className="mt-4 sm:mt-6 flex flex-wrap gap-2">
+            <div className="mt-3 sm:mt-6 flex flex-wrap gap-1.5 sm:gap-2">
               {kidsHighlights.map((h) => (
                 <span
                   key={h}
-                  className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-[11px] sm:text-xs font-medium"
+                  className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-[10px] sm:text-xs font-medium"
                 >
                   {h}
                 </span>
@@ -108,27 +108,61 @@ export function SplitHero() {
 
             <Link
               href="/op-kids"
-              className="group/btn mt-6 sm:mt-8 inline-flex items-center gap-2.5 pl-5 sm:pl-6 pr-2 py-2 rounded-full bg-white text-accent-purple font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300"
+              className="group/btn mt-5 sm:mt-8 inline-flex items-center gap-2 pl-4 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-white text-accent-purple font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Enter Kids World
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-purple text-white transition-transform duration-300 group-hover/btn:translate-x-0.5">
-                <ArrowRight className="w-4 h-4" />
+              <span className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-accent-purple text-white transition-transform duration-300 group-hover/btn:translate-x-0.5">
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </span>
             </Link>
 
-            <div className="mt-5 flex items-center gap-2 text-white/90">
+            <div className="mt-3 sm:mt-5 flex items-center gap-2 text-white/90">
               <span className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
+                  <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-300 text-amber-300" />
                 ))}
               </span>
-              <span className="text-xs sm:text-sm font-medium">
+              <span className="text-[11px] sm:text-sm font-medium">
                 Loved by 500+ happy families
               </span>
             </div>
           </motion.div>
         </div>
       </motion.div>
+
+      {/* ---------------- MOBILE DIVIDER + EMBLEM ---------------- */}
+      <div className="lg:hidden relative z-20 flex justify-center -my-7">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.4, type: "spring", stiffness: 120 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-white/30 blur-xl" />
+            <motion.span
+              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
+              className="absolute inset-0 rounded-full border-2 border-white"
+            />
+            <div className="relative w-14 h-14 rounded-full bg-white shadow-2xl flex items-center justify-center border-[3px] border-white">
+              <Image
+                src="/logos/op-institute-logo.png"
+                alt="O.P. Institute of Studies"
+                width={64}
+                height={64}
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+          </div>
+          <div className="mt-1.5 px-3 py-0.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
+            <p className="text-[10px] font-bold text-brand-900 flex items-center gap-1 whitespace-nowrap">
+              <Sparkles className="w-3 h-3 text-accent-purple" />
+              One Family · Two Worlds
+            </p>
+          </div>
+        </motion.div>
+      </div>
 
       {/* ---------------- OP INSTITUTE SIDE ---------------- */}
       <motion.div
@@ -138,7 +172,7 @@ export function SplitHero() {
           flexGrow: active === "institute" ? 1.35 : active === "kids" ? 0.65 : 1,
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="group relative flex-1 min-h-[50svh] lg:min-h-full overflow-hidden"
+        className="group relative flex-1 min-h-[48svh] lg:min-h-full overflow-hidden"
       >
         <motion.div
           className="absolute inset-0"
@@ -171,32 +205,32 @@ export function SplitHero() {
           <Trophy className="w-10 h-10" />
         </motion.span>
 
-        <div className="relative z-10 h-full flex flex-col justify-end lg:justify-center px-6 sm:px-12 lg:px-16 pt-14 pb-20 sm:pb-24 lg:py-32 lg:items-end lg:text-right">
+        <div className="relative z-10 h-full flex flex-col justify-center lg:justify-center px-5 sm:px-12 lg:px-16 pt-10 pb-8 sm:pt-14 sm:pb-24 lg:py-32 lg:items-end lg:text-right">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
             className="max-w-md lg:flex lg:flex-col lg:items-end"
           >
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-400/25 backdrop-blur-sm text-brand-100 text-xs sm:text-sm font-semibold mb-4 sm:mb-5">
-              <GraduationCap className="w-4 h-4" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-400/25 backdrop-blur-sm text-brand-100 text-[11px] sm:text-sm font-semibold mb-3 sm:mb-5">
+              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Class I – XII · CMA
             </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h2 className="font-display text-[1.75rem] sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
               O.P. Institute
-              <span className="block text-brand-200 text-xl sm:text-2xl lg:text-3xl mt-1">
+              <span className="block text-brand-200 text-lg sm:text-2xl lg:text-3xl mt-0.5 sm:mt-1">
                 of Studies
               </span>
             </h2>
-            <p className="mt-3 sm:mt-4 text-white/80 text-base sm:text-lg font-medium">
+            <p className="mt-2 sm:mt-4 text-white/80 text-sm sm:text-lg font-medium leading-relaxed">
               Excellence since 2003 — CMA, B.Com & school tuition.
             </p>
 
-            <div className="mt-4 sm:mt-6 flex flex-wrap gap-2 lg:justify-end">
+            <div className="mt-3 sm:mt-6 flex flex-wrap gap-1.5 sm:gap-2 lg:justify-end">
               {instituteHighlights.map((h) => (
                 <span
                   key={h}
-                  className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-white text-[11px] sm:text-xs font-medium"
+                  className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-white text-[10px] sm:text-xs font-medium"
                 >
                   {h}
                 </span>
@@ -205,22 +239,22 @@ export function SplitHero() {
 
             <Link
               href="/courses"
-              className="group/btn mt-6 sm:mt-8 inline-flex items-center gap-2.5 pl-5 sm:pl-6 pr-2 py-2 rounded-full bg-brand-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-900/40 hover:bg-brand-400 transition-all duration-300"
+              className="group/btn mt-5 sm:mt-8 inline-flex items-center gap-2 pl-4 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-brand-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-900/40 hover:bg-brand-400 transition-all duration-300"
             >
               Explore Institute
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-brand-600 transition-transform duration-300 group-hover/btn:translate-x-0.5">
-                <ArrowRight className="w-4 h-4" />
+              <span className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-white text-brand-600 transition-transform duration-300 group-hover/btn:translate-x-0.5">
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </span>
             </Link>
 
-            <div className="mt-5 flex items-center gap-4 text-white/80 lg:justify-end">
-              <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium">
-                <Trophy className="w-4 h-4 text-gold-400" />
+            <div className="mt-3 sm:mt-5 flex items-center gap-3 sm:gap-4 text-white/80 lg:justify-end">
+              <span className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-sm font-medium">
+                <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-400" />
                 20+ Years
               </span>
-              <span className="h-4 w-px bg-white/25" />
-              <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium">
-                <Users className="w-4 h-4 text-brand-300" />
+              <span className="h-3.5 sm:h-4 w-px bg-white/25" />
+              <span className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-sm font-medium">
+                <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-300" />
                 5000+ Students
               </span>
             </div>
@@ -228,8 +262,8 @@ export function SplitHero() {
         </div>
       </motion.div>
 
-      {/* ---------------- CENTER UNIFYING EMBLEM ---------------- */}
-      <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+      {/* ---------------- CENTER UNIFYING EMBLEM (Desktop only) ---------------- */}
+      <div className="pointer-events-none absolute inset-0 z-20 hidden lg:flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -243,18 +277,18 @@ export function SplitHero() {
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
               className="absolute inset-0 rounded-full border-2 border-white"
             />
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
+            <div className="relative w-24 h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
               <Image
                 src="/logos/op-institute-logo.png"
                 alt="O.P. Institute of Studies"
                 width={64}
                 height={64}
-                className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 object-contain"
+                className="w-14 h-14 object-contain"
               />
             </div>
           </div>
-          <div className="mt-2.5 sm:mt-3 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
-            <p className="text-[11px] sm:text-sm font-bold text-brand-900 flex items-center gap-1.5 whitespace-nowrap">
+          <div className="mt-3 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
+            <p className="text-sm font-bold text-brand-900 flex items-center gap-1.5 whitespace-nowrap">
               <Sparkles className="w-3.5 h-3.5 text-accent-purple" />
               One Family · Two Worlds
             </p>
@@ -264,7 +298,7 @@ export function SplitHero() {
           <motion.div
             animate={{ opacity: active ? 0 : 1, y: active ? 6 : 0 }}
             transition={{ duration: 0.3 }}
-            className="hidden lg:flex mt-3 items-center gap-1.5 text-white/80 text-xs font-medium"
+            className="mt-3 flex items-center gap-1.5 text-white/80 text-xs font-medium"
           >
             <MousePointerClick className="w-3.5 h-3.5" />
             Hover a side to explore

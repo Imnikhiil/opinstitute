@@ -22,7 +22,7 @@ export function GalleryPreview({ images }: { images: GalleryImage[] }) {
           />
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4">
           {preview.map((img, index) => (
             <ScrollReveal key={img.id} delay={index * 0.05}>
               <div

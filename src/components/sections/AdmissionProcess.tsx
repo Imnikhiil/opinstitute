@@ -19,20 +19,20 @@ export function AdmissionProcess() {
           />
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {admissionSteps.map((step, index) => (
             <ScrollReveal key={step.step} delay={index * 0.1}>
-              <div className="relative premium-card tap-card p-6 text-center h-full">
+              <div className="relative premium-card tap-card p-4 sm:p-6 text-center h-full">
                 {index < admissionSteps.length - 1 && (
                   <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-brand-200 dark:bg-brand-800" />
                 )}
-                <div className="w-12 h-12 rounded-full bg-brand-600 text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-600 text-white font-bold text-base sm:text-lg flex items-center justify-center mx-auto mb-3 sm:mb-4">
                   {step.step}
                 </div>
-                <h3 className="font-display font-semibold text-lg mb-2">
+                <h3 className="font-display font-semibold text-base sm:text-lg mb-1.5 sm:mb-2">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground text-sm">{step.description}</p>
+                <p className="text-muted-foreground text-xs sm:text-sm">{step.description}</p>
               </div>
             </ScrollReveal>
           ))}

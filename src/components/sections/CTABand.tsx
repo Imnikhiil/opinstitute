@@ -19,7 +19,7 @@ export function CTABand() {
         className="absolute top-10 right-[10%] w-40 h-40 rounded-full bg-white/10 blur-2xl"
       />
 
-      <div className="container-custom relative z-10 py-16 md:py-20">
+      <div className="container-custom relative z-10 py-12 sm:py-16 md:py-20">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
           <ScrollReveal direction="left">
             <div>
@@ -27,7 +27,7 @@ export function CTABand() {
                 <CalendarCheck className="w-4 h-4" />
                 Admissions Open 2025–26
               </span>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance">
+              <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance">
                 Ready to Begin Your <br className="hidden md:block" />
                 Learning Journey?
               </h2>

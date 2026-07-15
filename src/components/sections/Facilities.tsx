@@ -17,7 +17,7 @@ export function Facilities() {
           />
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {facilities.map((facility, index) => (
             <ScrollReveal key={facility.title} delay={index * 0.08}>
               <div className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300">

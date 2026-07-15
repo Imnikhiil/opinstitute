@@ -14,7 +14,7 @@ const items = [
 
 export function Marquee() {
   return (
-    <div className="relative overflow-hidden bg-brand-950 py-4 border-y border-white/10 mt-16 md:mt-20">
+    <div className="relative overflow-hidden bg-brand-950 py-3 sm:py-4 border-y border-white/10 mt-10 sm:mt-16 md:mt-20">
       {/* Soft fade edges */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-28 z-10 bg-gradient-to-r from-brand-950 to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-28 z-10 bg-gradient-to-l from-brand-950 to-transparent" />
@@ -28,7 +28,7 @@ export function Marquee() {
             ) : (
               <Sparkles className="w-4 h-4 text-gold-400" />
             )}
-            <span className="text-white/90 text-sm font-medium tracking-wide uppercase">
+            <span className="text-white/90 text-xs sm:text-sm font-medium tracking-wide uppercase">
               {item}
             </span>
           </span>

@@ -23,13 +23,13 @@ export function AboutInstitute() {
                   alt="OP Institute campus"
                   width={600}
                   height={450}
-                  className="w-full h-[400px] object-cover"
+                  className="w-full h-[280px] sm:h-[350px] lg:h-[400px] object-cover"
                   loading="lazy"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 glass-card p-6 rounded-2xl shadow-card">
-                <p className="text-3xl font-bold gradient-text">20+</p>
-                <p className="text-sm text-muted-foreground">Years of Trust · Since 2003</p>
+              <div className="absolute -bottom-4 right-2 sm:-bottom-6 sm:-right-6 glass-card p-4 sm:p-6 rounded-2xl shadow-card">
+                <p className="text-2xl sm:text-3xl font-bold gradient-text">20+</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Years of Trust · Since 2003</p>
               </div>
             </div>
           </ScrollReveal>

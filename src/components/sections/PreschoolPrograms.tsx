@@ -79,7 +79,7 @@ export function PreschoolPrograms() {
           variant="kids"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {preschoolPrograms.map((program, index) => {
             const p = palettes[index % palettes.length];
             return (
@@ -94,7 +94,7 @@ export function PreschoolPrograms() {
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 whileHover={{ y: -10 }}
-                className="group relative bg-white dark:bg-gray-900 rounded-3xl p-6 pt-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 border-2 border-transparent overflow-hidden"
+                className="group relative bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-4 pt-6 sm:p-6 sm:pt-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 border-2 border-transparent overflow-hidden"
               >
                 {/* Colored top bar */}
                 <div
@@ -118,23 +118,23 @@ export function PreschoolPrograms() {
                     ease: "easeInOut",
                     delay: index * 0.25,
                   }}
-                  className="text-4xl mb-3 origin-bottom transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6 select-none"
+                  className="text-2xl sm:text-4xl mb-2 sm:mb-3 origin-bottom transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6 select-none"
                 >
                   {p.emoji}
                 </motion.div>
 
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 ${p.pill}`}>
+                <span className={`inline-block px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold mb-2 sm:mb-3 ${p.pill}`}>
                   {program.age}
                 </span>
-                <h3 className={`font-display font-bold text-xl mb-2 transition-colors ${p.title}`}>
+                <h3 className={`font-display font-bold text-base sm:text-xl mb-1.5 sm:mb-2 transition-colors ${p.title}`}>
                   {program.name}
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
                   {program.description}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-1.5 sm:space-y-2">
                   {program.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2.5 text-sm">
+                    <li key={f} className="flex items-center gap-1.5 sm:gap-2.5 text-xs sm:text-sm">
                       <span
                         className={`shrink-0 w-4 h-4 rounded-full ${p.dot} flex items-center justify-center`}
                       >

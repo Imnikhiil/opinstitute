@@ -55,7 +55,7 @@
   }
 
   .page-hero {
-    @apply relative pt-32 pb-20 bg-page-hero-gradient;
+    @apply relative pt-24 pb-14 sm:pt-32 sm:pb-20 bg-page-hero-gradient;
   }
 
   .gradient-text {
@@ -67,7 +67,7 @@
   }
 
   .section-padding {
-    @apply py-20 md:py-28;
+    @apply py-14 sm:py-20 md:py-28;
   }
 
   .container-custom {

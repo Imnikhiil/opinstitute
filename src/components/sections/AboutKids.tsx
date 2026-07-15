@@ -34,7 +34,7 @@ export function AboutKids() {
                   loading="lazy"
                 />
               </div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Welcome to <strong className="text-kids-600 dark:text-kids-400">OP Kids Pre School</strong> — 
                 where kids love to learn! Our play-based curriculum, caring teachers, and 
                 vibrant environment make learning natural and fun for children aged 2-6 years.
