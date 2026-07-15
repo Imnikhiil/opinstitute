@@ -1,18 +1,36 @@
 "use client";
 
+import Image from "next/image";
 import { Award, Briefcase, GraduationCap, Clock } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { leadership, type Leader } from "@/data/leadership";
+import { leadership as staticLeadership, type Leader } from "@/data/leadership";
 import { cn } from "@/lib/utils";
 
 function Avatar({ leader, size = "lg" }: { leader: Leader; size?: "md" | "lg" }) {
-  const dim = size === "lg" ? "w-14 h-14 text-xl" : "w-14 h-14 text-lg";
+  const dim = size === "lg" ? "w-14 h-14" : "w-14 h-14";
+  const textSize = size === "lg" ? "text-xl" : "text-lg";
+
+  if (leader.image) {
+    return (
+      <div className={cn("relative rounded-full overflow-hidden shadow-md shrink-0", dim)}>
+        <Image
+          src={leader.image}
+          alt={leader.name}
+          fill
+          sizes="56px"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
         "rounded-full flex items-center justify-center font-display font-bold text-white shadow-md shrink-0",
         dim,
+        textSize,
         leader.accent === "brand"
           ? "bg-gradient-to-br from-brand-500 to-brand-800"
           : "bg-gradient-to-br from-gold-400 to-gold-600"
@@ -158,11 +176,15 @@ export function LeadershipHighlight({
   title = "Our Leadership",
   subtitle = "The people who guide OP Institute and OP Kids every day",
   badge = "Leadership",
+  leaders,
 }: {
   title?: string;
   subtitle?: string;
   badge?: string;
+  leaders?: Leader[];
 }) {
+  const data = leaders && leaders.length > 0 ? leaders : staticLeadership;
+
   return (
     <div>
       <ScrollReveal>
@@ -175,7 +197,7 @@ export function LeadershipHighlight({
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-        {leadership.map((leader, i) => (
+        {data.map((leader, i) => (
           <LeaderCard key={leader.id} leader={leader} delay={i * 0.08} />
         ))}
       </div>
@@ -184,10 +206,12 @@ export function LeadershipHighlight({
 }
 
 /** Compact strip for home / about teasers */
-export function LeadershipStrip() {
+export function LeadershipStrip({ leaders }: { leaders?: Leader[] }) {
+  const data = leaders && leaders.length > 0 ? leaders : staticLeadership;
+
   return (
     <div className="grid sm:grid-cols-2 gap-3">
-      {leadership.map((leader) => (
+      {data.map((leader) => (
         <div
           key={leader.id}
           className="flex items-center gap-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 p-3.5"

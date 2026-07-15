@@ -4,6 +4,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
 import { aboutContent } from "@/data/site";
+import { getLeadership } from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -11,7 +12,10 @@ export const metadata: Metadata = {
     "Learn about OP Institute of Studies — our history, vision, mission, and values. Meet Founder Om Prakash and Academic & Management Head Meenakshi.",
 };
 
-export default function AboutPage() {
+export const revalidate = 60;
+
+export default async function AboutPage() {
+  const leaders = await getLeadership();
   return (
     <>
       <section className="page-hero">
@@ -81,6 +85,7 @@ export default function AboutPage() {
             badge="Leadership"
             title="Messages from Our Leaders"
             subtitle="Founder Om Prakash and Meenakshi — the team that leads and manages OP Institute every day"
+            leaders={leaders}
           />
         </div>
       </section>

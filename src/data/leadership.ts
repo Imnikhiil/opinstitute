@@ -14,6 +14,7 @@ export interface Leader {
   since?: string;
   stats: LeaderStat[];
   message: string;
+  image?: string;
   initials: string;
   accent: "brand" | "gold";
 }

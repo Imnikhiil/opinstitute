@@ -1,6 +1,7 @@
 import { createPublicClient } from "@/lib/supabase/public-client";
 import { courses as staticCourses, type Course } from "@/data/courses";
 import { faculty as staticFaculty, type FacultyMember } from "@/data/faculty";
+import { leadership as staticLeadership, type Leader } from "@/data/leadership";
 import { testimonials as staticTestimonials, type Testimonial } from "@/data/testimonials";
 import { events as staticEvents, type Event } from "@/data/events";
 import { galleryImages as staticGallery, type GalleryImage } from "@/data/gallery";
@@ -43,6 +44,29 @@ function mapFaculty(row: Row): FacultyMember {
     image:
       image ||
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+  };
+}
+
+function mapLeader(row: Row): Leader {
+  const image = str(row.image_url);
+  const credentials = row.credentials;
+  const statsRaw = row.stats;
+  return {
+    id: str(row.id),
+    name: str(row.name),
+    title: str(row.title),
+    organization: str(row.organization),
+    credentials: Array.isArray(credentials) ? (credentials as string[]) : [],
+    experience: str(row.experience),
+    education: str(row.education),
+    since: str(row.since_year) || undefined,
+    stats: Array.isArray(statsRaw)
+      ? (statsRaw as { value: string; label: string }[])
+      : [],
+    message: str(row.message),
+    image: image || undefined,
+    initials: str(row.initials),
+    accent: (row.accent as Leader["accent"]) || "brand",
   };
 }
 
@@ -107,6 +131,11 @@ export async function getCourses(): Promise<Course[]> {
 export async function getFaculty(): Promise<FacultyMember[]> {
   const rows = await fetchTable("faculty");
   return rows.length ? rows.map(mapFaculty) : staticFaculty;
+}
+
+export async function getLeadership(): Promise<Leader[]> {
+  const rows = await fetchTable("leadership");
+  return rows.length ? rows.map(mapLeader) : staticLeadership;
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {

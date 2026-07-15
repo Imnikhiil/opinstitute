@@ -10,8 +10,7 @@ import {
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
-import { getFaculty } from "@/lib/supabase/public-data";
-import { leadership } from "@/data/leadership";
+import { getFaculty, getLeadership } from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "Faculty",
@@ -22,11 +21,13 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function FacultyPage() {
-  const allFaculty = await getFaculty();
+  const [allFaculty, leaders] = await Promise.all([
+    getFaculty(),
+    getLeadership(),
+  ]);
   const leaderNames = new Set(
-    leadership.map((l) => l.name.trim().toLowerCase())
+    leaders.map((l) => l.name.trim().toLowerCase())
   );
-  // Leadership is featured separately; hide duplicates if added in admin
   const faculty = allFaculty.filter(
     (m) => !leaderNames.has(m.name.trim().toLowerCase())
   );
@@ -51,6 +52,7 @@ export default async function FacultyPage() {
             badge="Leadership"
             title="Founder & Management"
             subtitle="Om Prakash and Meenakshi — the faces that guide and run the institute"
+            leaders={leaders}
           />
         </div>
       </section>
