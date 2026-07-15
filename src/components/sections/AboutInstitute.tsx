@@ -13,7 +13,7 @@ export function AboutInstitute() {
   return (
     <section id="about" className="section-padding">
       <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           <ScrollReveal direction="left">
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-br from-brand-500/20 to-transparent rounded-3xl" />

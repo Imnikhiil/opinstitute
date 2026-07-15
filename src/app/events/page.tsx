@@ -27,10 +27,10 @@ export default async function EventsPage() {
     <>
       <section className="page-hero">
         <div className="container-custom relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-900 mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900 mb-3 sm:mb-4">
             Events & Activities
           </h1>
-          <p className="text-[#666666] text-lg max-w-2xl">
+          <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
             Stay updated with our academic programs, celebrations, and campus activities.
           </p>
         </div>
@@ -57,7 +57,7 @@ export default async function EventsPage() {
 
                   <div className="md:w-1/2 pl-12 md:pl-0">
                     <div className="glass-card overflow-hidden hover:shadow-card-hover transition-shadow">
-                      <div className="relative h-48">
+                      <div className="relative h-40 sm:h-48">
                         <Image
                           src={event.image}
                           alt={event.title}
@@ -65,8 +65,8 @@ export default async function EventsPage() {
                           className="object-cover"
                         />
                       </div>
-                      <div className="p-6">
-                        <div className="flex items-center gap-3 mb-2">
+                      <div className="p-4 sm:p-6">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                           <span
                             className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${typeColors[event.type]}`}
                           >
@@ -77,7 +77,7 @@ export default async function EventsPage() {
                             {event.date}
                           </span>
                         </div>
-                        <h3 className="font-display font-bold text-xl mb-2">
+                        <h3 className="font-display font-bold text-lg sm:text-xl mb-1.5 sm:mb-2">
                           {event.title}
                         </h3>
                         <p className="text-muted-foreground text-sm">

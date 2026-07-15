@@ -24,7 +24,7 @@ export function ContactSection() {
           />
         </ScrollReveal>
 
-        <div className="grid lg:grid-cols-5 gap-8">
+        <div className="grid lg:grid-cols-5 gap-6 sm:gap-8">
           <ScrollReveal direction="left" className="lg:col-span-2">
             <div className="space-y-4">
               {campuses.map((campus) => (
@@ -101,7 +101,7 @@ export function ContactSection() {
           </ScrollReveal>
 
           <ScrollReveal direction="right" delay={0.2} className="lg:col-span-3">
-            <div className="glass-card p-6 md:p-8">
+            <div className="glass-card p-4 sm:p-6 md:p-8">
               <ContactForm />
             </div>
           </ScrollReveal>

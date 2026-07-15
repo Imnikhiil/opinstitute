@@ -29,10 +29,10 @@ export default async function FacultyPage() {
     <>
       <section className="page-hero">
         <div className="container-custom relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-900 mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900 mb-3 sm:mb-4">
             Our Faculty
           </h1>
-          <p className="text-[#666666] text-lg max-w-2xl">
+          <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
             Led by our Founder and Management Head — supported by passionate
             educators dedicated to every student&apos;s success.
           </p>
@@ -65,7 +65,7 @@ export default async function FacultyPage() {
               Admin Panel.
             </p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {faculty.map((member, index) => (
                 <ScrollReveal key={member.id} delay={index * 0.08}>
                   <div className="group glass-card overflow-hidden hover:shadow-card-hover transition-all hover:-translate-y-2">
@@ -79,8 +79,8 @@ export default async function FacultyPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <div className="p-5">
-                      <h3 className="font-display font-bold text-lg">
+                    <div className="p-3 sm:p-5">
+                      <h3 className="font-display font-bold text-sm sm:text-lg">
                         {member.name}
                       </h3>
                       <p className="text-brand-600 dark:text-brand-400 text-sm font-medium mt-0.5">

@@ -30,10 +30,10 @@ export default async function ContactPage() {
     <>
       <section className="page-hero">
         <div className="container-custom relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-900 mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900 mb-3 sm:mb-4">
             Contact Us
           </h1>
-          <p className="text-[#666666] text-lg max-w-2xl">
+          <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
             Two Google listings at Mahavir Enclave Part 2 — OP Institute and OP
             Kids, each with its own phone, email, and social links.
           </p>
@@ -43,7 +43,7 @@ export default async function ContactPage() {
       <section className="section-padding">
         <div className="container-custom">
           {/* Dual campus cards */}
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
             {campuses.map((campus, i) => (
               <ScrollReveal key={campus.id} delay={i * 0.08}>
                 <article
@@ -56,7 +56,7 @@ export default async function ContactPage() {
                 >
                   <div
                     className={cn(
-                      "px-6 py-4 border-b",
+                      "px-4 py-3 sm:px-6 sm:py-4 border-b",
                       campus.accent === "brand"
                         ? "bg-gradient-to-r from-brand-600 to-brand-700 text-white border-brand-700"
                         : "bg-gradient-to-r from-kids-500 to-kids-600 text-white border-kids-600"
@@ -65,7 +65,7 @@ export default async function ContactPage() {
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/75">
                       {campus.category}
                     </p>
-                    <h2 className="font-display text-xl font-bold mt-0.5">
+                    <h2 className="font-display text-lg sm:text-xl font-bold mt-0.5">
                       {campus.name}
                     </h2>
                     <p className="text-sm text-white/85 mt-1 flex items-center gap-1.5">
@@ -74,7 +74,7 @@ export default async function ContactPage() {
                     </p>
                   </div>
 
-                  <div className="p-6 space-y-4">
+                  <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                     <div className="flex items-start gap-3">
                       <MapPin
                         className={cn(
@@ -190,7 +190,7 @@ export default async function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="h-[220px] border-t border-gray-100 dark:border-white/5">
+                  <div className="h-[180px] sm:h-[220px] border-t border-gray-100 dark:border-white/5">
                     <iframe
                       src={campus.mapEmbed}
                       width="100%"
@@ -267,8 +267,8 @@ export default async function ContactPage() {
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.15}>
-              <div className="glass-card p-6 md:p-8 h-full">
-                <h2 className="font-display text-2xl font-bold mb-6">
+              <div className="glass-card p-4 sm:p-6 md:p-8 h-full">
+                <h2 className="font-display text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
                   Send a Message
                 </h2>
                 <ContactForm />

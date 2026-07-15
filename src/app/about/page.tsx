@@ -16,10 +16,10 @@ export default function AboutPage() {
     <>
       <section className="page-hero">
         <div className="container-custom relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-900 mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900 mb-3 sm:mb-4">
             About Us
           </h1>
-          <p className="text-[#666666] text-lg max-w-2xl">
+          <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
             Discover our journey, values, and the people behind OP Institute of
             Studies & OP Kids Pre School.
           </p>
@@ -46,7 +46,7 @@ export default function AboutPage() {
                   alt="OP Institute history"
                   width={600}
                   height={400}
-                  className="w-full h-[350px] object-cover"
+                  className="w-full h-[250px] sm:h-[300px] lg:h-[350px] object-cover"
                 />
               </div>
             </ScrollReveal>
@@ -58,16 +58,16 @@ export default function AboutPage() {
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-8">
             <ScrollReveal>
-              <div className="glass-card p-8 h-full">
+              <div className="glass-card p-5 sm:p-8 h-full">
                 <span className="text-brand-600 font-semibold text-sm">Vision</span>
-                <h2 className="font-display text-2xl font-bold mt-2 mb-4">Our Vision</h2>
+                <h2 className="font-display text-xl sm:text-2xl font-bold mt-2 mb-3 sm:mb-4">Our Vision</h2>
                 <p className="text-muted-foreground leading-relaxed">{aboutContent.vision}</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <div className="glass-card p-8 h-full">
+              <div className="glass-card p-5 sm:p-8 h-full">
                 <span className="text-brand-600 font-semibold text-sm">Mission</span>
-                <h2 className="font-display text-2xl font-bold mt-2 mb-4">Our Mission</h2>
+                <h2 className="font-display text-xl sm:text-2xl font-bold mt-2 mb-3 sm:mb-4">Our Mission</h2>
                 <p className="text-muted-foreground leading-relaxed">{aboutContent.mission}</p>
               </div>
             </ScrollReveal>
@@ -90,10 +90,10 @@ export default function AboutPage() {
           <ScrollReveal>
             <SectionHeader badge="Values" title="Our Core Values" />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {aboutContent.values.map((value, i) => (
               <ScrollReveal key={value.title} delay={i * 0.08}>
-                <div className="glass-card p-6 hover:shadow-card-hover transition-shadow">
+                <div className="glass-card p-5 sm:p-6 hover:shadow-card-hover transition-shadow">
                   <h3 className="font-display font-semibold text-lg text-brand-600 dark:text-brand-400 mb-2">
                     {value.title}
                   </h3>

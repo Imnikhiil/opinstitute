@@ -107,7 +107,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
   return (
     <>
       {/* Colorful Hero */}
-      <section className="relative pt-32 pb-32 overflow-hidden">
+      <section className="relative pt-24 pb-24 sm:pt-32 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-kids-400 via-accent-pink to-accent-purple bg-[length:200%_200%] animate-gradient-x" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')] opacity-60" />
 
@@ -155,7 +155,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.15, type: "spring", stiffness: 120 }}
               whileHover={{ rotate: [0, -2, 2, 0], transition: { duration: 0.5 } }}
-              className="mx-auto mb-8 inline-flex rounded-3xl bg-white p-5 md:p-7 shadow-2xl"
+              className="mx-auto mb-6 sm:mb-8 inline-flex rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 md:p-7 shadow-2xl"
             >
               <Image
                 src="/logos/op-kids-logo.png"
@@ -163,11 +163,11 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                 width={520}
                 height={280}
                 priority
-                className="h-auto w-[260px] md:w-[420px] object-contain"
+                className="h-auto w-[200px] sm:w-[260px] md:w-[420px] object-contain"
               />
             </motion.div>
             <h1 className="sr-only">OP Kids Pre School — Where Kids Love to Learn</h1>
-            <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-8">
+            <p className="text-white/90 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
               A magical world of colors, creativity, and joyful learning for
               children aged 2–6 years — where kids love to learn!
             </p>
@@ -195,7 +195,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
       {/* Quick stats band */}
       <section className="relative -mt-2 pb-4">
         <div className="container-custom">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {kidsStats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -204,13 +204,13 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -6 }}
-                className="group relative rounded-3xl bg-white dark:bg-gray-900 p-5 sm:p-6 text-center shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
+                className="group relative rounded-2xl sm:rounded-3xl bg-white dark:bg-gray-900 p-3 sm:p-5 md:p-6 text-center shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
               >
                 <div className="absolute inset-x-0 top-0 h-1 bg-kids-gradient" />
-                <div className="text-3xl sm:text-4xl mb-2 select-none transition-transform duration-300 group-hover:scale-110">
+                <div className="text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2 select-none transition-transform duration-300 group-hover:scale-110">
                   {stat.emoji}
                 </div>
-                <div className="font-display text-2xl sm:text-3xl font-bold kids-gradient-text">
+                <div className="font-display text-xl sm:text-2xl md:text-3xl font-bold kids-gradient-text">
                   <StatCounter end={stat.value} suffix={stat.suffix} />
                 </div>
                 <p className="mt-1 text-xs sm:text-sm font-medium text-muted-foreground leading-snug">
@@ -254,7 +254,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
             />
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
             {kidsFeatures.map((feature, index) => {
               const Icon = iconMap[feature.icon] || Puzzle;
               return (
@@ -269,7 +269,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   whileHover={{ y: -8 }}
-                  className="group relative rounded-2xl p-6 bg-white dark:bg-gray-900 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
+                  className="group relative rounded-2xl p-4 sm:p-6 bg-white dark:bg-gray-900 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
                 >
                   <div
                     className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.color}`}
@@ -286,14 +286,14 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                       ease: "easeInOut",
                       delay: index * 0.2,
                     }}
-                    className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}
+                    className={`relative w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}
                   >
-                    <Icon className="w-7 h-7 text-white" />
+                    <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
                   </motion.div>
-                  <h3 className="font-display font-semibold text-lg mb-2 relative">
+                  <h3 className="font-display font-semibold text-base sm:text-lg mb-1 sm:mb-2 relative">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed relative">
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed relative">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -315,7 +315,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
               variant="kids"
             />
           </ScrollReveal>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {preschoolPrograms.map((prog, i) => {
               const p = programPalettes[i % programPalettes.length];
               return (
@@ -330,7 +330,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   whileHover={{ y: -10 }}
-                  className="group relative bg-white dark:bg-gray-900 rounded-3xl p-6 pt-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
+                  className="group relative bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-4 pt-6 sm:p-6 sm:pt-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
                 >
                   <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${p.bar}`} />
                   <div className={`absolute -top-10 -right-10 w-28 h-28 rounded-full ${p.blob} blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -339,17 +339,17 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                   <motion.div
                     animate={{ y: [0, -6, 0] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.25 }}
-                    className="text-4xl mb-3 select-none transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6"
+                    className="text-2xl sm:text-4xl mb-2 sm:mb-3 select-none transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6"
                   >
                     {p.emoji}
                   </motion.div>
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 ${p.pill}`}>
+                  <span className={`inline-block px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold mb-1.5 sm:mb-2 ${p.pill}`}>
                     {prog.age}
                   </span>
-                  <h3 className={`font-display font-bold text-xl mb-2 transition-colors ${p.title}`}>
+                  <h3 className={`font-display font-bold text-base sm:text-xl mb-1 sm:mb-2 transition-colors ${p.title}`}>
                     {prog.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{prog.description}</p>
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">{prog.description}</p>
                 </motion.div>
               );
             })}
@@ -370,7 +370,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
               variant="kids"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {kidsCurriculum.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -379,7 +379,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -8 }}
-                className="group relative flex items-start gap-4 rounded-2xl bg-white dark:bg-gray-900 p-5 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
+                className="group relative flex items-start gap-3 sm:gap-4 rounded-2xl bg-white dark:bg-gray-900 p-4 sm:p-5 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden"
               >
                 <div
                   className={cn(
@@ -389,14 +389,14 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                 />
                 <div
                   className={cn(
-                    "shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center text-2xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 select-none",
+                    "shrink-0 w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br flex items-center justify-center text-xl sm:text-2xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 select-none",
                     item.color
                   )}
                 >
                   {item.emoji}
                 </div>
-                <div className="relative">
-                  <h3 className="font-display font-semibold text-lg mb-1">{item.title}</h3>
+                <div className="relative min-w-0">
+                  <h3 className="font-display font-semibold text-base sm:text-lg mb-1">{item.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {item.description}
                   </p>
@@ -421,7 +421,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
 
           <div className="relative">
             {/* Vertical timeline line */}
-            <div className="absolute left-[27px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-kids-400 via-accent-pink to-accent-purple" />
+            <div className="absolute left-[23px] sm:left-[27px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-kids-400 via-accent-pink to-accent-purple" />
 
             <div className="space-y-4">
               {kidsDayRoutine.map((step, i) => (
@@ -435,7 +435,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
                   className="relative flex items-center gap-4 sm:gap-5"
                 >
                   {/* Emoji node */}
-                  <div className="relative z-10 shrink-0 w-14 h-14 rounded-full bg-white dark:bg-gray-900 shadow-lg ring-4 ring-kids-100 dark:ring-kids-900/40 flex items-center justify-center text-2xl select-none">
+                  <div className="relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-gray-900 shadow-lg ring-4 ring-kids-100 dark:ring-kids-900/40 flex items-center justify-center text-xl sm:text-2xl select-none">
                     {step.emoji}
                   </div>
 
@@ -471,7 +471,7 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
               variant="kids"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[
               { src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80", label: "Creative Play", ring: "ring-amber-300" },
               { src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80", label: "Learning Together", ring: "ring-pink-300" },
@@ -596,10 +596,10 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
             >
               🎓
             </motion.div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
               Give Your Child the Best Start
             </h2>
-            <p className="text-white/90 mb-8 max-w-xl mx-auto">
+            <p className="text-white/90 mb-6 sm:mb-8 max-w-xl mx-auto text-sm sm:text-base">
               Limited seats available for 2025-26. Schedule a campus visit today!
             </p>
             <Link href="/admissions">

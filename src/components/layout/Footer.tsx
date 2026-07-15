@@ -137,11 +137,11 @@ export function Footer() {
         </div>
 
         {/* Dual brand channels — clear, not messy */}
-        <div className="mt-12 pt-8 border-t border-gray-800 grid sm:grid-cols-2 gap-6">
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 grid sm:grid-cols-2 gap-4 sm:gap-6">
           {channels.map((brand) => (
             <div
               key={brand.id}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+              className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5"
             >
               <p
                 className={`text-xs font-semibold uppercase tracking-[0.14em] mb-1 ${

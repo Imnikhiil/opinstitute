@@ -17,10 +17,10 @@ export default function AdmissionsPage() {
     <>
       <section className="page-hero">
         <div className="container-custom relative z-10">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-900 mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900 mb-3 sm:mb-4">
             Admissions
           </h1>
-          <p className="text-[#666666] text-lg max-w-2xl">
+          <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
             Begin your journey with OP Institute. Admissions open for 2025-26 academic year.
           </p>
         </div>
@@ -36,15 +36,15 @@ export default function AdmissionsPage() {
             />
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-10 sm:mb-16">
             {admissionSteps.map((step, i) => (
               <ScrollReveal key={step.step} delay={i * 0.1}>
-                <div className="glass-card p-6 text-center h-full">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">
+                <div className="glass-card p-4 sm:p-6 text-center h-full">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-white font-bold text-base sm:text-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     {step.step}
                   </div>
-                  <h3 className="font-display font-semibold text-lg mb-2">{step.title}</h3>
-                  <p className="text-muted-foreground text-sm">{step.description}</p>
+                  <h3 className="font-display font-semibold text-sm sm:text-lg mb-1 sm:mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm">{step.description}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -52,8 +52,8 @@ export default function AdmissionsPage() {
 
           <div className="grid lg:grid-cols-5 gap-8">
             <ScrollReveal direction="left" className="lg:col-span-3">
-              <div className="glass-card p-6 md:p-8">
-                <h2 className="font-display text-2xl font-bold mb-6">
+              <div className="glass-card p-4 sm:p-6 md:p-8">
+                <h2 className="font-display text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
                   Admission Enquiry Form
                 </h2>
                 <AdmissionForm />
