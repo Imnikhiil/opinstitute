@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Plus, Pencil, Trash2, X, Save, Upload, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { ImageCropper } from "@/components/admin/ImageCropper";
 
 export type FieldType =
   | "text"
@@ -49,6 +50,8 @@ export function CrudManager({
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState<Row>({});
+  const [cropFile, setCropFile] = useState<File | null>(null);
+  const [cropFieldName, setCropFieldName] = useState("");
 
   const openAdd = () => {
     const blank: Row = {};
@@ -219,6 +222,19 @@ export function CrudManager({
         </div>
       )}
 
+      {/* Image Crop Modal */}
+      {cropFile && (
+        <ImageCropper
+          file={cropFile}
+          aspect={4 / 5}
+          onCrop={(croppedFile) => {
+            setCropFile(null);
+            uploadImage(croppedFile, cropFieldName);
+          }}
+          onCancel={() => setCropFile(null)}
+        />
+      )}
+
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -337,7 +353,11 @@ export function CrudManager({
                             className="hidden"
                             onChange={(e) => {
                               const file = e.target.files?.[0];
-                              if (file) uploadImage(file, f.name);
+                              if (file) {
+                                setCropFile(file);
+                                setCropFieldName(f.name);
+                              }
+                              e.target.value = "";
                             }}
                           />
                         </label>
