@@ -8,11 +8,9 @@ import {
   ArrowRight,
   Baby,
   GraduationCap,
-  Sparkles,
   Trophy,
   Star,
   Users,
-  MousePointerClick,
 } from "lucide-react";
 
 type Side = "kids" | "institute" | null;
@@ -130,40 +128,6 @@ export function SplitHero() {
         </div>
       </motion.div>
 
-      {/* ---------------- MOBILE DIVIDER + EMBLEM ---------------- */}
-      <div className="lg:hidden relative z-20 flex justify-center -my-7">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.4, type: "spring", stiffness: 120 }}
-          className="flex flex-col items-center"
-        >
-          <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-white/30 blur-xl" />
-            <motion.span
-              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
-              className="absolute inset-0 rounded-full border-2 border-white"
-            />
-            <div className="relative w-14 h-14 rounded-full bg-white shadow-2xl flex items-center justify-center border-[3px] border-white">
-              <Image
-                src="/logos/op-institute-logo.png"
-                alt="O.P. Institute of Studies"
-                width={64}
-                height={64}
-                className="w-8 h-8 object-contain"
-              />
-            </div>
-          </div>
-          <div className="mt-1.5 px-3 py-0.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
-            <p className="text-[10px] font-bold text-brand-900 flex items-center gap-1 whitespace-nowrap">
-              <Sparkles className="w-3 h-3 text-accent-purple" />
-              One Family · Two Worlds
-            </p>
-          </div>
-        </motion.div>
-      </div>
-
       {/* ---------------- OP INSTITUTE SIDE ---------------- */}
       <motion.div
         onMouseEnter={() => setActive("institute")}
@@ -172,7 +136,7 @@ export function SplitHero() {
           flexGrow: active === "institute" ? 1.35 : active === "kids" ? 0.65 : 1,
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="group relative flex-1 min-h-[48svh] lg:min-h-full overflow-hidden"
+        className="group relative flex-1 min-h-[50svh] lg:min-h-full overflow-hidden"
       >
         <motion.div
           className="absolute inset-0"
@@ -205,7 +169,7 @@ export function SplitHero() {
           <Trophy className="w-10 h-10" />
         </motion.span>
 
-        <div className="relative z-10 h-full flex flex-col justify-center lg:justify-center px-5 sm:px-12 lg:px-16 pt-10 pb-8 sm:pt-14 sm:pb-24 lg:py-32 lg:items-end lg:text-right">
+        <div className="relative z-10 h-full flex flex-col justify-center px-5 sm:px-12 lg:px-16 pt-10 pb-10 sm:pt-14 sm:pb-14 lg:py-32 lg:items-end lg:text-right">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -261,50 +225,6 @@ export function SplitHero() {
           </motion.div>
         </div>
       </motion.div>
-
-      {/* ---------------- CENTER UNIFYING EMBLEM (Desktop only) ---------------- */}
-      <div className="pointer-events-none absolute inset-0 z-20 hidden lg:flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.4, type: "spring", stiffness: 120 }}
-          className="flex flex-col items-center"
-        >
-          <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-white/30 blur-xl" />
-            <motion.span
-              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
-              className="absolute inset-0 rounded-full border-2 border-white"
-            />
-            <div className="relative w-24 h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
-              <Image
-                src="/logos/op-institute-logo.png"
-                alt="O.P. Institute of Studies"
-                width={64}
-                height={64}
-                className="w-14 h-14 object-contain"
-              />
-            </div>
-          </div>
-          <div className="mt-3 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
-            <p className="text-sm font-bold text-brand-900 flex items-center gap-1.5 whitespace-nowrap">
-              <Sparkles className="w-3.5 h-3.5 text-accent-purple" />
-              One Family · Two Worlds
-            </p>
-          </div>
-
-          {/* Hover hint (desktop) */}
-          <motion.div
-            animate={{ opacity: active ? 0 : 1, y: active ? 6 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="mt-3 flex items-center gap-1.5 text-white/80 text-xs font-medium"
-          >
-            <MousePointerClick className="w-3.5 h-3.5" />
-            Hover a side to explore
-          </motion.div>
-        </motion.div>
-      </div>
 
       {/* Scroll-to-explore cue */}
       <motion.div
