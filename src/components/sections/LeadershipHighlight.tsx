@@ -8,17 +8,17 @@ import { leadership as staticLeadership, type Leader } from "@/data/leadership";
 import { cn } from "@/lib/utils";
 
 function Avatar({ leader, size = "lg" }: { leader: Leader; size?: "md" | "lg" }) {
-  const dim = size === "lg" ? "w-14 h-14" : "w-14 h-14";
-  const textSize = size === "lg" ? "text-xl" : "text-lg";
+  const dim = size === "lg" ? "w-20 h-20 sm:w-24 sm:h-24" : "w-14 h-14";
+  const textSize = size === "lg" ? "text-2xl sm:text-3xl" : "text-lg";
 
   if (leader.image) {
     return (
-      <div className={cn("relative rounded-full overflow-hidden shadow-md shrink-0", dim)}>
+      <div className={cn("relative rounded-full overflow-hidden shadow-lg ring-3 ring-gray-100 dark:ring-gray-800 shrink-0", dim)}>
         <Image
           src={leader.image}
           alt={leader.name}
           fill
-          sizes="56px"
+          sizes={size === "lg" ? "96px" : "56px"}
           className="object-cover"
         />
       </div>
@@ -28,7 +28,7 @@ function Avatar({ leader, size = "lg" }: { leader: Leader; size?: "md" | "lg" })
   return (
     <div
       className={cn(
-        "rounded-full flex items-center justify-center font-display font-bold text-white shadow-md shrink-0",
+        "rounded-full flex items-center justify-center font-display font-bold text-white shadow-lg shrink-0",
         dim,
         textSize,
         leader.accent === "brand"
