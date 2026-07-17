@@ -16,13 +16,17 @@ function Avatar({
 }) {
   const dim =
     size === "xl"
-      ? "w-28 h-28 sm:w-36 sm:h-36"
+      ? "w-32 h-32 sm:w-40 sm:h-40"
       : size === "lg"
-        ? "w-20 h-20 sm:w-24 sm:h-24"
+        ? "w-28 h-28 sm:w-32 sm:h-32"
         : "w-14 h-14";
   const textSize =
-    size === "xl" ? "text-3xl sm:text-4xl" : size === "lg" ? "text-2xl sm:text-3xl" : "text-lg";
-  const sizesAttr = size === "xl" ? "144px" : size === "lg" ? "96px" : "56px";
+    size === "xl"
+      ? "text-3xl sm:text-4xl"
+      : size === "lg"
+        ? "text-2xl sm:text-3xl"
+        : "text-lg";
+  const sizesAttr = size === "xl" ? "160px" : size === "lg" ? "128px" : "56px";
 
   if (leader.image) {
     return (
@@ -38,7 +42,7 @@ function Avatar({
           fill
           quality={90}
           sizes={sizesAttr}
-          className="object-cover object-top"
+          className="object-cover object-center"
         />
       </div>
     );
@@ -73,8 +77,8 @@ function FounderFeature({ leader }: { leader: Leader }) {
 
         <div className="relative grid sm:grid-cols-[auto_1fr] gap-5 sm:gap-6 p-5 sm:p-6 lg:p-7">
           {/* Portrait + identity */}
-          <div className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-3 sm:w-[140px] shrink-0">
-            <Avatar leader={leader} size="lg" />
+          <div className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-3 sm:w-[168px] shrink-0">
+            <Avatar leader={leader} size="xl" />
             <div className="sm:text-center min-w-0">
               <p className="font-display text-base sm:text-lg font-bold text-[#1d2951] dark:text-white leading-tight">
                 {leader.name}
@@ -165,10 +169,11 @@ function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number 
           )}
         />
 
-        <div className="px-5 sm:px-6 pt-5 sm:pt-6">
+        <div className="px-5 sm:px-6 pt-5 sm:pt-6 flex flex-col items-center text-center">
+          <Avatar leader={leader} size="xl" />
           <span
             className={cn(
-              "inline-block px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.12em]",
+              "inline-block mt-4 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.12em]",
               isBrand
                 ? "bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300"
                 : "bg-kids-50 text-kids-700 dark:bg-kids-950/40 dark:text-kids-300"
@@ -176,28 +181,22 @@ function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number 
           >
             {leader.organization}
           </span>
+          <p
+            className={cn(
+              "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] mt-3 mb-0.5",
+              isBrand
+                ? "text-brand-600 dark:text-brand-400"
+                : "text-gold-700 dark:text-gold-400"
+            )}
+          >
+            {leader.title}
+          </p>
+          <h3 className="font-display text-lg sm:text-xl font-bold text-[#1d2951] dark:text-white leading-tight">
+            {leader.name}
+          </h3>
         </div>
 
-        <div className="flex items-start gap-3.5 px-5 sm:px-6 pt-3 pb-0">
-          <Avatar leader={leader} />
-          <div className="min-w-0 flex-1">
-            <p
-              className={cn(
-                "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] mb-0.5",
-                isBrand
-                  ? "text-brand-600 dark:text-brand-400"
-                  : "text-gold-700 dark:text-gold-400"
-              )}
-            >
-              {leader.title}
-            </p>
-            <h3 className="font-display text-lg sm:text-xl font-bold text-[#1d2951] dark:text-white leading-tight">
-              {leader.name}
-            </h3>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-1.5 px-5 sm:px-6 mt-3">
+        <div className="flex flex-wrap justify-center gap-1.5 px-5 sm:px-6 mt-3">
           {leader.credentials.map((c) => (
             <span
               key={c}
