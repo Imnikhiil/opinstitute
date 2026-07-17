@@ -565,7 +565,7 @@ export function OpKidsPage({
                     <div className="relative flex flex-col items-center">
                       <div
                         className={cn(
-                          "relative w-full aspect-[3/4] max-w-[200px] mx-auto rounded-2xl overflow-hidden shadow-md mb-4 ring-2",
+                          "relative w-full h-36 sm:h-40 max-w-[160px] mx-auto rounded-xl overflow-hidden shadow-md mb-3 ring-2",
                           p.ring
                         )}
                       >
@@ -575,7 +575,7 @@ export function OpKidsPage({
                           fill
                           quality={90}
                           className="object-cover object-top"
-                          sizes="200px"
+                          sizes="160px"
                         />
                       </div>
                       <h3 className="font-display font-bold text-lg sm:text-xl">
