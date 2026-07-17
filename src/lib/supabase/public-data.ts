@@ -143,46 +143,99 @@ export async function getFaculty(): Promise<FacultyMember[]> {
   return rows.length ? rows.map(mapFaculty) : staticFaculty;
 }
 
+function isFounderLeader(leader: Pick<Leader, "name" | "title">) {
+  return /founder/i.test(leader.title) || /om\s*prakash/i.test(leader.name);
+}
+
+function isKidsManagement(leader: Pick<Leader, "title" | "organization">) {
+  return (
+    /academic|management/i.test(leader.title) &&
+    /kids|preschool/i.test(leader.organization)
+  );
+}
+
+function isInstituteManagement(leader: Pick<Leader, "title" | "organization">) {
+  return (
+    /academic|management/i.test(leader.title) &&
+    /institute/i.test(leader.organization) &&
+    !/kids|preschool/i.test(leader.organization)
+  );
+}
+
+function enrichLeader(leader: Leader): Leader {
+  const nameKey = leader.name.trim().toLowerCase();
+  const fallback =
+    staticLeadership.find((s) => s.name.trim().toLowerCase() === nameKey) ??
+    (nameKey === "mona"
+      ? staticLeadership.find((s) => s.id === "mona-kids")
+      : isKidsManagement(leader)
+        ? staticLeadership.find((s) => s.id === "mona-kids")
+        : isInstituteManagement(leader)
+          ? staticLeadership.find((s) => s.id === "institute-management-head")
+          : undefined);
+
+  const org = leader.organization.trim();
+  const combinedOrg = /institute/i.test(org) && /kids|preschool/i.test(org);
+
+  // Force kids-only label when this is clearly the preschool management head
+  let organization = org || fallback?.organization || "";
+  if (combinedOrg && isKidsManagement({ ...leader, organization: org })) {
+    organization = "OP Kids Pre School";
+  } else if (combinedOrg && fallback?.organization) {
+    organization = fallback.organization;
+  } else if (
+    nameKey === "mona" &&
+    (!organization || combinedOrg || /institute/i.test(organization))
+  ) {
+    organization = "OP Kids Pre School";
+  }
+
+  return {
+    ...leader,
+    message:
+      !leader.message.trim() ||
+      (fallback && leader.message.trim().length + 40 < fallback.message.length)
+        ? fallback?.message || leader.message
+        : leader.message,
+    organization,
+    credentials:
+      leader.credentials.length > 0
+        ? leader.credentials
+        : fallback?.credentials ?? [],
+    stats: leader.stats.length > 0 ? leader.stats : fallback?.stats ?? [],
+    initials: leader.initials || fallback?.initials || "?",
+    accent:
+      nameKey === "mona" || isKidsManagement({ ...leader, organization })
+        ? "gold"
+        : leader.accent || fallback?.accent || "brand",
+  };
+}
+
 export async function getLeadership(): Promise<Leader[]> {
   const rows = await fetchTable("leadership");
-  const mapped = rows.length ? rows.map(mapLeader) : staticLeadership;
+  const mapped = (rows.length ? rows.map(mapLeader) : staticLeadership).map(
+    enrichLeader
+  );
 
-  // Prefer richer static messages / org labels when DB copy is thin or outdated
-  return mapped.map((leader) => {
-    const nameKey = leader.name.trim().toLowerCase();
-    const fallback =
-      staticLeadership.find(
-        (s) => s.name.trim().toLowerCase() === nameKey
-      ) ??
-      (nameKey === "mona"
-        ? staticLeadership.find((s) => s.id === "mona-kids")
-        : undefined);
+  if (!rows.length) return mapped;
 
-    const org = leader.organization.trim();
-    const combinedOrg =
-      /institute/i.test(org) && /kids/i.test(org);
-
-    return {
-      ...leader,
-      message:
-        !leader.message.trim() ||
-        (fallback &&
-          leader.message.trim().length + 40 < fallback.message.length)
-          ? fallback?.message || leader.message
-          : leader.message,
-      organization:
-        combinedOrg && fallback?.organization
-          ? fallback.organization
-          : org || fallback?.organization || "",
-      credentials:
-        leader.credentials.length > 0
-          ? leader.credentials
-          : fallback?.credentials ?? [],
-      stats: leader.stats.length > 0 ? leader.stats : fallback?.stats ?? [],
-      initials: leader.initials || fallback?.initials || "?",
-      accent: leader.accent || fallback?.accent || "brand",
-    };
+  // Ensure both management heads always appear (DB may only have one of them yet)
+  const missing = staticLeadership.filter((s) => {
+    if (isFounderLeader(s)) {
+      return !mapped.some(isFounderLeader);
+    }
+    if (isKidsManagement(s)) {
+      return !mapped.some(isKidsManagement);
+    }
+    if (isInstituteManagement(s)) {
+      return !mapped.some(isInstituteManagement);
+    }
+    return !mapped.some(
+      (m) => m.name.trim().toLowerCase() === s.name.trim().toLowerCase()
+    );
   });
+
+  return [...mapped, ...missing.map(enrichLeader)];
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
