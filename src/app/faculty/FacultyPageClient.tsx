@@ -9,6 +9,7 @@ import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
 import {
   facultyCategories,
   facultyCategoryLabels,
+  FACULTY_PHOTO_ASPECT,
   type FacultyCategory,
   type FacultyMember,
 } from "@/data/faculty";
@@ -24,41 +25,45 @@ function parseCategory(value: string | null | undefined): FilterId {
 
 function FacultyCard({ member }: { member: FacultyMember }) {
   return (
-    <div className="group glass-card overflow-hidden hover:shadow-card-hover transition-all hover:-translate-y-0.5 rounded-xl h-full flex flex-col">
-      <div className="relative w-full h-36 sm:h-40 overflow-hidden bg-gray-100 dark:bg-gray-800">
+    <div className="group glass-card overflow-hidden hover:shadow-card-hover transition-all hover:-translate-y-0.5 rounded-xl h-full flex flex-col max-w-[220px] w-full mx-auto">
+      {/* Same ratio as admin crop (4:5) so faces match upload */}
+      <div
+        className="relative w-full overflow-hidden bg-gray-100 dark:bg-gray-800"
+        style={{ aspectRatio: String(FACULTY_PHOTO_ASPECT) }}
+      >
         <Image
           src={member.image}
           alt={member.name}
           fill
           quality={90}
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+          sizes="(max-width: 640px) 45vw, 220px"
+          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
 
-      <div className="flex flex-col flex-1 p-3 sm:p-3.5">
-        <h3 className="font-display font-bold text-sm sm:text-[15px] text-[#1d2951] dark:text-white leading-snug">
+      <div className="flex flex-col flex-1 p-2.5 sm:p-3">
+        <h3 className="font-display font-bold text-[13px] sm:text-sm text-[#1d2951] dark:text-white leading-snug">
           {member.name}
         </h3>
         {(member.department || member.subject) && (
-          <p className="text-brand-600 dark:text-brand-400 text-xs font-medium mt-0.5 line-clamp-1">
+          <p className="text-brand-600 dark:text-brand-400 text-[11px] sm:text-xs font-medium mt-0.5 line-clamp-1">
             {member.department || member.subject}
           </p>
         )}
-        <p className="text-muted-foreground text-[11px] sm:text-xs mt-1.5 leading-snug line-clamp-2">
+        <p className="text-muted-foreground text-[10px] sm:text-[11px] mt-1 leading-snug line-clamp-2">
           {[member.qualification, member.experience && `Experience: ${member.experience}`]
             .filter(Boolean)
             .join(", ")}
         </p>
 
         {member.achievement && (
-          <span className="mt-2 self-start inline-block px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] font-semibold">
+          <span className="mt-1.5 self-start inline-block px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[9px] font-semibold">
             {member.achievement}
           </span>
         )}
 
         {(member.subjects_taught || member.batch_handled) && (
-          <div className="mt-2 pt-2 border-t border-gray-100 dark:border-white/10 space-y-1 text-[11px] text-muted-foreground">
+          <div className="mt-1.5 pt-1.5 border-t border-gray-100 dark:border-white/10 space-y-0.5 text-[10px] sm:text-[11px] text-muted-foreground">
             {member.subjects_taught && (
               <p className="line-clamp-1">
                 <span className="font-medium text-foreground/70">Subjects: </span>
@@ -75,7 +80,7 @@ function FacultyCard({ member }: { member: FacultyMember }) {
         )}
 
         {member.quote && (
-          <p className="mt-2 text-[11px] text-muted-foreground italic leading-snug line-clamp-2">
+          <p className="mt-1.5 text-[10px] sm:text-[11px] text-muted-foreground italic leading-snug line-clamp-2">
             &ldquo;{member.quote}&rdquo;
           </p>
         )}
@@ -94,9 +99,9 @@ function FacultyGrid({ members }: { members: FacultyMember[] }) {
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 justify-items-center">
       {members.map((member, index) => (
-        <ScrollReveal key={member.id} delay={index * 0.05}>
+        <ScrollReveal key={member.id} delay={index * 0.05} className="w-full flex justify-center">
           <FacultyCard member={member} />
         </ScrollReveal>
       ))}

@@ -16,6 +16,9 @@ export interface FacultyMember {
   category: FacultyCategory;
 }
 
+/** width ÷ height — keep crop + website card in sync */
+export const FACULTY_PHOTO_ASPECT = 4 / 5;
+
 export const facultyCategories = [
   { id: "all" as const, label: "All Faculty" },
   { id: "preschool" as const, label: "OP KIDS PRE SCHOOL" },

@@ -7,19 +7,19 @@ type Props = {
   file: File;
   onCrop: (croppedFile: File) => void;
   onCancel: () => void;
-  /** Card photos use portrait — width/height */
+  /** Card photos use portrait — must match website faculty card (4/5) */
   aspect?: number;
 };
 
 /**
- * Easy photo adjuster: fixed preview frame, drag + zoom the image
- * (same idea as phone apps — without copying their UI).
+ * Easy photo adjuster: fixed preview frame, drag + zoom the image.
+ * Aspect ratio matches how the photo appears on the public site.
  */
 export function ImageCropper({
   file,
   onCrop,
   onCancel,
-  aspect = 3 / 4,
+  aspect = 4 / 5,
 }: Props) {
   const frameRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -325,8 +325,8 @@ export function ImageCropper({
               Adjust photo
             </h4>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-              Photo ko drag karke set karo, zoom se size badhao/ghatao. Jo frame
-              ke andar dikhega wahi website pe aayega.
+              Frame website card jaisa hai. Photo drag/zoom karke face center
+              me lao — jo is frame me dikhega wahi site pe aayega.
             </p>
           </div>
           <button

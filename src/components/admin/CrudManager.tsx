@@ -6,6 +6,7 @@ import { Plus, Pencil, Trash2, X, Save, Upload, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { ImageCropper } from "@/components/admin/ImageCropper";
+import { FACULTY_PHOTO_ASPECT } from "@/data/faculty";
 
 export type FieldType =
   | "text"
@@ -226,6 +227,15 @@ export function CrudManager({
       {cropFile && (
         <ImageCropper
           file={cropFile}
+          aspect={
+            config.table === "faculty"
+              ? FACULTY_PHOTO_ASPECT
+              : config.table === "leadership" || config.table === "testimonials"
+                ? 1
+                : config.table === "gallery"
+                  ? 4 / 3
+                  : FACULTY_PHOTO_ASPECT
+          }
           onCrop={(croppedFile) => {
             setCropFile(null);
             uploadImage(croppedFile, cropFieldName);

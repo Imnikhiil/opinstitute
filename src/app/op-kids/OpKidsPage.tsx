@@ -39,6 +39,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
 import type { FacultyMember } from "@/data/faculty";
+import { FACULTY_PHOTO_ASPECT } from "@/data/faculty";
 
 const iconMap: Record<string, LucideIcon> = {
   Puzzle,
@@ -565,16 +566,17 @@ export function OpKidsPage({
                     <div className="relative flex flex-col items-center">
                       <div
                         className={cn(
-                          "relative w-full h-36 sm:h-40 max-w-[160px] mx-auto rounded-xl overflow-hidden shadow-md mb-3 ring-2",
+                          "relative w-full max-w-[160px] mx-auto rounded-xl overflow-hidden shadow-md mb-3 ring-2",
                           p.ring
                         )}
+                        style={{ aspectRatio: String(FACULTY_PHOTO_ASPECT) }}
                       >
                         <Image
                           src={member.image}
                           alt={member.name}
                           fill
                           quality={90}
-                          className="object-cover object-top"
+                          className="object-cover object-center"
                           sizes="160px"
                         />
                       </div>
