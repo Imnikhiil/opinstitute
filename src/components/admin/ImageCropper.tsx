@@ -1,18 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, RotateCw, ZoomIn, ZoomOut } from "lucide-react";
+import { Check, RotateCw, X, ZoomIn, ZoomOut } from "lucide-react";
 
 type Props = {
   file: File;
   onCrop: (croppedFile: File) => void;
   onCancel: () => void;
-  /** width / height — faculty cards use portrait 3/4 */
+  /** Card photos use portrait — width/height */
   aspect?: number;
 };
 
 /**
- * WhatsApp-style cropper: fixed frame, drag/zoom the photo underneath.
+ * Easy photo adjuster: fixed preview frame, drag + zoom the image
+ * (same idea as phone apps — without copying their UI).
  */
 export function ImageCropper({
   file,
@@ -33,9 +34,7 @@ export function ImageCropper({
     origX: number;
     origY: number;
   } | null>(null);
-  const pinchRef = useRef<{ startDist: number; startZoom: number } | null>(
-    null
-  );
+  const pinchRef = useRef<{ startDist: number; startZoom: number } | null>(null);
 
   const [imgSrc, setImgSrc] = useState("");
   const [natural, setNatural] = useState({ w: 0, h: 0 });
@@ -64,13 +63,24 @@ export function ImageCropper({
     reader.readAsDataURL(file);
   }, [file]);
 
-  const minCover = useCallback((frameW: number, frameH: number, nw: number, nh: number) => {
-    if (!nw || !nh || !frameW || !frameH) return 1;
-    return Math.max(frameW / nw, frameH / nh);
-  }, []);
+  const minCover = useCallback(
+    (frameW: number, frameH: number, nw: number, nh: number) => {
+      if (!nw || !nh || !frameW || !frameH) return 1;
+      return Math.max(frameW / nw, frameH / nh);
+    },
+    []
+  );
 
   const clampOffset = useCallback(
-    (x: number, y: number, z: number, frameW: number, frameH: number, nw: number, nh: number) => {
+    (
+      x: number,
+      y: number,
+      z: number,
+      frameW: number,
+      frameH: number,
+      nw: number,
+      nh: number
+    ) => {
       const scale = minCover(frameW, frameH, nw, nh) * z;
       const drawW = nw * scale;
       const drawH = nh * scale;
@@ -85,11 +95,9 @@ export function ImageCropper({
   const fitToFrame = useCallback(
     (frameW: number, frameH: number, nw: number, nh: number) => {
       const cover = minCover(frameW, frameH, nw, nh);
-      const drawW = nw * cover;
-      const drawH = nh * cover;
       const next = {
-        x: (frameW - drawW) / 2,
-        y: (frameH - drawH) / 2,
+        x: (frameW - nw * cover) / 2,
+        y: (frameH - nh * cover) / 2,
       };
       setZoom(1);
       setOffset(next);
@@ -127,9 +135,7 @@ export function ImageCropper({
     setNatural(next);
   };
 
-  const cover = frame.w
-    ? minCover(frame.w, frame.h, natural.w, natural.h)
-    : 1;
+  const cover = frame.w ? minCover(frame.w, frame.h, natural.w, natural.h) : 1;
   const scale = cover * zoom;
 
   const applyZoom = (nextZoom: number, centerX?: number, centerY?: number) => {
@@ -139,17 +145,14 @@ export function ImageCropper({
 
     const coverNow = minCover(frameW, frameH, nw, nh);
     const z = Math.min(4, Math.max(1, nextZoom));
-    const prevZ = zoomRef.current;
-    const prevScale = coverNow * prevZ;
+    const prevScale = coverNow * zoomRef.current;
     const nextScale = coverNow * z;
     const fx = centerX ?? frameW / 2;
     const fy = centerY ?? frameH / 2;
     const { x: ox, y: oy } = offsetRef.current;
-    const imgX = (fx - ox) / prevScale;
-    const imgY = (fy - oy) / prevScale;
     const nextOffset = clampOffset(
-      fx - imgX * nextScale,
-      fy - imgY * nextScale,
+      fx - ((fx - ox) / prevScale) * nextScale,
+      fy - ((fy - oy) / prevScale) * nextScale,
       z,
       frameW,
       frameH,
@@ -200,7 +203,7 @@ export function ImageCropper({
     if (!frameRef.current) return;
     const rect = frameRef.current.getBoundingClientRect();
     applyZoom(
-      zoomRef.current + (e.deltaY > 0 ? -0.12 : 0.12),
+      zoomRef.current + (e.deltaY > 0 ? -0.1 : 0.1),
       e.clientX - rect.left,
       e.clientY - rect.top
     );
@@ -208,13 +211,10 @@ export function ImageCropper({
 
   useEffect(() => {
     const el = frameRef.current;
-    if (!el) return;
+    if (!el || !ready) return;
 
     const dist = (t: TouchList) =>
-      Math.hypot(
-        t[0].clientX - t[1].clientX,
-        t[0].clientY - t[1].clientY
-      );
+      Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
 
     const onTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
@@ -229,15 +229,11 @@ export function ImageCropper({
       if (e.touches.length === 2 && pinchRef.current && frameRef.current) {
         e.preventDefault();
         const rect = frameRef.current.getBoundingClientRect();
-        const cx =
-          (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-        const cy =
-          (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
         applyZoom(
           pinchRef.current.startZoom *
             (dist(e.touches) / pinchRef.current.startDist),
-          cx,
-          cy
+          (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left,
+          (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top
         );
       }
     };
@@ -253,7 +249,7 @@ export function ImageCropper({
       el.removeEventListener("touchmove", onTouchMove);
       el.removeEventListener("touchend", onTouchEnd);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- listeners use refs
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
 
   const handleRotate = () => {
@@ -266,10 +262,15 @@ export function ImageCropper({
     ctx.translate(canvas.width, 0);
     ctx.rotate(Math.PI / 2);
     ctx.drawImage(img, 0, 0);
-    const data = canvas.toDataURL("image/jpeg", 0.95);
     setReady(false);
-    setImgSrc(data);
-    // natural size updates on next image load
+    setImgSrc(canvas.toDataURL("image/jpeg", 0.95));
+  };
+
+  const handleReset = () => {
+    const { w: frameW, h: frameH } = frameSizeRef.current;
+    const { w: nw, h: nh } = naturalRef.current;
+    if (!frameW || !nw) return;
+    fitToFrame(frameW, frameH, nw, nh);
   };
 
   const handleDone = async () => {
@@ -285,11 +286,10 @@ export function ImageCropper({
       canvas.width = outW;
       canvas.height = outH;
       const ctx = canvas.getContext("2d")!;
-      ctx.fillStyle = "#111";
+      ctx.fillStyle = "#f3f4f6";
       ctx.fillRect(0, 0, outW, outH);
 
-      const coverNow = minCover(frameW, frameH, nw, nh);
-      const drawScale = coverNow * zoomRef.current;
+      const drawScale = minCover(frameW, frameH, nw, nh) * zoomRef.current;
       const fx = outW / frameW;
       const fy = outH / frameH;
       const { x, y } = offsetRef.current;
@@ -317,112 +317,120 @@ export function ImageCropper({
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex flex-col bg-black">
-      <div className="flex items-center justify-between px-4 py-3 shrink-0">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="text-green-400 font-semibold text-sm px-1 py-1"
-        >
-          Cancel
-        </button>
-        <p className="text-white/70 text-xs sm:text-sm text-center px-2">
-          Photo ko move / zoom karo — WhatsApp jaisa
-        </p>
-        <button
-          type="button"
-          onClick={handleDone}
-          disabled={busy || !ready}
-          className="text-green-400 font-semibold text-sm px-1 py-1 disabled:opacity-40"
-        >
-          {busy ? "…" : "Done"}
-        </button>
-      </div>
-
-      <div className="flex-1 flex items-center justify-center px-4 min-h-0">
-        <div
-          className="relative w-full max-w-[340px] sm:max-w-[380px]"
-          style={{ aspectRatio: `${aspect}` }}
-        >
-          <div className="absolute -inset-10 bg-black pointer-events-none" />
-
-          <div
-            ref={frameRef}
-            className="absolute inset-0 overflow-hidden bg-neutral-900 touch-none cursor-grab active:cursor-grabbing select-none"
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
-            onWheel={onWheel}
-          >
-            {imgSrc && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                ref={imgRef}
-                src={imgSrc}
-                alt="Crop"
-                draggable={false}
-                onLoad={onImageLoad}
-                className="absolute top-0 left-0 max-w-none pointer-events-none will-change-transform"
-                style={{
-                  width: natural.w || undefined,
-                  height: natural.h || undefined,
-                  transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
-                  transformOrigin: "top left",
-                }}
-              />
-            )}
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 bg-black/55 backdrop-blur-sm">
+      <div className="w-full max-w-lg bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col max-h-[92vh]">
+        <div className="flex items-start justify-between gap-3 px-5 py-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
+          <div>
+            <h4 className="font-display font-bold text-base text-[#1d2951] dark:text-white">
+              Adjust photo
+            </h4>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              Photo ko drag karke set karo, zoom se size badhao/ghatao. Jo frame
+              ke andar dikhega wahi website pe aayega.
+            </p>
           </div>
-
-          {/* WhatsApp frame: white border, grid, L-corners */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 grid grid-cols-3 grid-rows-3">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="border border-white/30" />
-              ))}
-            </div>
-            <div className="absolute inset-0 border border-white/90" />
-            <span className="absolute top-0 left-0 w-7 h-7 border-t-[3px] border-l-[3px] border-white" />
-            <span className="absolute top-0 right-0 w-7 h-7 border-t-[3px] border-r-[3px] border-white" />
-            <span className="absolute bottom-0 left-0 w-7 h-7 border-b-[3px] border-l-[3px] border-white" />
-            <span className="absolute bottom-0 right-0 w-7 h-7 border-b-[3px] border-r-[3px] border-white" />
-          </div>
-        </div>
-      </div>
-
-      <div className="shrink-0 px-4 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <div className="flex items-center justify-center gap-8 mb-5">
-          <button
-            type="button"
-            onClick={() => applyZoom(zoomRef.current - 0.2)}
-            className="w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center"
-            aria-label="Zoom out"
-          >
-            <ZoomOut className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            onClick={handleRotate}
-            className="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center"
-            aria-label="Rotate"
-          >
-            <RotateCw className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => applyZoom(zoomRef.current + 0.2)}
-            className="w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center"
-            aria-label="Zoom in"
-          >
-            <ZoomIn className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="flex items-center justify-between max-w-sm mx-auto">
           <button
             type="button"
             onClick={onCancel}
-            className="text-green-400 font-semibold text-base px-2 py-2"
+            className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition shrink-0"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="p-5 flex flex-col items-center gap-4 overflow-y-auto">
+          <div
+            className="relative w-full max-w-[280px] rounded-xl overflow-hidden shadow-lg ring-1 ring-black/10"
+            style={{ aspectRatio: `${aspect}` }}
+          >
+            <div
+              ref={frameRef}
+              className="absolute inset-0 overflow-hidden bg-gray-200 dark:bg-gray-800 touch-none cursor-grab active:cursor-grabbing select-none"
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
+              onWheel={onWheel}
+            >
+              {imgSrc && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  ref={imgRef}
+                  src={imgSrc}
+                  alt="Photo preview"
+                  draggable={false}
+                  onLoad={onImageLoad}
+                  className="absolute top-0 left-0 max-w-none pointer-events-none will-change-transform"
+                  style={{
+                    width: natural.w || undefined,
+                    height: natural.h || undefined,
+                    transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
+                    transformOrigin: "top left",
+                  }}
+                />
+              )}
+            </div>
+
+            <div className="absolute inset-0 pointer-events-none rounded-xl ring-2 ring-brand-500/80" />
+            <div className="absolute inset-3 border border-dashed border-white/70 rounded-lg pointer-events-none" />
+          </div>
+
+          <div className="w-full max-w-[280px] space-y-3">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => applyZoom(zoomRef.current - 0.15)}
+                className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700"
+                aria-label="Zoom out"
+              >
+                <ZoomOut className="w-4 h-4" />
+              </button>
+              <input
+                type="range"
+                min={1}
+                max={4}
+                step={0.01}
+                value={zoom}
+                onChange={(e) => applyZoom(Number(e.target.value))}
+                className="flex-1 accent-brand-600"
+                aria-label="Zoom"
+              />
+              <button
+                type="button"
+                onClick={() => applyZoom(zoomRef.current + 0.15)}
+                className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700"
+                aria-label="Zoom in"
+              >
+                <ZoomIn className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={handleRotate}
+                className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                <RotateCw className="w-3.5 h-3.5" />
+                Rotate
+              </button>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="flex-1 px-3 py-2 rounded-xl text-xs font-medium bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-2 px-5 py-4 border-t border-gray-100 dark:border-gray-800 shrink-0">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
           >
             Cancel
           </button>
@@ -430,10 +438,10 @@ export function ImageCropper({
             type="button"
             onClick={handleDone}
             disabled={busy || !ready}
-            className="inline-flex items-center gap-1.5 text-green-400 font-semibold text-base px-2 py-2 disabled:opacity-40"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold bg-brand-600 text-white hover:bg-brand-700 disabled:opacity-50"
           >
-            <Check className="w-5 h-5" />
-            {busy ? "Saving…" : "Done"}
+            <Check className="w-4 h-4" />
+            {busy ? "Saving…" : "Save photo"}
           </button>
         </div>
       </div>
