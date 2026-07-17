@@ -30,6 +30,15 @@ function mapCourse(row: Row): Course {
 
 function mapFaculty(row: Row): FacultyMember {
   const image = str(row.image_url);
+  const rawCategory = str(row.category).toLowerCase();
+  const subjectHint = `${str(row.subject)} ${str(row.department)}`.toLowerCase();
+  const category: FacultyMember["category"] =
+    rawCategory === "preschool" ||
+    (!rawCategory &&
+      (subjectHint.includes("kids") || subjectHint.includes("preschool")))
+      ? "preschool"
+      : "institute";
+
   return {
     id: str(row.id),
     name: str(row.name),
@@ -41,6 +50,7 @@ function mapFaculty(row: Row): FacultyMember {
     batch_handled: str(row.batch_handled),
     achievement: str(row.achievement),
     quote: str(row.quote),
+    category,
     image:
       image ||
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",

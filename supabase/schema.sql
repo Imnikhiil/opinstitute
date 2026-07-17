@@ -42,6 +42,7 @@ create table if not exists public.faculty (
   subject       text,
   image_url     text,
   linkedin      text,
+  category      text default 'institute',            -- preschool | institute
   sort_order    int default 0,
   created_at    timestamptz not null default now()
 );

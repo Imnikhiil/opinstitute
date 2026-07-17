@@ -36,15 +36,15 @@ insert into public.courses (name, description, duration, eligibility, features, 
 ('Class XI & XII (Commerce)', 'Specialized coaching for Class 11 & 12 Commerce students — Accountancy, Business Studies, Economics — building the base for CMA & B.Com.', '1 – 2 Years', 'Class 11 & 12 Commerce students', array['Accountancy & Economics','Business Studies','Board pattern papers','Career counselling','Doubt sessions'], 'school', false, 5);
 
 -- Faculty
-insert into public.faculty (name, qualification, experience, subject, image_url, linkedin, sort_order) values
-('CA Amit Verma', 'Chartered Accountant (FCA)', '18 Years', 'Accountancy & CA', 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80', '#', 1),
-('CS Sunita Rao', 'Company Secretary (ACS)', '15 Years', 'Company Law & CS', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80', '#', 2),
-('Mr. Vikram Singh', 'M.Com, CMA', '12 Years', 'Cost Accounting & CMA', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', '#', 3),
-('Dr. Neha Gupta', 'M.A. Economics, Ph.D.', '10 Years', 'Economics', 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80', '#', 4),
-('Mrs. Anjali Mehta', 'M.A. English, B.Ed.', '14 Years', 'English', 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80', null, 5),
-('Mr. Ravi Shankar', 'M.Com, MBA (Finance)', '11 Years', 'Business Studies & B.Com', 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80', '#', 6),
-('Mrs. Kavita Joshi', 'M.Ed., Early Childhood Education', '8 Years', 'OP Kids – Preschool', 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', null, 7),
-('Mr. Deepak Malhotra', 'M.Sc. Mathematics, B.Ed.', '9 Years', 'Mathematics (School)', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', '#', 8);
+insert into public.faculty (name, qualification, experience, subject, image_url, linkedin, category, sort_order) values
+('CA Amit Verma', 'Chartered Accountant (FCA)', '18 Years', 'Accountancy & CA', 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80', '#', 'institute', 1),
+('CS Sunita Rao', 'Company Secretary (ACS)', '15 Years', 'Company Law & CS', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80', '#', 'institute', 2),
+('Mr. Vikram Singh', 'M.Com, CMA', '12 Years', 'Cost Accounting & CMA', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', '#', 'institute', 3),
+('Dr. Neha Gupta', 'M.A. Economics, Ph.D.', '10 Years', 'Economics', 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80', '#', 'institute', 4),
+('Mrs. Anjali Mehta', 'M.A. English, B.Ed.', '14 Years', 'English', 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80', null, 'institute', 5),
+('Mr. Ravi Shankar', 'M.Com, MBA (Finance)', '11 Years', 'Business Studies & B.Com', 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80', '#', 'institute', 6),
+('Mrs. Kavita Joshi', 'M.Ed., Early Childhood Education', '8 Years', 'OP Kids – Preschool', 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', null, 'preschool', 7),
+('Mr. Deepak Malhotra', 'M.Sc. Mathematics, B.Ed.', '9 Years', 'Mathematics (School)', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', '#', 'institute', 8);
 
 -- Testimonials
 insert into public.testimonials (name, role, content, rating, image_url, category, sort_order) values
