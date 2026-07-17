@@ -38,6 +38,7 @@ import {
 } from "@/data/site";
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
+import type { FacultyMember } from "@/data/faculty";
 
 const iconMap: Record<string, LucideIcon> = {
   Puzzle,
@@ -101,7 +102,20 @@ const floatingEmojis = [
   { e: "🌈", cls: "bottom-[12%] left-[38%] text-4xl", dur: 8, y: 14 },
 ];
 
-export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
+const teacherPalettes = [
+  { ring: "ring-amber-200", blob: "bg-amber-300/30", accent: "text-amber-600" },
+  { ring: "ring-pink-200", blob: "bg-pink-300/30", accent: "text-pink-600" },
+  { ring: "ring-violet-200", blob: "bg-violet-300/30", accent: "text-violet-600" },
+  { ring: "ring-sky-200", blob: "bg-sky-300/30", accent: "text-sky-600" },
+];
+
+export function OpKidsPage({
+  testimonials,
+  faculty,
+}: {
+  testimonials: Testimonial[];
+  faculty: FacultyMember[];
+}) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
@@ -503,6 +517,111 @@ export function OpKidsPage({ testimonials }: { testimonials: Testimonial[] }) {
           </div>
         </div>
       </section>
+
+      {/* OP Kids Faculty */}
+      {faculty.length > 0 && (
+        <section className="section-padding relative overflow-hidden bg-gradient-to-br from-kids-50 via-pink-50 to-purple-50 dark:from-kids-950/20 dark:via-pink-950/10 dark:to-purple-950/10">
+          <div className="absolute top-10 left-[6%] w-64 h-64 rounded-full bg-kids-300/15 blur-3xl" />
+          <div className="absolute bottom-10 right-[8%] w-72 h-72 rounded-full bg-accent-pink/15 blur-3xl" />
+          <div className="container-custom relative">
+            <ScrollReveal>
+              <SectionHeader
+                badge="Our Teachers"
+                title="Meet the OP Kids Faculty"
+                subtitle="Caring educators who make every day joyful, safe, and full of discovery"
+                variant="kids"
+              />
+            </ScrollReveal>
+
+            <div
+              className={cn(
+                "grid gap-4 sm:gap-6",
+                faculty.length === 1
+                  ? "grid-cols-1 max-w-sm mx-auto"
+                  : faculty.length === 2
+                    ? "grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
+                    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              )}
+            >
+              {faculty.map((member, i) => {
+                const p = teacherPalettes[i % teacherPalettes.length];
+                return (
+                  <motion.div
+                    key={member.id}
+                    initial={{ opacity: 0, y: 36, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{
+                      duration: 0.55,
+                      delay: i * 0.1,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    whileHover={{ y: -8 }}
+                    className="group relative bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden text-center"
+                  >
+                    <div
+                      className={`absolute -top-12 -right-12 w-32 h-32 rounded-full ${p.blob} blur-2xl opacity-60 group-hover:opacity-100 transition-opacity`}
+                    />
+                    <div className="relative flex flex-col items-center">
+                      <div
+                        className={cn(
+                          "relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 shadow-md mb-4",
+                          p.ring
+                        )}
+                      >
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          className="object-cover"
+                          sizes="112px"
+                        />
+                      </div>
+                      <h3 className="font-display font-bold text-lg sm:text-xl">
+                        {member.name}
+                      </h3>
+                      {(member.department || member.subject) && (
+                        <p
+                          className={cn(
+                            "text-sm font-semibold mt-1",
+                            p.accent
+                          )}
+                        >
+                          {member.department || member.subject}
+                        </p>
+                      )}
+                      {member.qualification && (
+                        <p className="text-muted-foreground text-xs sm:text-sm mt-2 leading-relaxed">
+                          {member.qualification}
+                        </p>
+                      )}
+                      {member.experience && (
+                        <span className="mt-3 inline-block px-3 py-1 rounded-full bg-kids-100 text-kids-700 dark:bg-kids-900/40 dark:text-kids-300 text-xs font-semibold">
+                          {member.experience} experience
+                        </span>
+                      )}
+                      {member.quote && (
+                        <p className="mt-4 text-xs sm:text-sm text-muted-foreground italic leading-relaxed border-t border-gray-100 dark:border-white/10 pt-4">
+                          &ldquo;{member.quote}&rdquo;
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 sm:mt-10 text-center">
+              <Link href="/faculty?category=preschool">
+                <Button variant="kids" className="group rounded-full">
+                  View Full Faculty Profiles
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Parent Testimonials */}
       <Testimonials
