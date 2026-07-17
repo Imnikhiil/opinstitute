@@ -226,7 +226,6 @@ export function CrudManager({
       {cropFile && (
         <ImageCropper
           file={cropFile}
-          aspect={4 / 5}
           onCrop={(croppedFile) => {
             setCropFile(null);
             uploadImage(croppedFile, cropFieldName);
