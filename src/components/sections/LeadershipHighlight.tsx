@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Award, Briefcase, GraduationCap, Clock, Quote } from "lucide-react";
+import { Award, Briefcase, GraduationCap, Clock } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { leadership as staticLeadership, type Leader } from "@/data/leadership";
@@ -63,93 +63,76 @@ function isFounder(leader: Leader) {
   return /founder/i.test(leader.title) || /om\s*prakash/i.test(leader.name);
 }
 
-/** Large featured block — Founder & Director message takes center stage */
+/** Compact, professional founder message — portrait + quote + meta in one organised block */
 function FounderFeature({ leader }: { leader: Leader }) {
   return (
     <ScrollReveal>
-      <article className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-brand-950 text-white shadow-premium">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PHBhdGggZD0iTTM2IDM0djItaDJ2LTJoLTJ6bTAtNHYyaDJ2LTJoLTJ6bTAtNHYyaDJ2LTJoLTJ6bTAtNHYyaDJ2LTJoLTJ6bTAtNHYyaDJ2LTJoLTJ6bTAtNHYyaDJ2LTJoLTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-60" />
-        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gold-400/15 blur-3xl" />
-        <div className="absolute -bottom-20 -left-16 w-64 h-64 rounded-full bg-brand-400/20 blur-3xl" />
+      <article className="relative overflow-hidden rounded-2xl border border-brand-200/70 dark:border-brand-800/60 bg-white dark:bg-gray-900 shadow-sm">
+        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-brand-600 via-brand-500 to-gold-500" />
 
-        <div className="relative grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-8 lg:gap-10 p-6 sm:p-8 lg:p-10">
-          {/* Message column — primary */}
-          <div className="flex flex-col justify-center order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 mb-4 sm:mb-5">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-gold-300">
-                <Award className="w-3.5 h-3.5" />
-                Message from the Founder
-              </span>
-            </div>
-
-            <Quote className="w-10 h-10 sm:w-12 sm:h-12 text-gold-400/50 mb-3 sm:mb-4" />
-
-            <blockquote className="font-display text-lg sm:text-xl lg:text-2xl font-medium leading-relaxed text-white/95">
-              {leader.message}
-            </blockquote>
-
-            <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-white/15">
-              <p className="font-display text-xl sm:text-2xl font-bold text-white">
+        <div className="relative grid sm:grid-cols-[auto_1fr] gap-5 sm:gap-6 p-5 sm:p-6 lg:p-7">
+          {/* Portrait + identity */}
+          <div className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-3 sm:w-[140px] shrink-0">
+            <Avatar leader={leader} size="lg" />
+            <div className="sm:text-center min-w-0">
+              <p className="font-display text-base sm:text-lg font-bold text-[#1d2951] dark:text-white leading-tight">
                 {leader.name}
               </p>
-              <p className="text-gold-300 font-semibold text-sm sm:text-base mt-0.5">
+              <p className="text-brand-600 dark:text-brand-400 text-xs sm:text-sm font-semibold mt-0.5">
                 {leader.title}
               </p>
-              <p className="text-white/60 text-sm mt-1">{leader.organization}</p>
-            </div>
-
-            {leader.stats.length > 0 && (
-              <div className="mt-6 grid grid-cols-2 gap-3 max-w-md">
-                {leader.stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-2xl bg-white/10 ring-1 ring-white/15 px-4 py-3 text-center backdrop-blur-sm"
-                  >
-                    <p className="font-display text-2xl font-bold text-gold-300">
-                      {stat.value}
-                    </p>
-                    <p className="text-[11px] sm:text-xs text-white/70 font-medium mt-0.5">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Portrait / credentials column */}
-          <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end justify-center">
-            <div className="relative flex flex-col items-center text-center lg:text-right w-full max-w-sm">
-              <Avatar leader={leader} size="xl" />
-              <div className="mt-5 flex flex-wrap justify-center lg:justify-end gap-1.5">
+              <p className="text-[11px] text-muted-foreground mt-0.5 hidden sm:block">
+                {leader.organization}
+              </p>
+              <div className="mt-2 flex flex-wrap sm:justify-center gap-1">
                 {leader.credentials.map((c) => (
                   <span
                     key={c}
-                    className="px-2.5 py-1 rounded-full bg-white/10 ring-1 ring-white/20 text-[11px] font-semibold text-white/90"
+                    className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300"
                   >
                     {c}
                   </span>
                 ))}
               </div>
-              <div className="mt-5 grid grid-cols-2 gap-3 w-full">
-                <div className="rounded-2xl bg-white/8 ring-1 ring-white/12 px-3 py-3 text-center">
-                  <Briefcase className="w-4 h-4 mx-auto text-gold-300/80 mb-1" />
-                  <span className="block text-[10px] uppercase tracking-wide text-white/50">
-                    Experience
+            </div>
+          </div>
+
+          {/* Message + meta */}
+          <div className="min-w-0 flex flex-col">
+            <div className="inline-flex items-center gap-1.5 mb-2.5">
+              <Award className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand-600 dark:text-brand-400">
+                Message from the Founder
+              </span>
+            </div>
+
+            <blockquote className="pl-3.5 border-l-2 border-brand-300 dark:border-brand-600">
+              <p className="text-sm sm:text-[15px] leading-relaxed text-foreground/80 dark:text-gray-200">
+                {leader.message}
+              </p>
+            </blockquote>
+
+            <div className="mt-auto pt-4 sm:pt-5">
+              <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs sm:text-[13px] text-muted-foreground border-t border-gray-100 dark:border-white/10 pt-3.5">
+                <span className="inline-flex items-center gap-1.5 font-medium text-foreground/80">
+                  <Briefcase className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                  {leader.experience}
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-medium text-foreground/80">
+                  <GraduationCap className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                  {leader.education}
+                </span>
+                {leader.stats.map((stat) => (
+                  <span
+                    key={stat.label}
+                    className="inline-flex items-center gap-1 font-medium text-foreground/80"
+                  >
+                    <span className="font-display font-bold text-brand-700 dark:text-brand-400">
+                      {stat.value}
+                    </span>
+                    <span className="text-muted-foreground">{stat.label}</span>
                   </span>
-                  <span className="text-sm font-semibold text-white">
-                    {leader.experience}
-                  </span>
-                </div>
-                <div className="rounded-2xl bg-white/8 ring-1 ring-white/12 px-3 py-3 text-center">
-                  <GraduationCap className="w-4 h-4 mx-auto text-gold-300/80 mb-1" />
-                  <span className="block text-[10px] uppercase tracking-wide text-white/50">
-                    Education
-                  </span>
-                  <span className="text-sm font-semibold text-white">
-                    {leader.education}
-                  </span>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -309,18 +292,18 @@ export function LeadershipStrip({ leaders }: { leaders?: Leader[] }) {
 
   return (
     <div className="space-y-3">
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-900 via-brand-800 to-brand-950 p-4 sm:p-5 text-white shadow-md">
-        <Quote className="absolute top-3 right-3 w-8 h-8 text-gold-400/30" />
-        <div className="flex items-start gap-3.5">
+      <div className="relative overflow-hidden rounded-2xl border border-brand-200/70 dark:border-brand-800/50 bg-white dark:bg-gray-900 p-3.5 sm:p-4">
+        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-brand-600 to-gold-500" />
+        <div className="flex items-start gap-3 pl-1">
           <Avatar leader={founder} size="md" />
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-gold-300 mb-1">
+            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-brand-600 dark:text-brand-400 mb-0.5">
               {founder.title}
             </p>
-            <p className="font-display font-bold text-base text-white">
+            <p className="font-display font-bold text-sm text-[#1d2951] dark:text-white">
               {founder.name}
             </p>
-            <p className="mt-2 text-sm text-white/85 leading-relaxed line-clamp-3">
+            <p className="mt-1.5 text-xs sm:text-[13px] text-muted-foreground leading-relaxed line-clamp-2">
               &ldquo;{founder.message}&rdquo;
             </p>
           </div>
