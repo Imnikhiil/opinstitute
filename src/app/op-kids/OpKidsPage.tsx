@@ -565,7 +565,7 @@ export function OpKidsPage({
                     <div className="relative flex flex-col items-center">
                       <div
                         className={cn(
-                          "relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 shadow-md mb-4",
+                          "relative w-full aspect-[3/4] max-w-[200px] mx-auto rounded-2xl overflow-hidden shadow-md mb-4 ring-2",
                           p.ring
                         )}
                       >
@@ -573,8 +573,9 @@ export function OpKidsPage({
                           src={member.image}
                           alt={member.name}
                           fill
-                          className="object-cover"
-                          sizes="112px"
+                          quality={90}
+                          className="object-cover object-top"
+                          sizes="200px"
                         />
                       </div>
                       <h3 className="font-display font-bold text-lg sm:text-xl">

@@ -36,8 +36,9 @@ function Avatar({
           src={leader.image}
           alt={leader.name}
           fill
+          quality={90}
           sizes={sizesAttr}
-          className="object-cover"
+          className="object-cover object-top"
         />
       </div>
     );

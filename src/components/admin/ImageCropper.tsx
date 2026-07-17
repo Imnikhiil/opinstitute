@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import ReactCrop, {
   type Crop,
   type PixelCrop,
@@ -31,34 +31,50 @@ async function getCroppedBlob(
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
 
-  const outputWidth = crop.width * scaleX;
-  const outputHeight = crop.height * scaleY;
+  let outputWidth = Math.round(crop.width * scaleX);
+  let outputHeight = Math.round(crop.height * scaleY);
+
+  // Cap extremely large uploads to keep files reasonable (no quality loss for display)
+  const MAX_OUTPUT = 1600;
+  const longest = Math.max(outputWidth, outputHeight);
+  if (longest > MAX_OUTPUT) {
+    const factor = MAX_OUTPUT / longest;
+    outputWidth = Math.round(outputWidth * factor);
+    outputHeight = Math.round(outputHeight * factor);
+  }
 
   canvas.width = outputWidth;
   canvas.height = outputHeight;
 
   const ctx = canvas.getContext("2d")!;
+  ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
 
   ctx.drawImage(
     image,
     crop.x * scaleX,
     crop.y * scaleY,
-    outputWidth,
-    outputHeight,
+    crop.width * scaleX,
+    crop.height * scaleY,
     0,
     0,
     outputWidth,
     outputHeight
   );
 
-  return new Promise((resolve) => {
+  const baseName = fileName.replace(/\.[^.]+$/, "") || "photo";
+
+  return new Promise((resolve, reject) => {
     canvas.toBlob(
       (blob) => {
-        resolve(new File([blob!], fileName, { type: "image/jpeg" }));
+        if (!blob) {
+          reject(new Error("Could not export cropped image"));
+          return;
+        }
+        resolve(new File([blob], `${baseName}.jpg`, { type: "image/jpeg" }));
       },
       "image/jpeg",
-      0.92
+      0.95
     );
   });
 }
@@ -76,11 +92,11 @@ export function ImageCropper({ file, aspect = 4 / 5, onCrop, onCancel }: Props) 
   const [imgSrc, setImgSrc] = useState("");
   const imgRef = useRef<HTMLImageElement>(null);
 
-  useState(() => {
+  useEffect(() => {
     const reader = new FileReader();
-    reader.addEventListener("load", () => setImgSrc(reader.result as string));
+    reader.addEventListener("load", () => setImgSrc(String(reader.result || "")));
     reader.readAsDataURL(file);
-  });
+  }, [file]);
 
   const onImageLoad = useCallback(
     (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -92,7 +108,11 @@ export function ImageCropper({ file, aspect = 4 / 5, onCrop, onCancel }: Props) 
 
   const handleConfirm = async () => {
     if (!imgRef.current || !completedCrop) return;
-    const cropped = await getCroppedBlob(imgRef.current, completedCrop, file.name);
+    const cropped = await getCroppedBlob(
+      imgRef.current,
+      completedCrop,
+      file.name
+    );
     onCrop(cropped);
   };
 

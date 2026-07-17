@@ -6,6 +6,7 @@ import { testimonials as staticTestimonials, type Testimonial } from "@/data/tes
 import { events as staticEvents, type Event } from "@/data/events";
 import { galleryImages as staticGallery, type GalleryImage } from "@/data/gallery";
 import { siteConfig as staticSiteConfig } from "@/data/site";
+import { sharpImageUrl } from "@/lib/utils";
 
 type Row = Record<string, unknown>;
 
@@ -51,9 +52,10 @@ function mapFaculty(row: Row): FacultyMember {
     achievement: str(row.achievement),
     quote: str(row.quote),
     category,
-    image:
+    image: sharpImageUrl(
       image ||
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=900&q=90"
+    ),
   };
 }
 
@@ -74,7 +76,7 @@ function mapLeader(row: Row): Leader {
       ? (statsRaw as { value: string; label: string }[])
       : [],
     message: str(row.message),
-    image: image || undefined,
+    image: image ? sharpImageUrl(image, 800) : undefined,
     initials: str(row.initials),
     accent: (row.accent as Leader["accent"]) || "brand",
   };
