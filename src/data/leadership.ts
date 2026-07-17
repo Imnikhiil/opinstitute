@@ -39,10 +39,10 @@ export const leadership: Leader[] = [
     accent: "brand",
   },
   {
-    id: "meenakshi",
-    name: "Meenakshi",
+    id: "mona-kids",
+    name: "Mona",
     title: "Academic & Management Head",
-    organization: "O.P. Institute · OP Kids",
+    organization: "OP Kids Pre School",
     credentials: ["NPTT", "B.Ed", "CTET qualified"],
     experience: "8 years",
     education: "B.Ed",
@@ -52,8 +52,26 @@ export const leadership: Leader[] = [
       { value: "3", label: "certifications" },
     ],
     message:
-      "Alongside our Founder, I oversee the day-to-day management of OP Institute and OP Kids — from primary education and classroom quality to parent coordination and campus operations. With NPTT, B.Ed and CTET qualifications, my focus is strong foundations in the early years and a smoothly run institution where every student and parent feels supported.",
+      "At OP Kids Pre School, my focus is strong foundations in the early years — caring classrooms, joyful learning, and close parent coordination so every child feels safe, confident, and excited to grow.",
     initials: "M",
     accent: "gold",
+  },
+  {
+    id: "institute-management-head",
+    name: "Meenakshi",
+    title: "Academic & Management Head",
+    organization: "O.P. Institute of Studies",
+    credentials: ["Academic leadership", "B.Ed"],
+    experience: "8 years",
+    education: "B.Ed",
+    since: "2018",
+    stats: [
+      { value: "500+", label: "students guided" },
+      { value: "2", label: "programs led" },
+    ],
+    message:
+      "At O.P. Institute of Studies, I oversee academic quality and day-to-day management — from classroom standards and teacher coordination to student mentorship — so every learner gets structured guidance toward strong results.",
+    initials: "M",
+    accent: "brand",
   },
 ];

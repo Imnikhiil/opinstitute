@@ -325,9 +325,9 @@ export const aboutContent = {
   directorName: "Om Prakash",
   directorTitle: "Founder & Director, O.P. Institute of Studies",
   principalMessage:
-    "Alongside our Founder, I oversee the day-to-day management of OP Institute and OP Kids — from primary education and classroom quality to parent coordination and campus operations. With NPTT, B.Ed and CTET qualifications, my focus is strong foundations in the early years and a smoothly run institution where every student and parent feels supported.",
-  principalName: "Meenakshi",
-  principalTitle: "Academic & Management Head",
+    "At OP Kids Pre School, the focus is strong foundations in the early years — caring classrooms, joyful learning, and close parent coordination. At O.P. Institute of Studies, academic quality and day-to-day management keep every learner supported toward strong results.",
+  principalName: "Mona & Meenakshi",
+  principalTitle: "Academic & Management Heads",
   values: [
     {
       title: "Excellence",

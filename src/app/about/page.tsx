@@ -63,7 +63,7 @@ export default async function AboutPage() {
           <LeadershipHighlight
             badge="Leadership"
             title="A Message from Our Founder"
-            subtitle="Meet Founder & Director Om Prakash — and the leadership that guides OP Institute every day"
+            subtitle="Founder Om Prakash, with Academic & Management Heads for OP Kids and OP Institute"
             leaders={leaders}
           />
         </div>

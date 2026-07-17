@@ -147,26 +147,40 @@ export async function getLeadership(): Promise<Leader[]> {
   const rows = await fetchTable("leadership");
   const mapped = rows.length ? rows.map(mapLeader) : staticLeadership;
 
-  // Prefer richer static messages when DB copy is missing or much shorter
+  // Prefer richer static messages / org labels when DB copy is thin or outdated
   return mapped.map((leader) => {
-    const fallback = staticLeadership.find(
-      (s) => s.name.trim().toLowerCase() === leader.name.trim().toLowerCase()
-    );
-    if (
-      fallback &&
-      (!leader.message.trim() ||
-        leader.message.trim().length + 40 < fallback.message.length)
-    ) {
-      return { ...leader, message: fallback.message };
-    }
+    const nameKey = leader.name.trim().toLowerCase();
+    const fallback =
+      staticLeadership.find(
+        (s) => s.name.trim().toLowerCase() === nameKey
+      ) ??
+      (nameKey === "mona"
+        ? staticLeadership.find((s) => s.id === "mona-kids")
+        : undefined);
+
+    const org = leader.organization.trim();
+    const combinedOrg =
+      /institute/i.test(org) && /kids/i.test(org);
+
     return {
       ...leader,
+      message:
+        !leader.message.trim() ||
+        (fallback &&
+          leader.message.trim().length + 40 < fallback.message.length)
+          ? fallback?.message || leader.message
+          : leader.message,
+      organization:
+        combinedOrg && fallback?.organization
+          ? fallback.organization
+          : org || fallback?.organization || "",
       credentials:
         leader.credentials.length > 0
           ? leader.credentials
           : fallback?.credentials ?? [],
       stats: leader.stats.length > 0 ? leader.stats : fallback?.stats ?? [],
       initials: leader.initials || fallback?.initials || "?",
+      accent: leader.accent || fallback?.accent || "brand",
     };
   });
 }

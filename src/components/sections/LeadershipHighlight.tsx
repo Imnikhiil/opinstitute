@@ -143,31 +143,69 @@ function FounderFeature({ leader }: { leader: Leader }) {
 }
 
 function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number }) {
+  const isBrand = leader.accent === "brand";
+
   return (
     <ScrollReveal delay={delay}>
-      <article className="relative h-full overflow-hidden rounded-2xl border border-gold-200/80 dark:border-gold-800/40 bg-white dark:bg-gray-900 shadow-sm">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 to-gold-400" />
+      <article
+        className={cn(
+          "relative h-full overflow-hidden rounded-2xl border bg-white dark:bg-gray-900 shadow-sm",
+          isBrand
+            ? "border-brand-200/80 dark:border-brand-800/50"
+            : "border-gold-200/80 dark:border-gold-800/40"
+        )}
+      >
+        <div
+          className={cn(
+            "absolute top-0 left-0 right-0 h-1",
+            isBrand
+              ? "bg-gradient-to-r from-brand-600 to-brand-400"
+              : "bg-gradient-to-r from-gold-600 to-gold-400"
+          )}
+        />
 
-        <div className="flex items-start gap-3.5 p-5 sm:p-6 pt-6 sm:pt-7">
+        <div className="px-5 sm:px-6 pt-5 sm:pt-6">
+          <span
+            className={cn(
+              "inline-block px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.12em]",
+              isBrand
+                ? "bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300"
+                : "bg-kids-50 text-kids-700 dark:bg-kids-950/40 dark:text-kids-300"
+            )}
+          >
+            {leader.organization}
+          </span>
+        </div>
+
+        <div className="flex items-start gap-3.5 px-5 sm:px-6 pt-3 pb-0">
           <Avatar leader={leader} />
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] mb-0.5 text-gold-700 dark:text-gold-400">
+            <p
+              className={cn(
+                "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] mb-0.5",
+                isBrand
+                  ? "text-brand-600 dark:text-brand-400"
+                  : "text-gold-700 dark:text-gold-400"
+              )}
+            >
               {leader.title}
             </p>
             <h3 className="font-display text-lg sm:text-xl font-bold text-[#1d2951] dark:text-white leading-tight">
               {leader.name}
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-              {leader.organization}
-            </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 px-5 sm:px-6 mt-1">
+        <div className="flex flex-wrap gap-1.5 px-5 sm:px-6 mt-3">
           {leader.credentials.map((c) => (
             <span
               key={c}
-              className="px-2.5 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold bg-gold-50 text-gold-800 dark:bg-gold-950/30 dark:text-gold-300"
+              className={cn(
+                "px-2.5 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold",
+                isBrand
+                  ? "bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300"
+                  : "bg-gold-50 text-gold-800 dark:bg-gold-950/30 dark:text-gold-300"
+              )}
             >
               {c}
             </span>
@@ -208,9 +246,21 @@ function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number 
             {leader.stats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-xl px-3 py-2.5 text-center bg-gold-50/80 dark:bg-gold-950/20"
+                className={cn(
+                  "rounded-xl px-3 py-2.5 text-center",
+                  isBrand
+                    ? "bg-brand-50/80 dark:bg-brand-950/30"
+                    : "bg-gold-50/80 dark:bg-gold-950/20"
+                )}
               >
-                <p className="font-display text-lg sm:text-xl font-bold text-gold-700 dark:text-gold-400">
+                <p
+                  className={cn(
+                    "font-display text-lg sm:text-xl font-bold",
+                    isBrand
+                      ? "text-brand-700 dark:text-brand-400"
+                      : "text-gold-700 dark:text-gold-400"
+                  )}
+                >
                   {stat.value}
                 </p>
                 <p className="text-[10px] sm:text-[11px] text-muted-foreground font-medium mt-0.5">
@@ -222,7 +272,14 @@ function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number 
         )}
 
         <div className="px-5 sm:px-6 py-5 mt-2">
-          <div className="rounded-xl bg-gold-50/60 dark:bg-gold-950/20 p-4 border-l-4 border-gold-500">
+          <div
+            className={cn(
+              "rounded-xl p-4 border-l-4",
+              isBrand
+                ? "bg-brand-50/60 dark:bg-brand-950/20 border-brand-500"
+                : "bg-gold-50/60 dark:bg-gold-950/20 border-gold-500"
+            )}
+          >
             <p className="text-foreground/80 leading-relaxed text-sm sm:text-base">
               &ldquo;{leader.message}&rdquo;
             </p>
@@ -231,6 +288,16 @@ function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number 
       </article>
     </ScrollReveal>
   );
+}
+
+function sortManagementHeads(leaders: Leader[]) {
+  const rank = (l: Leader) => {
+    const org = l.organization.toLowerCase();
+    if (org.includes("kids") || org.includes("preschool")) return 0;
+    if (org.includes("institute")) return 1;
+    return 2;
+  };
+  return [...leaders].sort((a, b) => rank(a) - rank(b));
 }
 
 export function LeadershipHighlight({
@@ -246,7 +313,7 @@ export function LeadershipHighlight({
 }) {
   const data = leaders && leaders.length > 0 ? leaders : staticLeadership;
   const founder = data.find(isFounder);
-  const others = data.filter((l) => !isFounder(l));
+  const others = sortManagementHeads(data.filter((l) => !isFounder(l)));
 
   return (
     <div>
@@ -282,11 +349,11 @@ export function LeadershipHighlight({
   );
 }
 
-/** Compact strip for home / about teasers — founder quote featured */
+/** Compact strip for home / about teasers — founder quote + management heads */
 export function LeadershipStrip({ leaders }: { leaders?: Leader[] }) {
   const data = leaders && leaders.length > 0 ? leaders : staticLeadership;
   const founder = data.find(isFounder) ?? data[0];
-  const others = data.filter((l) => l.id !== founder?.id);
+  const others = sortManagementHeads(data.filter((l) => l.id !== founder?.id));
 
   if (!founder) return null;
 
@@ -310,25 +377,39 @@ export function LeadershipStrip({ leaders }: { leaders?: Leader[] }) {
         </div>
       </div>
 
-      {others.map((leader) => (
-        <div
-          key={leader.id}
-          className="flex items-center gap-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 p-3.5"
-        >
-          <Avatar leader={leader} size="md" />
-          <div className="min-w-0">
-            <p className="font-display font-bold text-sm text-[#1d2951] dark:text-white truncate">
-              {leader.name}
-            </p>
-            <p className="text-xs text-brand-600 dark:text-brand-400 font-medium truncate">
-              {leader.title}
-            </p>
-            <p className="text-[11px] text-muted-foreground truncate">
-              {leader.credentials.slice(0, 3).join(" · ")}
-            </p>
+      <div
+        className={cn(
+          "grid gap-3",
+          others.length > 1 ? "sm:grid-cols-2" : "grid-cols-1"
+        )}
+      >
+        {others.map((leader) => (
+          <div
+            key={leader.id}
+            className="flex items-center gap-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 p-3.5"
+          >
+            <Avatar leader={leader} size="md" />
+            <div className="min-w-0">
+              <p
+                className={cn(
+                  "text-[10px] font-bold uppercase tracking-[0.1em] truncate",
+                  leader.accent === "brand"
+                    ? "text-brand-600 dark:text-brand-400"
+                    : "text-kids-600 dark:text-kids-400"
+                )}
+              >
+                {leader.organization}
+              </p>
+              <p className="font-display font-bold text-sm text-[#1d2951] dark:text-white truncate">
+                {leader.name}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {leader.title}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
