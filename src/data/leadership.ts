@@ -34,7 +34,7 @@ export const leadership: Leader[] = [
       { value: "2", label: "institutes led" },
     ],
     message:
-      "Education is the most powerful tool we can use to change the world. Our team works tirelessly to create an environment where learning is joyful and transformative.",
+      "Education is the most powerful tool we can use to change the world. At OP Institute of Studies, we are committed to nurturing every student's unique potential — from a child's first day at OP Kids to cracking professional exams like CMA. Our dedicated team works tirelessly to create an environment where learning is joyful, meaningful, and transformative. I invite you to join our family and experience the difference.",
     initials: "OP",
     accent: "brand",
   },
@@ -52,7 +52,7 @@ export const leadership: Leader[] = [
       { value: "3", label: "certifications" },
     ],
     message:
-      "Alongside our founder, I oversee day-to-day management — from classroom quality to parent coordination and campus operations.",
+      "Alongside our Founder, I oversee the day-to-day management of OP Institute and OP Kids — from primary education and classroom quality to parent coordination and campus operations. With NPTT, B.Ed and CTET qualifications, my focus is strong foundations in the early years and a smoothly run institution where every student and parent feels supported.",
     initials: "M",
     accent: "gold",
   },

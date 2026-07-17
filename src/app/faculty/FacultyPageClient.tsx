@@ -208,8 +208,8 @@ export function FacultyPageClient({
         <div className="container-custom">
           <LeadershipHighlight
             badge="Leadership"
-            title="Founder & Management"
-            subtitle="Om Prakash and Meenakshi — the faces that guide and run the institute"
+            title="A Message from Our Founder"
+            subtitle="Founder & Director Om Prakash — and the leadership behind our teaching team"
             leaders={leaders}
           />
         </div>

@@ -145,7 +145,30 @@ export async function getFaculty(): Promise<FacultyMember[]> {
 
 export async function getLeadership(): Promise<Leader[]> {
   const rows = await fetchTable("leadership");
-  return rows.length ? rows.map(mapLeader) : staticLeadership;
+  const mapped = rows.length ? rows.map(mapLeader) : staticLeadership;
+
+  // Prefer richer static messages when DB copy is missing or much shorter
+  return mapped.map((leader) => {
+    const fallback = staticLeadership.find(
+      (s) => s.name.trim().toLowerCase() === leader.name.trim().toLowerCase()
+    );
+    if (
+      fallback &&
+      (!leader.message.trim() ||
+        leader.message.trim().length + 40 < fallback.message.length)
+    ) {
+      return { ...leader, message: fallback.message };
+    }
+    return {
+      ...leader,
+      credentials:
+        leader.credentials.length > 0
+          ? leader.credentials
+          : fallback?.credentials ?? [],
+      stats: leader.stats.length > 0 ? leader.stats : fallback?.stats ?? [],
+      initials: leader.initials || fallback?.initials || "?",
+    };
+  });
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {

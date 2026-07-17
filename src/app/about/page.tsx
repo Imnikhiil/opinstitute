@@ -58,7 +58,18 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="section-padding bg-gray-50 dark:bg-gray-900/50">
+      <section className="section-padding bg-gray-50/80 dark:bg-gray-900/30">
+        <div className="container-custom">
+          <LeadershipHighlight
+            badge="Leadership"
+            title="A Message from Our Founder"
+            subtitle="Meet Founder & Director Om Prakash — and the leadership that guides OP Institute every day"
+            leaders={leaders}
+          />
+        </div>
+      </section>
+
+      <section className="section-padding">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-8">
             <ScrollReveal>
@@ -76,17 +87,6 @@ export default async function AboutPage() {
               </div>
             </ScrollReveal>
           </div>
-        </div>
-      </section>
-
-      <section className="section-padding">
-        <div className="container-custom">
-          <LeadershipHighlight
-            badge="Leadership"
-            title="Messages from Our Leaders"
-            subtitle="Founder Om Prakash and Meenakshi — the team that leads and manages OP Institute every day"
-            leaders={leaders}
-          />
         </div>
       </section>
 

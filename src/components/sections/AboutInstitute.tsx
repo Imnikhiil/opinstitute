@@ -46,13 +46,13 @@ export function AboutInstitute() {
             </p>
             <div className="mb-6">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-600 dark:text-brand-400 mb-3">
-                Led by
+                Led by our Founder
               </p>
               <LeadershipStrip />
             </div>
             <Link href="/about">
               <Button variant="outline">
-                Meet Our Leaders
+                Read Founder&apos;s Message
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
