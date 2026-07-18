@@ -22,9 +22,9 @@ export function Footer() {
               <Image
                 src="/logos/op-institute-logo.png"
                 alt="OP Institute of Studies logo"
-                width={52}
-                height={52}
-                className="h-12 w-12 object-contain"
+                width={64}
+                height={64}
+                className="h-14 w-14 object-contain"
               />
               <div>
                 <p className="font-display font-bold text-white text-base leading-tight">

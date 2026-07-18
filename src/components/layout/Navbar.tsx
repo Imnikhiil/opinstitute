@@ -118,10 +118,10 @@ export function Navbar() {
             <Image
               src="/logos/op-institute-logo.png"
               alt="OP Institute of Studies logo"
-              width={48}
-              height={48}
+              width={56}
+              height={56}
               priority
-              className="h-8 w-8 sm:h-10 sm:w-10 object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-9 w-9 sm:h-11 sm:w-11 object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </span>
           <div className="hidden sm:block">

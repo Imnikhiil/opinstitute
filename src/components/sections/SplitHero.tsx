@@ -131,15 +131,15 @@ export function SplitHero() {
       </motion.div>
 
       {/* ---------------- MOBILE DIVIDER + EMBLEM ---------------- */}
-      <div className="relative z-20 flex lg:hidden items-center justify-center -my-7">
+      <div className="relative z-20 flex lg:hidden items-center justify-center -my-9">
         <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-        <div className="relative w-14 h-14 rounded-full bg-white shadow-xl flex items-center justify-center border-2 border-white">
+        <div className="relative w-20 h-20 rounded-full bg-white shadow-xl flex items-center justify-center ring-2 ring-white overflow-hidden p-0.5">
           <Image
             src="/logos/op-institute-logo.png"
             alt="OP Institute of Studies"
-            width={40}
-            height={40}
-            className="w-9 h-9 object-contain"
+            width={80}
+            height={80}
+            className="w-full h-full object-contain"
           />
         </div>
       </div>
@@ -251,19 +251,20 @@ export function SplitHero() {
           className="flex flex-col items-center"
         >
           <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-white/30 blur-xl" />
+            <div className="absolute inset-0 rounded-full bg-white/30 blur-xl scale-110" />
             <motion.span
-              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+              animate={{ scale: [1, 1.28, 1], opacity: [0.5, 0, 0.5] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
-              className="absolute inset-0 rounded-full border-2 border-white"
+              className="absolute -inset-1 rounded-full border-2 border-white"
             />
-            <div className="relative w-24 h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
+            <div className="relative w-40 h-40 rounded-full bg-white shadow-2xl flex items-center justify-center ring-4 ring-white overflow-hidden p-1">
               <Image
                 src="/logos/op-institute-logo.png"
                 alt="OP Institute of Studies"
-                width={64}
-                height={64}
-                className="w-14 h-14 object-contain"
+                width={160}
+                height={160}
+                priority
+                className="w-full h-full object-contain"
               />
             </div>
           </div>
