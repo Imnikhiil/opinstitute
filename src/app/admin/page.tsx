@@ -13,6 +13,7 @@ import {
   Baby,
   Crown,
   Settings,
+  Megaphone,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 
@@ -44,6 +45,7 @@ async function getDashboardData() {
     "events",
     "gallery",
     "leadership",
+    "announcements",
   ] as const;
 
   const [{ data: userData }, ...tableResults] = await Promise.all([
@@ -122,6 +124,15 @@ export default async function AdminDashboard() {
       iconBg:
         "bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400",
       highlight: counts.newQueries > 0,
+    },
+    {
+      label: "Announcements",
+      value: counts.announcements,
+      href: "/admin/announcements",
+      icon: Megaphone,
+      accent: "from-orange-500 to-orange-700",
+      iconBg:
+        "bg-orange-50 text-orange-600 dark:bg-orange-950/40 dark:text-orange-400",
     },
     {
       label: "Courses",

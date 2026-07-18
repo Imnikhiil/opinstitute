@@ -17,6 +17,7 @@ import {
   Menu,
   X,
   ExternalLink,
+  Megaphone,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
@@ -27,6 +28,7 @@ const navGroups = [
     items: [
       { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
       { href: "/admin/queries", label: "Queries", icon: Inbox },
+      { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
     ],
   },
   {

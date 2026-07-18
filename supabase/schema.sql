@@ -121,6 +121,23 @@ alter table public.site_settings add column if not exists kids_youtube text;
 
 insert into public.site_settings (id) values (1) on conflict (id) do nothing;
 
+-- ---------- 8. ANNOUNCEMENTS (site notices / admissions banners) ----------
+create table if not exists public.announcements (
+  id                uuid primary key default gen_random_uuid(),
+  title             text not null,
+  message           text,
+  link_url          text,
+  link_label        text,
+  show_on_main      boolean not null default true,
+  show_on_kids      boolean not null default false,
+  show_on_institute boolean not null default false,
+  active            boolean not null default true,
+  sort_order        int not null default 0,
+  starts_on         text,
+  ends_on           text,
+  created_at        timestamptz not null default now()
+);
+
 -- ============================================================
 --  ROW LEVEL SECURITY
 --  Public site can: submit queries + read content
@@ -133,6 +150,7 @@ alter table public.testimonials  enable row level security;
 alter table public.events        enable row level security;
 alter table public.gallery       enable row level security;
 alter table public.site_settings enable row level security;
+alter table public.announcements enable row level security;
 
 -- QUERIES: anyone can submit; only admins can view/update/delete
 create policy "anyone can submit query"   on public.queries for insert to anon, authenticated with check (true);
@@ -144,7 +162,7 @@ create policy "admin can delete queries"  on public.queries for delete to authen
 do $$
 declare t text;
 begin
-  foreach t in array array['courses','faculty','testimonials','events','gallery','site_settings']
+  foreach t in array array['courses','faculty','testimonials','events','gallery','site_settings','announcements']
   loop
     execute format('create policy "public can read %1$s" on public.%1$s for select to anon, authenticated using (true);', t);
     execute format('create policy "admin can insert %1$s" on public.%1$s for insert to authenticated with check (true);', t);

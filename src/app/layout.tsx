@@ -6,7 +6,7 @@ import { SiteConfigProvider } from "@/components/providers/SiteConfigProvider";
 import { SiteBrandProvider } from "@/components/providers/SiteBrandProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { siteConfig } from "@/data/site";
-import { getSiteConfig } from "@/lib/supabase/public-data";
+import { getSiteConfig, getAnnouncements } from "@/lib/supabase/public-data";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -83,7 +83,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const config = await getSiteConfig();
+  const [config, announcements] = await Promise.all([
+    getSiteConfig(),
+    getAnnouncements(),
+  ]);
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -91,7 +94,7 @@ export default async function RootLayout({
         <ThemeProvider>
           <SiteConfigProvider config={config}>
             <SiteBrandProvider>
-              <SiteChrome>{children}</SiteChrome>
+              <SiteChrome announcements={announcements}>{children}</SiteChrome>
             </SiteBrandProvider>
           </SiteConfigProvider>
         </ThemeProvider>

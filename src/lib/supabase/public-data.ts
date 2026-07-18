@@ -307,6 +307,64 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
   return rows.length ? rows.map(mapGallery) : staticGallery;
 }
 
+export type Announcement = {
+  id: string;
+  title: string;
+  message: string;
+  linkUrl: string;
+  linkLabel: string;
+  showOnMain: boolean;
+  showOnKids: boolean;
+  showOnInstitute: boolean;
+  active: boolean;
+  sortOrder: number;
+  startsOn: string;
+  endsOn: string;
+};
+
+function todayISODate(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function isAnnouncementLive(row: Announcement, today: string): boolean {
+  if (!row.active) return false;
+  if (row.startsOn && today < row.startsOn) return false;
+  if (row.endsOn && today > row.endsOn) return false;
+  return row.showOnMain || row.showOnKids || row.showOnInstitute;
+}
+
+function mapAnnouncement(row: Row): Announcement {
+  return {
+    id: str(row.id),
+    title: str(row.title),
+    message: str(row.message),
+    linkUrl: str(row.link_url),
+    linkLabel: str(row.link_label, "Learn more"),
+    showOnMain: Boolean(row.show_on_main),
+    showOnKids: Boolean(row.show_on_kids),
+    showOnInstitute: Boolean(row.show_on_institute),
+    active: row.active !== false,
+    sortOrder: Number(row.sort_order) || 0,
+    startsOn: str(row.starts_on),
+    endsOn: str(row.ends_on),
+  };
+}
+
+/** Active, in-date announcements for the public site banner */
+export async function getAnnouncements(): Promise<Announcement[]> {
+  const rows = await fetchTable("announcements");
+  if (!rows.length) return [];
+  const today = todayISODate();
+  return rows
+    .map(mapAnnouncement)
+    .filter((a) => isAnnouncementLive(a, today))
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
 export type SiteConfig = typeof staticSiteConfig;
 
 export async function getSiteConfig(): Promise<SiteConfig> {

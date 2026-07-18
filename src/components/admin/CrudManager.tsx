@@ -101,7 +101,17 @@ export function CrudManager({
   const openAdd = () => {
     const blank: Row = {};
     config.fields.forEach((f) => {
-      blank[f.name] = f.type === "boolean" ? false : f.type === "tags" ? [] : "";
+      if (f.type === "boolean") {
+        // Sensible defaults for announcements / popular flags
+        blank[f.name] =
+          f.name === "active" ||
+          f.name === "show_on_main" ||
+          f.name === "popular";
+      } else if (f.type === "tags") {
+        blank[f.name] = [];
+      } else {
+        blank[f.name] = "";
+      }
     });
     setForm(blank);
     setEditing(null);
@@ -318,24 +328,52 @@ export function CrudManager({
                   <p className="font-semibold line-clamp-1 text-[#1d2951] dark:text-white">
                     {(row[config.titleField] as string) || "—"}
                   </p>
-                  {brand && (
-                    <span
-                      className={cn(
-                        "shrink-0 px-2 py-0.5 rounded-lg text-[10px] font-semibold",
-                        brand === "preschool"
-                          ? "bg-kids-100 text-kids-700 dark:bg-kids-900/40 dark:text-kids-300"
-                          : "bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"
-                      )}
-                    >
-                      {BRAND_LABELS[brand]}
-                    </span>
-                  )}
+                  <div className="flex flex-wrap gap-1 justify-end shrink-0">
+                    {brand && (
+                      <span
+                        className={cn(
+                          "px-2 py-0.5 rounded-lg text-[10px] font-semibold",
+                          brand === "preschool"
+                            ? "bg-kids-100 text-kids-700 dark:bg-kids-900/40 dark:text-kids-300"
+                            : "bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"
+                        )}
+                      >
+                        {BRAND_LABELS[brand]}
+                      </span>
+                    )}
+                    {row.active === false ? (
+                      <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-gray-100 text-gray-500">
+                        Off
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
-                {config.subtitleField && formatSubtitle(row) && (
-                  <p className="text-sm text-muted-foreground line-clamp-2 mt-0.5 flex-1">
+                {(Boolean(row.show_on_main) ||
+                  Boolean(row.show_on_kids) ||
+                  Boolean(row.show_on_institute)) && (
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {Boolean(row.show_on_main) ? (
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                        Main
+                      </span>
+                    ) : null}
+                    {Boolean(row.show_on_kids) ? (
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-kids-100 text-kids-700">
+                        Kids
+                      </span>
+                    ) : null}
+                    {Boolean(row.show_on_institute) ? (
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-brand-100 text-brand-700">
+                        Institute
+                      </span>
+                    ) : null}
+                  </div>
+                )}
+                {config.subtitleField && formatSubtitle(row) ? (
+                  <p className="text-sm text-muted-foreground line-clamp-2 mt-1 flex-1">
                     {formatSubtitle(row)}
                   </p>
-                )}
+                ) : null}
                 <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
                   <button
                     onClick={() => openEdit(row)}
