@@ -10,13 +10,24 @@ const config: CrudConfig = {
   titleField: "name",
   subtitleField: "content",
   imageField: "image_url",
+  brandField: "category",
   fields: [
     { name: "image_url", label: "Photo (optional)", type: "image" },
     { name: "name", label: "Name", type: "text", required: true, placeholder: "Mrs. Rekha Patel" },
     { name: "role", label: "Role", type: "text", placeholder: "Parent – OP Kids Nursery" },
     { name: "content", label: "Review", type: "textarea", required: true, fullWidth: true, placeholder: "Write their review here…" },
     { name: "rating", label: "Rating (1-5)", type: "number", placeholder: "5" },
-    { name: "category", label: "Category", type: "select", options: ["preschool", "institute"] },
+    {
+      name: "category",
+      label: "Brand",
+      type: "select",
+      options: ["preschool", "institute"],
+      optionLabels: {
+        preschool: "OP Kids Pre School",
+        institute: "OP Institute of Studies",
+      },
+      required: true,
+    },
     { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };

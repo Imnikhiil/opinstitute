@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Save, Loader2, CheckCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
 type Settings = Record<string, string | null>;
 
@@ -137,32 +138,55 @@ export function SettingsForm({ initial }: { initial: Settings }) {
 
   return (
     <div className="max-w-3xl space-y-6">
-      {groups.map((g) => (
-        <div
-          key={g.title}
-          className="rounded-2xl bg-white dark:bg-gray-900/80 border border-gray-200/80 dark:border-white/10 p-5 sm:p-6 shadow-sm"
-        >
-          <h3 className="font-semibold mb-4 text-[#1d2951] dark:text-white">
-            {g.title}
-          </h3>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {g.fields.map((f) => (
-              <div key={f.name} className="sm:col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium mb-1.5">
-                  {f.label}
-                </label>
-                <input
-                  type="text"
-                  value={form[f.name] ?? ""}
-                  onChange={(e) => setField(f.name, e.target.value)}
-                  placeholder={f.placeholder}
-                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-brand-500"
-                />
-              </div>
-            ))}
+      {groups.map((g) => {
+        const isKids = g.title.includes("OP Kids");
+        const isInstitute = g.title.includes("OP Institute");
+        return (
+          <div
+            key={g.title}
+            className={cn(
+              "rounded-2xl bg-white dark:bg-gray-900/80 border p-5 sm:p-6 shadow-sm",
+              isKids
+                ? "border-kids-200/80 dark:border-kids-800/40"
+                : isInstitute
+                  ? "border-brand-200/80 dark:border-brand-800/40"
+                  : "border-gray-200/80 dark:border-white/10"
+            )}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              {isKids && (
+                <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-kids-100 text-kids-700">
+                  OP Kids
+                </span>
+              )}
+              {isInstitute && (
+                <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-brand-100 text-brand-700">
+                  Institute
+                </span>
+              )}
+              <h3 className="font-semibold text-[#1d2951] dark:text-white">
+                {g.title}
+              </h3>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {g.fields.map((f) => (
+                <div key={f.name} className="sm:col-span-2 md:col-span-1">
+                  <label className="block text-sm font-medium mb-1.5">
+                    {f.label}
+                  </label>
+                  <input
+                    type="text"
+                    value={form[f.name] ?? ""}
+                    onChange={(e) => setField(f.name, e.target.value)}
+                    placeholder={f.placeholder}
+                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       <div className="sticky bottom-4 flex items-center gap-3">
         <button

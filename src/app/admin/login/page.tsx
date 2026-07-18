@@ -47,14 +47,25 @@ export default function AdminLoginPage() {
 
       <div className="relative w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 inline-flex rounded-2xl bg-white p-3.5 shadow-xl shadow-black/15">
-            <Image
-              src="/logos/op-institute-logo.png"
-              alt="OP Institute of Studies"
-              width={56}
-              height={56}
-              className="h-12 w-12 object-contain"
-            />
+          <div className="mx-auto mb-4 inline-flex items-center gap-2">
+            <div className="rounded-2xl bg-white p-3 shadow-xl shadow-black/15">
+              <Image
+                src="/logos/op-institute-logo.png"
+                alt="OP Institute of Studies"
+                width={48}
+                height={48}
+                className="h-11 w-11 object-contain"
+              />
+            </div>
+            <div className="rounded-2xl bg-white p-3 shadow-xl shadow-black/15">
+              <Image
+                src="/logos/op-kids-logo.png"
+                alt="OP Kids Pre School"
+                width={48}
+                height={48}
+                className="h-11 w-11 object-contain"
+              />
+            </div>
           </div>
           <h1 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
             Admin Panel

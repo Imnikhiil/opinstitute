@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   Mail,
   Phone,
@@ -10,6 +10,8 @@ import {
   Trash2,
   Inbox,
   User,
+  Search,
+  RotateCcw,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { WhatsAppIcon } from "@/components/ui/SocialIcons";
@@ -32,22 +34,9 @@ export interface Query {
   created_at: string;
 }
 
-type Filter =
-  | "all"
-  | "new"
-  | "kids"
-  | "institute"
-  | "contact"
-  | "admission";
-
-const filters: { id: Filter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "new", label: "New" },
-  { id: "kids", label: "OP Kids" },
-  { id: "institute", label: "Institute" },
-  { id: "contact", label: "Contact" },
-  { id: "admission", label: "Admission" },
-];
+type BrandFilter = "all" | "kids" | "institute";
+type TypeFilter = "all" | "contact" | "admission";
+type StatusFilter = "all" | "new" | "done";
 
 function resolveQueryBrand(q: Query): ContentBrand | null {
   const raw = (q.brand || "").toLowerCase();
@@ -71,21 +60,45 @@ function timeAgo(iso: string) {
   });
 }
 
+function waLink(phone: string) {
+  let digits = phone.replace(/[^0-9]/g, "");
+  if (digits.length === 10) digits = `91${digits}`;
+  return `https://wa.me/${digits}`;
+}
+
 export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
   const [queries, setQueries] = useState<Query[]>(initialQueries);
-  const [filter, setFilter] = useState<Filter>("all");
+  const [brandFilter, setBrandFilter] = useState<BrandFilter>("all");
+  const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [search, setSearch] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
+    const qText = search.trim().toLowerCase();
     return queries.filter((q) => {
       const brand = resolveQueryBrand(q);
-      if (filter === "all") return true;
-      if (filter === "new") return q.status === "new";
-      if (filter === "kids") return brand === "preschool";
-      if (filter === "institute") return brand === "institute";
-      return q.type === filter;
+      if (brandFilter === "kids" && brand !== "preschool") return false;
+      if (brandFilter === "institute" && brand !== "institute") return false;
+      if (typeFilter !== "all" && q.type !== typeFilter) return false;
+      if (statusFilter === "new" && q.status !== "new") return false;
+      if (statusFilter === "done" && q.status !== "done") return false;
+      if (!qText) return true;
+      const hay = [
+        q.name,
+        q.parent_name,
+        q.email,
+        q.phone,
+        q.program,
+        q.subject,
+        q.message,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return hay.includes(qText);
     });
-  }, [queries, filter]);
+  }, [queries, brandFilter, typeFilter, statusFilter, search]);
 
   const updateStatus = async (id: string, status: Query["status"]) => {
     setBusy(id);
@@ -119,71 +132,138 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
     (q) => resolveQueryBrand(q) === "institute"
   ).length;
 
+  const chip = (
+    active: boolean,
+    kidsTone: boolean,
+    className?: string
+  ) =>
+    cn(
+      "px-3.5 py-2 rounded-xl text-sm font-medium transition-all",
+      active
+        ? kidsTone
+          ? "bg-kids-500 text-white shadow-sm"
+          : "bg-brand-600 text-white shadow-sm"
+        : "text-muted-foreground hover:text-foreground hover:bg-gray-50 dark:hover:bg-gray-800",
+      className
+    );
+
   return (
     <div>
-      <div className="inline-flex flex-wrap gap-1 p-1 mb-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 shadow-sm">
-        {filters.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => setFilter(f.id)}
-            className={cn(
-              "px-4 py-2 rounded-xl text-sm font-medium transition-all",
-              filter === f.id
-                ? f.id === "kids"
-                  ? "bg-kids-500 text-white shadow-sm"
-                  : "bg-brand-600 text-white shadow-sm"
-                : "text-muted-foreground hover:text-foreground hover:bg-gray-50 dark:hover:bg-gray-800"
-            )}
-          >
-            {f.label}
-            {f.id === "new" && newCount > 0 && (
-              <span
-                className={cn(
-                  "ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold",
-                  filter === f.id
-                    ? "bg-white/20 text-white"
-                    : "bg-red-500 text-white"
-                )}
-              >
-                {newCount}
-              </span>
-            )}
-            {f.id === "kids" && kidsCount > 0 && (
-              <span
-                className={cn(
-                  "ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold",
-                  filter === f.id
-                    ? "bg-white/20 text-white"
-                    : "bg-kids-100 text-kids-700"
-                )}
-              >
-                {kidsCount}
-              </span>
-            )}
-            {f.id === "institute" && instituteCount > 0 && (
-              <span
-                className={cn(
-                  "ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold",
-                  filter === f.id
-                    ? "bg-white/20 text-white"
-                    : "bg-brand-100 text-brand-700"
-                )}
-              >
-                {instituteCount}
-              </span>
-            )}
-          </button>
-        ))}
+      <div className="relative mb-4">
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search name, phone, email, program…"
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm"
+        />
       </div>
+
+      <div className="space-y-2.5 mb-6">
+        <div className="inline-flex flex-wrap gap-1 p-1 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 shadow-sm">
+          {(
+            [
+              { id: "all" as const, label: "All brands" },
+              { id: "kids" as const, label: "OP Kids", count: kidsCount },
+              {
+                id: "institute" as const,
+                label: "Institute",
+                count: instituteCount,
+              },
+            ] as const
+          ).map((f) => (
+            <button
+              key={f.id}
+              onClick={() => setBrandFilter(f.id)}
+              className={chip(brandFilter === f.id, f.id === "kids")}
+            >
+              {f.label}
+              {"count" in f && f.count > 0 && (
+                <span
+                  className={cn(
+                    "ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold",
+                    brandFilter === f.id
+                      ? "bg-white/20 text-white"
+                      : f.id === "kids"
+                        ? "bg-kids-100 text-kids-700"
+                        : "bg-brand-100 text-brand-700"
+                  )}
+                >
+                  {f.count}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <div className="inline-flex flex-wrap gap-1 p-1 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 shadow-sm">
+            {(
+              [
+                { id: "all" as const, label: "All types" },
+                { id: "admission" as const, label: "Admission" },
+                { id: "contact" as const, label: "Contact" },
+              ] as const
+            ).map((f) => (
+              <button
+                key={f.id}
+                onClick={() => setTypeFilter(f.id)}
+                className={chip(typeFilter === f.id, false)}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="inline-flex flex-wrap gap-1 p-1 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-white/10 shadow-sm">
+            {(
+              [
+                { id: "all" as const, label: "All status" },
+                { id: "new" as const, label: "New", count: newCount },
+                { id: "done" as const, label: "Done" },
+              ] as const
+            ).map((f) => (
+              <button
+                key={f.id}
+                onClick={() => setStatusFilter(f.id)}
+                className={chip(statusFilter === f.id, false)}
+              >
+                {f.label}
+                {"count" in f && f.count !== undefined && f.count > 0 && (
+                  <span
+                    className={cn(
+                      "ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-semibold",
+                      statusFilter === f.id
+                        ? "bg-white/20 text-white"
+                        : "bg-red-500 text-white"
+                    )}
+                  >
+                    {f.count}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="text-xs text-muted-foreground mb-3">
+        Showing {filtered.length} of {queries.length} quer
+        {queries.length === 1 ? "y" : "ies"}
+      </p>
 
       {filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-gray-900/40 p-14 text-center">
           <div className="mx-auto w-14 h-14 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
             <Inbox className="w-7 h-7 text-muted-foreground" />
           </div>
-          <p className="font-medium text-foreground">No queries found</p>
+          <p className="font-medium text-foreground">
+            {queries.length === 0 ? "No queries yet" : "No matching queries"}
+          </p>
           <p className="text-sm text-muted-foreground mt-1">
-            Enquiries from the website will appear here.
+            {queries.length === 0
+              ? "Enquiries from the website will appear here."
+              : "Try clearing search or filters."}
           </p>
         </div>
       ) : (
@@ -203,15 +283,13 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                 )}
               >
                 <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
                     <div
                       className={cn(
                         "w-11 h-11 rounded-xl flex items-center justify-center shrink-0",
                         brand === "preschool"
                           ? "bg-kids-50 text-kids-600 dark:bg-kids-950/30"
-                          : q.type === "admission"
-                            ? "bg-brand-50 text-brand-600 dark:bg-brand-950/30"
-                            : "bg-brand-50 text-brand-600 dark:bg-brand-950/30"
+                          : "bg-brand-50 text-brand-600 dark:bg-brand-950/30"
                       )}
                     >
                       {q.type === "admission" ? (
@@ -220,17 +298,10 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                         <MessageSquare className="w-5 h-5" />
                       )}
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="font-semibold flex flex-wrap items-center gap-2 text-[#1d2951] dark:text-white">
                         {q.name}
-                        <span
-                          className={cn(
-                            "px-2 py-0.5 rounded-lg text-[10px] font-semibold uppercase tracking-wide",
-                            q.type === "admission"
-                              ? "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                              : "bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"
-                          )}
-                        >
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold uppercase tracking-wide bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                           {q.type}
                         </span>
                         {brand === "preschool" && (
@@ -260,7 +331,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     {q.status !== "done" && (
                       <button
                         onClick={() => updateStatus(q.id, "done")}
@@ -269,6 +340,16 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                       >
                         <Check className="w-3.5 h-3.5" />
                         Done
+                      </button>
+                    )}
+                    {q.status === "done" && (
+                      <button
+                        onClick={() => updateStatus(q.id, "read")}
+                        disabled={busy === q.id}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-gray-100 dark:bg-gray-800 text-muted-foreground hover:text-foreground transition disabled:opacity-50"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        Reopen
                       </button>
                     )}
                     {q.status === "new" && (
@@ -341,7 +422,7 @@ export function QueriesClient({ initialQueries }: { initialQueries: Query[] }) {
                 {q.phone && (
                   <div className="mt-4 flex flex-wrap gap-2">
                     <a
-                      href={`https://wa.me/${q.phone.replace(/[^0-9]/g, "")}`}
+                      href={waLink(q.phone)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#25D366]/10 text-[#128C4A] hover:bg-[#25D366]/20 transition"

@@ -8,8 +8,9 @@ const config: CrudConfig = {
   table: "gallery",
   singular: "Photo",
   titleField: "alt",
-  subtitleField: "brand",
+  subtitleField: "category",
   imageField: "image_url",
+  brandField: "brand",
   fields: [
     { name: "image_url", label: "Photo", type: "image", required: true },
     {

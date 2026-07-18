@@ -9,6 +9,10 @@ import {
   ArrowRight,
   AlertTriangle,
   Sparkles,
+  GraduationCap,
+  Baby,
+  Crown,
+  Settings,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 
@@ -39,6 +43,7 @@ async function getDashboardData() {
     "testimonials",
     "events",
     "gallery",
+    "leadership",
   ] as const;
 
   const [{ data: userData }, ...tableResults] = await Promise.all([
@@ -50,13 +55,24 @@ async function getDashboardData() {
       .from("queries")
       .select("*", { count: "exact", head: true })
       .eq("status", "new"),
+    supabase
+      .from("queries")
+      .select("*", { count: "exact", head: true })
+      .eq("brand", "preschool"),
+    supabase
+      .from("queries")
+      .select("*", { count: "exact", head: true })
+      .eq("brand", "institute"),
   ]);
 
   const counts: Record<string, number> = {};
   tables.forEach((t, i) => {
     counts[t] = tableResults[i].count ?? 0;
   });
-  counts.newQueries = tableResults[tables.length].count ?? 0;
+  const offset = tables.length;
+  counts.newQueries = tableResults[offset].count ?? 0;
+  counts.kidsQueries = tableResults[offset + 1].count ?? 0;
+  counts.instituteQueries = tableResults[offset + 2].count ?? 0;
 
   const user = userData.user;
   const adminName = adminDisplayName(
@@ -116,6 +132,15 @@ export default async function AdminDashboard() {
       iconBg: "bg-sky-50 text-sky-600 dark:bg-sky-950/40 dark:text-sky-400",
     },
     {
+      label: "Leadership",
+      value: counts.leadership,
+      href: "/admin/leadership",
+      icon: Crown,
+      accent: "from-violet-500 to-violet-700",
+      iconBg:
+        "bg-violet-50 text-violet-600 dark:bg-violet-950/40 dark:text-violet-400",
+    },
+    {
       label: "Faculty",
       value: counts.faculty,
       href: "/admin/faculty",
@@ -149,6 +174,16 @@ export default async function AdminDashboard() {
       iconBg:
         "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
     },
+    {
+      label: "Site Settings",
+      value: "→",
+      href: "/admin/settings",
+      icon: Settings,
+      accent: "from-slate-500 to-slate-700",
+      iconBg:
+        "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+      isLink: true,
+    },
   ];
 
   const today = new Date().toLocaleDateString("en-IN", {
@@ -165,10 +200,10 @@ export default async function AdminDashboard() {
           Overview
         </p>
         <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#1d2951] dark:text-white">
-          {adminName}
+          Welcome, {adminName}
         </h1>
         <p className="text-muted-foreground mt-1.5 text-sm sm:text-[15px]">
-          {today} · Manage your website content and enquiries
+          {today} · Manage OP Institute & OP Kids content
         </p>
       </div>
 
@@ -176,7 +211,7 @@ export default async function AdminDashboard() {
         <Link
           href="/admin/queries"
           prefetch
-          className="group relative flex items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-600 via-brand-600 to-brand-700 text-white p-5 sm:p-6 mb-7 shadow-lg shadow-brand-600/25 hover:shadow-xl hover:shadow-brand-600/30 transition-shadow duration-150"
+          className="group relative flex items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-600 via-brand-600 to-brand-700 text-white p-5 sm:p-6 mb-6 shadow-lg shadow-brand-600/25 hover:shadow-xl hover:shadow-brand-600/30 transition-shadow duration-150"
         >
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.18),transparent_55%)]" />
           <div className="relative flex items-center gap-4">
@@ -198,7 +233,40 @@ export default async function AdminDashboard() {
         </Link>
       )}
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+      <div className="grid sm:grid-cols-2 gap-3 mb-7">
+        <div className="rounded-2xl border border-kids-200 dark:border-kids-800/50 bg-gradient-to-br from-kids-50 to-white dark:from-kids-950/20 dark:to-gray-900 p-4 sm:p-5">
+          <div className="flex items-center gap-2 text-kids-700 dark:text-kids-300 font-semibold text-sm mb-1">
+            <Baby className="w-4 h-4" />
+            OP Kids queries
+          </div>
+          <p className="font-display text-3xl font-bold text-[#1d2951] dark:text-white">
+            {counts.kidsQueries}
+          </p>
+          <Link
+            href="/admin/queries"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-kids-600 mt-2 hover:gap-1.5 transition-all"
+          >
+            Open inbox <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+        <div className="rounded-2xl border border-brand-200 dark:border-brand-800/50 bg-gradient-to-br from-brand-50 to-white dark:from-brand-950/20 dark:to-gray-900 p-4 sm:p-5">
+          <div className="flex items-center gap-2 text-brand-700 dark:text-brand-300 font-semibold text-sm mb-1">
+            <GraduationCap className="w-4 h-4" />
+            Institute queries
+          </div>
+          <p className="font-display text-3xl font-bold text-[#1d2951] dark:text-white">
+            {counts.instituteQueries}
+          </p>
+          <Link
+            href="/admin/queries"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 mt-2 hover:gap-1.5 transition-all"
+          >
+            Open inbox <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {cards.map((c) => (
           <Link
             key={c.label}

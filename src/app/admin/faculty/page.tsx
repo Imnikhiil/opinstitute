@@ -10,6 +10,7 @@ const config: CrudConfig = {
   titleField: "name",
   subtitleField: "subject",
   imageField: "image_url",
+  brandField: "category",
   fields: [
     { name: "image_url", label: "Photo", type: "image" },
     { name: "name", label: "Name", type: "text", required: true, placeholder: "CA Amit Verma" },

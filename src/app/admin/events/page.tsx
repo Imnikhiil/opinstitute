@@ -8,8 +8,9 @@ const config: CrudConfig = {
   table: "events",
   singular: "Event",
   titleField: "title",
-  subtitleField: "brand",
+  subtitleField: "event_date",
   imageField: "image_url",
+  brandField: "brand",
   fields: [
     { name: "image_url", label: "Photo", type: "image" },
     {
