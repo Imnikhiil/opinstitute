@@ -39,7 +39,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
 import type { FacultyMember } from "@/data/faculty";
-import { FACULTY_PHOTO_ASPECT } from "@/data/faculty";
+import { FACULTY_PHOTO_ASPECT, facultyInitials } from "@/data/faculty";
 
 const iconMap: Record<string, LucideIcon> = {
   Puzzle,
@@ -571,14 +571,22 @@ export function OpKidsPage({
                         )}
                         style={{ aspectRatio: String(FACULTY_PHOTO_ASPECT) }}
                       >
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          fill
-                          quality={90}
-                          className="object-cover object-center"
-                          sizes="160px"
-                        />
+                        {member.image ? (
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            quality={90}
+                            className="object-cover object-center"
+                            sizes="160px"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-kids-400 to-accent-pink">
+                            <span className="font-display text-3xl font-bold text-white/95">
+                              {facultyInitials(member.name)}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <h3 className="font-display font-bold text-lg sm:text-xl">
                         {member.name}

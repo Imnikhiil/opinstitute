@@ -9,6 +9,7 @@ import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
 import {
   facultyCategories,
   facultyCategoryLabels,
+  facultyInitials,
   FACULTY_PHOTO_ASPECT,
   type FacultyCategory,
   type FacultyMember,
@@ -24,6 +25,8 @@ function parseCategory(value: string | null | undefined): FilterId {
 }
 
 function FacultyCard({ member }: { member: FacultyMember }) {
+  const hasPhoto = Boolean(member.image);
+
   return (
     <div className="group glass-card overflow-hidden hover:shadow-card-hover transition-all hover:-translate-y-0.5 rounded-xl h-full flex flex-col max-w-[220px] w-full mx-auto">
       {/* Same ratio as admin crop (4:5) so faces match upload */}
@@ -31,14 +34,29 @@ function FacultyCard({ member }: { member: FacultyMember }) {
         className="relative w-full overflow-hidden bg-gray-100 dark:bg-gray-800"
         style={{ aspectRatio: String(FACULTY_PHOTO_ASPECT) }}
       >
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          quality={90}
-          sizes="(max-width: 640px) 45vw, 220px"
-          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
-        />
+        {hasPhoto ? (
+          <Image
+            src={member.image}
+            alt={member.name}
+            fill
+            quality={90}
+            sizes="(max-width: 640px) 45vw, 220px"
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center justify-center bg-gradient-to-br",
+              member.category === "preschool"
+                ? "from-kids-400 to-kids-600"
+                : "from-brand-500 to-brand-800"
+            )}
+          >
+            <span className="font-display text-3xl sm:text-4xl font-bold text-white/95">
+              {facultyInitials(member.name)}
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col flex-1 p-2.5 sm:p-3">

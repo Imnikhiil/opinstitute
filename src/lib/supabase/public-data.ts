@@ -29,16 +29,38 @@ function mapCourse(row: Row): Course {
   };
 }
 
+function stripWrappingQuotes(text: string): string {
+  return text.replace(/^[\"'\u201C\u2018]+|[\"'\u201D\u2019]+$/g, "").trim();
+}
+
+/** Prefer department brand over a mistaken category value in the DB. */
+function resolveFacultyCategory(row: Row): FacultyMember["category"] {
+  const department = str(row.department).toLowerCase();
+  const subject = str(row.subject).toLowerCase();
+  const raw = str(row.category).toLowerCase();
+  const hint = `${department} ${subject}`;
+
+  if (
+    /op\s*kids|pre\s*school|preschool|pre\s*primary/.test(department)
+  ) {
+    return "preschool";
+  }
+  if (/op\s*institute|institute of studies/.test(department)) {
+    return "institute";
+  }
+  if (
+    /pre\s*primary|preschool|nursery|\blkg\b|\bukg\b|play\s*group|op\s*kids/.test(
+      hint
+    )
+  ) {
+    return "preschool";
+  }
+  if (raw === "preschool" || raw === "institute") return raw;
+  return "institute";
+}
+
 function mapFaculty(row: Row): FacultyMember {
   const image = str(row.image_url);
-  const rawCategory = str(row.category).toLowerCase();
-  const subjectHint = `${str(row.subject)} ${str(row.department)}`.toLowerCase();
-  const category: FacultyMember["category"] =
-    rawCategory === "preschool" ||
-    (!rawCategory &&
-      (subjectHint.includes("kids") || subjectHint.includes("preschool")))
-      ? "preschool"
-      : "institute";
 
   return {
     id: str(row.id),
@@ -50,12 +72,10 @@ function mapFaculty(row: Row): FacultyMember {
     subjects_taught: str(row.subjects_taught),
     batch_handled: str(row.batch_handled),
     achievement: str(row.achievement),
-    quote: str(row.quote),
-    category,
-    image: sharpImageUrl(
-      image ||
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=900&q=90"
-    ),
+    quote: stripWrappingQuotes(str(row.quote)),
+    category: resolveFacultyCategory(row),
+    // Empty when no upload — UI shows initials (avoid stock male placeholder)
+    image: image ? sharpImageUrl(image) : "",
   };
 }
 

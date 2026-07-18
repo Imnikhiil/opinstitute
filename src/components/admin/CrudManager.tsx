@@ -22,6 +22,8 @@ export interface CrudField {
   label: string;
   type: FieldType;
   options?: string[];
+  /** Display labels for select options (value → label) */
+  optionLabels?: Record<string, string>;
   placeholder?: string;
   required?: boolean;
   fullWidth?: boolean;
@@ -316,7 +318,7 @@ export function CrudManager({
                         <option value="">Select…</option>
                         {f.options?.map((o) => (
                           <option key={o} value={o}>
-                            {o}
+                            {f.optionLabels?.[o] ?? o}
                           </option>
                         ))}
                       </select>

@@ -13,7 +13,7 @@ const config: CrudConfig = {
   fields: [
     { name: "image_url", label: "Photo", type: "image" },
     { name: "name", label: "Name", type: "text", required: true, placeholder: "CA Amit Verma" },
-    { name: "category", label: "Category", type: "select", options: ["preschool", "institute"] },
+    { name: "category", label: "Category", type: "select", options: ["preschool", "institute"], optionLabels: { preschool: "OP Kids Pre School", institute: "OP Institute of Studies" }, required: true },
     { name: "department", label: "Department", type: "text", placeholder: "Accountancy & CA" },
     { name: "qualification", label: "Qualification", type: "text", placeholder: "Chartered Accountant (FCA)" },
     { name: "experience", label: "Experience", type: "text", placeholder: "18 years" },
