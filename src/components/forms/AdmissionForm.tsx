@@ -1,19 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { admissionFormSchema, type AdmissionFormData } from "@/lib/schemas";
 import { Button } from "@/components/ui/Button";
+import { HoneypotField } from "@/components/forms/HoneypotField";
 import { Send, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { createClient } from "@/lib/supabase/client";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import {
   formatAdmissionWhatsAppMessage,
   openWhatsApp,
 } from "@/lib/whatsapp";
+import { submitEnquiry } from "@/lib/submit-enquiry";
+import { HONEYPOT_FIELD } from "@/lib/spam-guard";
 import type { ContentBrand } from "@/data/brands";
 
 const kidsPrograms = [
@@ -45,6 +47,7 @@ export function AdmissionForm({ className }: { className?: string }) {
   const { isKids, isInstitute, brand: siteBrand } = useSiteBrand();
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const formStartedAt = useRef(Date.now());
 
   const programs = useMemo(() => {
     if (isKids) return kidsPrograms;
@@ -62,7 +65,6 @@ export function AdmissionForm({ className }: { className?: string }) {
     resolver: zodResolver(admissionFormSchema),
   });
 
-  // Clear program when switching Kids / Institute world so wrong option isn't kept
   useEffect(() => {
     setValue("program", "");
   }, [isKids, isInstitute, setValue]);
@@ -75,33 +77,31 @@ export function AdmissionForm({ className }: { className?: string }) {
         : brandFromProgram(data.program);
 
     try {
-      const supabase = createClient();
-      const { error } = await supabase.from("queries").insert({
+      const result = await submitEnquiry({
         type: "admission",
-        name: data.studentName,
-        parent_name: data.parentName,
-        email: data.email,
-        phone: data.phone,
-        program: data.program,
-        age: data.age,
-        message: data.message,
+        ...data,
         brand: enquiryBrand,
+        formStartedAt: formStartedAt.current,
+        [HONEYPOT_FIELD]: data.website ?? "",
       });
-      if (error) {
-        console.error("Admission save failed:", error.message);
-        setSubmitError("Could not save your enquiry. Please try again.");
+
+      if (!result.ok) {
+        setSubmitError(result.error);
         return;
       }
 
-      openWhatsApp(
-        enquiryBrand === "preschool"
-          ? siteConfig.kidsWhatsapp
-          : siteConfig.whatsapp,
-        formatAdmissionWhatsAppMessage(data)
-      );
+      if (result.saved) {
+        openWhatsApp(
+          enquiryBrand === "preschool"
+            ? siteConfig.kidsWhatsapp
+            : siteConfig.whatsapp,
+          formatAdmissionWhatsAppMessage(data)
+        );
+      }
 
       setSubmitted(true);
       reset();
+      formStartedAt.current = Date.now();
       setTimeout(() => setSubmitted(false), 8000);
     } catch (err) {
       console.error("Admission save error:", err);
@@ -127,7 +127,11 @@ export function AdmissionForm({ className }: { className?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={cn("space-y-5", className)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn("relative space-y-5", className)}
+    >
+      <HoneypotField register={register as never} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label className="block text-sm font-medium mb-1.5">Student Name *</label>

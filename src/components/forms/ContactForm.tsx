@@ -1,19 +1,21 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactFormSchema, type ContactFormData } from "@/lib/schemas";
 import { Button } from "@/components/ui/Button";
+import { HoneypotField } from "@/components/forms/HoneypotField";
 import { Send, CheckCircle } from "lucide-react";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { createClient } from "@/lib/supabase/client";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import {
   formatContactWhatsAppMessage,
   openWhatsApp,
 } from "@/lib/whatsapp";
+import { submitEnquiry } from "@/lib/submit-enquiry";
+import { HONEYPOT_FIELD } from "@/lib/spam-guard";
 
 interface ContactFormProps {
   className?: string;
@@ -25,6 +27,7 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
   const { isKids, brand: siteBrand } = useSiteBrand();
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const formStartedAt = useRef(Date.now());
   const {
     register,
     handleSubmit,
@@ -37,32 +40,32 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
   const onSubmit = async (data: ContactFormData) => {
     setSubmitError(null);
     try {
-      const supabase = createClient();
-      const { error } = await supabase.from("queries").insert({
+      const result = await submitEnquiry({
         type: "contact",
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        subject: data.subject,
-        message: data.message,
+        ...data,
         brand:
           siteBrand === "preschool" || siteBrand === "institute"
             ? siteBrand
             : null,
+        formStartedAt: formStartedAt.current,
+        [HONEYPOT_FIELD]: data.website ?? "",
       });
-      if (error) {
-        console.error("Query save failed:", error.message);
-        setSubmitError("Could not save your enquiry. Please try again.");
+
+      if (!result.ok) {
+        setSubmitError(result.error);
         return;
       }
 
-      openWhatsApp(
-        isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp,
-        formatContactWhatsAppMessage(data)
-      );
+      if (result.saved) {
+        openWhatsApp(
+          isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp,
+          formatContactWhatsAppMessage(data)
+        );
+      }
 
       setSubmitted(true);
       reset();
+      formStartedAt.current = Date.now();
       setTimeout(() => setSubmitted(false), 8000);
     } catch (err) {
       console.error("Query save error:", err);
@@ -96,7 +99,11 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={cn("space-y-5", className)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn("relative space-y-5", className)}
+    >
+      <HoneypotField register={register as never} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Full Name</label>
