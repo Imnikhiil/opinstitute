@@ -6,8 +6,11 @@ import { ArrowRight, Star } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 
 export function AboutKids() {
+  const { enterKidsWorld } = useSiteBrand();
+
   return (
     <section className="section-padding relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-kids-50 via-pink-50 to-purple-50 dark:from-kids-950/20 dark:via-pink-950/10 dark:to-purple-950/10" />
@@ -57,9 +60,9 @@ export function AboutKids() {
                   Loved by 200+ parents
                 </span>
               </div>
-              <Link href="/op-kids">
+              <Link href="/op-kids" onClick={() => enterKidsWorld()}>
                 <Button variant="kids" size="lg">
-                  Discover OP Kids Pre School
+                  Enter Kids World
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>

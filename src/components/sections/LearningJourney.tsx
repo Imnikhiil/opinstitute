@@ -127,13 +127,22 @@ export function LearningJourney() {
             <p className="text-white/70 mb-4 sm:mb-5 text-sm sm:text-base md:text-lg">
               One institution. Every stage of your child&apos;s success.
             </p>
-            <Link
-              href="/admissions"
-              className="group inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white text-brand-700 font-semibold shadow-xl hover:gap-3 transition-all duration-300"
-            >
-              Start the Journey
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                href="/op-kids"
+                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-kids-400 to-accent-pink text-white font-semibold shadow-xl hover:gap-3 transition-all duration-300"
+              >
+                OP Kids World
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+              <Link
+                href="/institute"
+                className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-brand-700 font-semibold shadow-xl hover:gap-3 transition-all duration-300"
+              >
+                Explore Institute
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
           </div>
         </ScrollReveal>
       </div>

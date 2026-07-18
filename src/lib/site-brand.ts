@@ -25,7 +25,7 @@ export function parseSiteBrandMode(
 export function getNavLinksForBrand(mode: SiteBrandMode): BrandNavLink[] {
   if (mode === "preschool") {
     return [
-      { href: "/op-kids", label: "Kids Home" },
+      { href: "/op-kids", label: "Home" },
       { href: "/faculty?category=preschool", label: "Faculty" },
       { href: "/gallery?brand=preschool", label: "Gallery" },
       { href: "/events?brand=preschool", label: "Events" },
@@ -36,7 +36,7 @@ export function getNavLinksForBrand(mode: SiteBrandMode): BrandNavLink[] {
 
   if (mode === "institute") {
     return [
-      { href: "/institute", label: "Institute Home" },
+      { href: "/institute", label: "Home" },
       { href: "/courses", label: "Courses" },
       { href: "/faculty?category=institute", label: "Faculty" },
       { href: "/gallery?brand=institute", label: "Gallery" },

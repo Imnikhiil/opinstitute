@@ -7,9 +7,12 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { LeadershipStrip } from "@/components/sections/LeadershipHighlight";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { aboutContent } from "@/data/site";
 
 export function AboutInstitute() {
+  const { enterInstitute } = useSiteBrand();
+
   return (
     <section id="about" className="section-padding">
       <div className="container-custom">
@@ -50,12 +53,20 @@ export function AboutInstitute() {
               </p>
               <LeadershipStrip />
             </div>
-            <Link href="/about">
-              <Button variant="outline">
-                Read Founder&apos;s Message
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/institute" onClick={() => enterInstitute()}>
+                <Button>
+                  Explore Institute
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+              <Link href="/about">
+                <Button variant="outline">
+                  Founder&apos;s Message
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </div>

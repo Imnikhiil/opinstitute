@@ -116,6 +116,16 @@ export function Footer() {
               )}
               {!isKids && (
                 <>
+                  {!isInstitute && (
+                    <li>
+                      <Link
+                        href="/institute"
+                        className="hover:text-brand-400 transition-colors"
+                      >
+                        OP Institute of Studies
+                      </Link>
+                    </li>
+                  )}
                   <li>
                     <Link
                       href="/courses"
