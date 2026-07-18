@@ -131,14 +131,14 @@ export function SplitHero() {
       </motion.div>
 
       {/* ---------------- MOBILE DIVIDER + EMBLEM ---------------- */}
-      <div className="relative z-20 flex lg:hidden items-center justify-center -my-9">
+      <div className="relative z-20 flex lg:hidden items-center justify-center -my-7">
         <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-        <div className="relative w-20 h-20 rounded-full bg-white shadow-xl flex items-center justify-center ring-2 ring-white overflow-hidden p-0.5">
+        <div className="relative w-16 h-16 rounded-full bg-white shadow-xl flex items-center justify-center ring-2 ring-white overflow-hidden p-0.5">
           <Image
             src="/logos/op-institute-logo.png"
             alt="OP Institute of Studies"
-            width={80}
-            height={80}
+            width={64}
+            height={64}
             className="w-full h-full object-contain"
           />
         </div>
@@ -257,12 +257,12 @@ export function SplitHero() {
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
               className="absolute -inset-1 rounded-full border-2 border-white"
             />
-            <div className="relative w-40 h-40 rounded-full bg-white shadow-2xl flex items-center justify-center ring-4 ring-white overflow-hidden p-1">
+            <div className="relative w-28 h-28 rounded-full bg-white shadow-2xl flex items-center justify-center ring-4 ring-white overflow-hidden p-0.5">
               <Image
                 src="/logos/op-institute-logo.png"
                 alt="OP Institute of Studies"
-                width={160}
-                height={160}
+                width={112}
+                height={112}
                 priority
                 className="w-full h-full object-contain"
               />
