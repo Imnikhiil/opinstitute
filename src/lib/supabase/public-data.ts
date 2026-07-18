@@ -5,6 +5,7 @@ import { leadership as staticLeadership, type Leader } from "@/data/leadership";
 import { testimonials as staticTestimonials, type Testimonial } from "@/data/testimonials";
 import { events as staticEvents, type Event } from "@/data/events";
 import { galleryImages as staticGallery, type GalleryImage } from "@/data/gallery";
+import type { ContentBrand } from "@/data/brands";
 import { siteConfig as staticSiteConfig } from "@/data/site";
 import { sharpImageUrl } from "@/lib/utils";
 
@@ -115,8 +116,25 @@ function mapTestimonial(row: Row): Testimonial {
   };
 }
 
+function resolveContentBrand(
+  row: Row,
+  legacyKidsSignal: string
+): ContentBrand {
+  const raw = str(row.brand).toLowerCase();
+  if (raw === "preschool" || raw === "institute") return raw;
+  const signal = legacyKidsSignal.toLowerCase();
+  if (
+    signal === "preschool" ||
+    /kids|pre\s*school|pre\s*primary/.test(signal)
+  ) {
+    return "preschool";
+  }
+  return "institute";
+}
+
 function mapEvent(row: Row): Event {
   const image = str(row.image_url);
+  const type = (str(row.type) as Event["type"]) || "academic";
   return {
     id: str(row.id),
     title: str(row.title),
@@ -125,19 +143,23 @@ function mapEvent(row: Row): Event {
     image:
       image ||
       "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
-    type: (row.type as Event["type"]) || "academic",
+    type,
+    brand: resolveContentBrand(row, type),
   };
 }
 
 function mapGallery(row: Row): GalleryImage {
   const src = str(row.image_url);
+  const category =
+    (str(row.category) as GalleryImage["category"]) || "campus";
   return {
     id: str(row.id),
     src:
       src ||
       "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
     alt: str(row.alt, "OP Institute gallery"),
-    category: (row.category as GalleryImage["category"]) || "campus",
+    category,
+    brand: resolveContentBrand(row, category),
   };
 }
 

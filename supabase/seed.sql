@@ -59,27 +59,27 @@ insert into public.testimonials (name, role, content, rating, image_url, categor
 ('Neha Agarwal', 'CMA Student – OP Institute', 'Clearing CMA felt achievable because of the structured guidance here. The cost accounting and management classes were detailed and the mentors were always available for doubts. Truly grateful.', 5, null, 'institute', 9);
 
 -- Events
-insert into public.events (title, event_date, description, image_url, type, sort_order) values
-('Annual Day Celebration 2025', 'December 15, 2025', 'A grand celebration showcasing student talents through performances, awards, and cultural programs.', 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80', 'cultural', 1),
-('OP Kids Summer Camp', 'May 20 – June 10, 2025', 'Fun-filled summer camp with art, craft, storytelling, swimming, and adventure activities for kids.', 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80', 'preschool', 2),
-('CMA Test Series', 'Every Sunday', 'Full-length mock tests for CMA students with detailed analysis and performance feedback.', 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80', 'academic', 3),
-('Sports Day 2025', 'January 26, 2025', 'Inter-house sports competitions including athletics, cricket, football, and fun races for all age groups.', 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&q=80', 'sports', 4),
-('Parent-Teacher Meet', 'First Saturday Monthly', 'Regular parent-teacher meetings to discuss student progress and collaborative learning strategies.', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', 'academic', 5),
-('Festival Celebrations', 'Throughout the Year', 'Diwali, Holi, Christmas, and Independence Day celebrations teaching cultural values and unity.', 'https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=600&q=80', 'cultural', 6),
-('Science Exhibition', 'February 28, 2025', 'Students showcase innovative science projects and experiments in our annual science fair.', 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80', 'academic', 7),
-('OP Kids Fancy Dress', 'November 14, 2025', 'Adorable fancy dress competition for preschoolers celebrating Children''s Day with creativity and fun.', 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80', 'preschool', 8);
+insert into public.events (title, event_date, description, image_url, type, brand, sort_order) values
+('Annual Day Celebration 2025', 'December 15, 2025', 'A grand celebration showcasing student talents through performances, awards, and cultural programs.', 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80', 'cultural', 'institute', 1),
+('OP Kids Summer Camp', 'May 20 – June 10, 2025', 'Fun-filled summer camp with art, craft, storytelling, swimming, and adventure activities for kids.', 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80', 'preschool', 'preschool', 2),
+('CMA Test Series', 'Every Sunday', 'Full-length mock tests for CMA students with detailed analysis and performance feedback.', 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80', 'academic', 'institute', 3),
+('Sports Day 2025', 'January 26, 2025', 'Inter-house sports competitions including athletics, cricket, football, and fun races for all age groups.', 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&q=80', 'sports', 'institute', 4),
+('Parent-Teacher Meet', 'First Saturday Monthly', 'Regular parent-teacher meetings to discuss student progress and collaborative learning strategies.', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', 'academic', 'institute', 5),
+('Festival Celebrations', 'Throughout the Year', 'Diwali, Holi, Christmas, and Independence Day celebrations teaching cultural values and unity.', 'https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=600&q=80', 'cultural', 'institute', 6),
+('Science Exhibition', 'February 28, 2025', 'Students showcase innovative science projects and experiments in our annual science fair.', 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80', 'academic', 'institute', 7),
+('OP Kids Fancy Dress', 'November 14, 2025', 'Adorable fancy dress competition for preschoolers celebrating Children''s Day with creativity and fun.', 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80', 'preschool', 'preschool', 8);
 
 -- Gallery
-insert into public.gallery (image_url, alt, category, sort_order) values
-('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80', 'Modern classroom with students', 'classroom', 1),
-('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80', 'Preschool children learning', 'preschool', 2),
-('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', 'Campus building exterior', 'campus', 3),
-('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80', 'Children playing outdoors', 'preschool', 4),
-('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80', 'Annual day celebration', 'events', 5),
-('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80', 'Students in science lab', 'classroom', 6),
-('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80', 'Award ceremony', 'achievements', 7),
-('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80', 'Sports day activities', 'events', 8),
-('https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80', 'Science exhibition', 'classroom', 9),
-('https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=800&q=80', 'Festival celebration', 'events', 10),
-('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', 'Library and study zone', 'campus', 11),
-('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80', 'Computer lab', 'classroom', 12);
+insert into public.gallery (image_url, alt, category, brand, sort_order) values
+('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80', 'Modern classroom with students', 'classroom', 'institute', 1),
+('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80', 'Preschool children learning', 'preschool', 'preschool', 2),
+('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', 'Campus building exterior', 'campus', 'institute', 3),
+('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80', 'Children playing outdoors', 'preschool', 'preschool', 4),
+('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80', 'Annual day celebration', 'events', 'institute', 5),
+('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80', 'Students in science lab', 'classroom', 'institute', 6),
+('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80', 'Award ceremony', 'achievements', 'institute', 7),
+('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80', 'Sports day activities', 'events', 'institute', 8),
+('https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80', 'Science exhibition', 'classroom', 'institute', 9),
+('https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=800&q=80', 'Festival celebration', 'events', 'institute', 10),
+('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', 'Library and study zone', 'campus', 'institute', 11),
+('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80', 'Computer lab', 'classroom', 'institute', 12);

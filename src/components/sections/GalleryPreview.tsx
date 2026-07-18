@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/Button";
 import type { GalleryImage } from "@/data/gallery";
 
 export function GalleryPreview({ images }: { images: GalleryImage[] }) {
-  const preview = images.slice(0, 6);
+  const institute = images.filter((img) => img.brand === "institute");
+  const preview = (institute.length >= 3 ? institute : images).slice(0, 6);
 
   return (
     <section className="section-padding">
@@ -30,7 +31,13 @@ export function GalleryPreview({ images }: { images: GalleryImage[] }) {
                   index === 0 ? "md:row-span-2 md:col-span-1" : ""
                 }`}
               >
-                <div className={`relative ${index === 0 ? "aspect-[3/4] md:aspect-auto md:h-full min-h-[200px]" : "aspect-square"}`}>
+                <div
+                  className={`relative ${
+                    index === 0
+                      ? "aspect-[3/4] md:aspect-auto md:h-full min-h-[200px]"
+                      : "aspect-square"
+                  }`}
+                >
                   <Image
                     src={img.src}
                     alt={img.alt}
@@ -47,10 +54,16 @@ export function GalleryPreview({ images }: { images: GalleryImage[] }) {
         </div>
 
         <ScrollReveal delay={0.3}>
-          <div className="text-center mt-10">
-            <Link href="/gallery">
+          <div className="text-center mt-10 flex flex-wrap justify-center gap-3">
+            <Link href="/gallery?brand=institute">
               <Button variant="outline">
-                View Full Gallery
+                Institute Gallery
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/gallery?brand=preschool">
+              <Button variant="kids">
+                Kids Gallery
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>

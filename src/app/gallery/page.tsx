@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getGalleryImages } from "@/lib/supabase/public-data";
+import { parseBrandFilter } from "@/data/brands";
 import { GalleryPageClient } from "./GalleryPageClient";
 
 export const metadata: Metadata = {
@@ -10,7 +12,24 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default async function GalleryPage() {
+type GalleryPageProps = {
+  searchParams?: Promise<{ brand?: string }> | { brand?: string };
+};
+
+export default async function GalleryPage({ searchParams }: GalleryPageProps) {
   const images = await getGalleryImages();
-  return <GalleryPageClient images={images} />;
+  const params = await Promise.resolve(searchParams ?? {});
+  const initialBrand = parseBrandFilter(params.brand);
+
+  return (
+    <Suspense
+      fallback={
+        <div className="section-padding container-custom text-center text-muted-foreground">
+          Loading gallery…
+        </div>
+      }
+    >
+      <GalleryPageClient images={images} initialBrand={initialBrand} />
+    </Suspense>
+  );
 }

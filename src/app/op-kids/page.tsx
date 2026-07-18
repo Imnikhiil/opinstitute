@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { getFaculty, getLeadership, getTestimonials } from "@/lib/supabase/public-data";
+import {
+  getEvents,
+  getFaculty,
+  getGalleryImages,
+  getLeadership,
+  getTestimonials,
+} from "@/lib/supabase/public-data";
 import { OpKidsPage } from "./OpKidsPage";
 
 export const metadata: Metadata = {
@@ -11,11 +17,14 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function Page() {
-  const [testimonials, allFaculty, leaders] = await Promise.all([
-    getTestimonials(),
-    getFaculty(),
-    getLeadership(),
-  ]);
+  const [testimonials, allFaculty, leaders, allGallery, allEvents] =
+    await Promise.all([
+      getTestimonials(),
+      getFaculty(),
+      getLeadership(),
+      getGalleryImages(),
+      getEvents(),
+    ]);
   const leaderNames = new Set(
     leaders.map((l) => l.name.trim().toLowerCase())
   );
@@ -24,5 +33,15 @@ export default async function Page() {
       m.category === "preschool" &&
       !leaderNames.has(m.name.trim().toLowerCase())
   );
-  return <OpKidsPage testimonials={testimonials} faculty={faculty} />;
+  const gallery = allGallery.filter((img) => img.brand === "preschool");
+  const events = allEvents.filter((e) => e.brand === "preschool");
+
+  return (
+    <OpKidsPage
+      testimonials={testimonials}
+      faculty={faculty}
+      gallery={gallery}
+      events={events}
+    />
+  );
 }

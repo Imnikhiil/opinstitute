@@ -22,6 +22,8 @@ import {
   Users,
   Lock,
   ChevronDown,
+  CalendarDays,
+  Images,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal, StatCounter } from "@/components/ui/ScrollReveal";
@@ -40,6 +42,8 @@ import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
 import type { FacultyMember } from "@/data/faculty";
 import { FACULTY_PHOTO_ASPECT, facultyInitials } from "@/data/faculty";
+import type { GalleryImage } from "@/data/gallery";
+import type { Event } from "@/data/events";
 
 const iconMap: Record<string, LucideIcon> = {
   Puzzle,
@@ -113,9 +117,13 @@ const teacherPalettes = [
 export function OpKidsPage({
   testimonials,
   faculty,
+  gallery = [],
+  events = [],
 }: {
   testimonials: Testimonial[];
   faculty: FacultyMember[];
+  gallery?: GalleryImage[];
+  events?: Event[];
 }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -633,6 +641,120 @@ export function OpKidsPage({
           </div>
         </section>
       )}
+
+      {/* Kids Gallery + Events — deep-linked, already filtered */}
+      <section className="section-padding bg-white dark:bg-gray-950">
+        <div className="container-custom">
+          <ScrollReveal>
+            <SectionHeader
+              badge="Kids World"
+              title="Photos & Events for Little Ones"
+              subtitle="See only OP Kids Pre School moments — no need to hunt through filters"
+              variant="kids"
+            />
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
+            <ScrollReveal>
+              <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-kids-50 to-pink-50 dark:from-kids-950/30 dark:to-pink-950/20 border border-kids-100 dark:border-kids-900/40 p-5 sm:p-6 h-full flex flex-col">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-kids-500 text-white">
+                    <Images className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-display font-bold text-lg text-kids-800 dark:text-kids-200">
+                      Kids Gallery
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Classrooms, play & celebrations
+                    </p>
+                  </div>
+                </div>
+
+                {gallery.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-2 mb-5">
+                    {gallery.slice(0, 3).map((img) => (
+                      <div
+                        key={img.id}
+                        className="relative aspect-square rounded-xl overflow-hidden"
+                      >
+                        <Image
+                          src={img.src}
+                          alt={img.alt}
+                          fill
+                          className="object-cover"
+                          sizes="120px"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground mb-5 flex-1">
+                    Kids photos will appear here as they are added from Admin.
+                  </p>
+                )}
+
+                <Link href="/gallery?brand=preschool" className="mt-auto">
+                  <Button variant="kids" className="w-full group rounded-full">
+                    Open Kids Gallery
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </Button>
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.08}>
+              <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-100 dark:border-amber-900/40 p-5 sm:p-6 h-full flex flex-col">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500 text-white">
+                    <CalendarDays className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-display font-bold text-lg text-amber-900 dark:text-amber-200">
+                      Kids Events
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Camps, fancy dress & fun days
+                    </p>
+                  </div>
+                </div>
+
+                {events.length > 0 ? (
+                  <ul className="space-y-2.5 mb-5 flex-1">
+                    {events.slice(0, 3).map((event) => (
+                      <li
+                        key={event.id}
+                        className="rounded-xl bg-white/80 dark:bg-gray-900/60 px-3 py-2.5"
+                      >
+                        <p className="font-medium text-sm text-foreground line-clamp-1">
+                          {event.title}
+                        </p>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          {event.date}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-muted-foreground mb-5 flex-1">
+                    Kids events will appear here as they are added from Admin.
+                  </p>
+                )}
+
+                <Link href="/events?brand=preschool" className="mt-auto">
+                  <Button
+                    variant="outline"
+                    className="w-full group rounded-full border-amber-300 text-amber-800 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-200 dark:hover:bg-amber-950/40"
+                  >
+                    Open Kids Events
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </Button>
+                </Link>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
       {/* Parent Testimonials */}
       <Testimonials

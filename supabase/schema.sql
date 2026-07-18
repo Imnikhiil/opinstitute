@@ -68,6 +68,7 @@ create table if not exists public.events (
   description  text,
   image_url    text,
   type         text default 'academic',              -- academic | cultural | sports | preschool
+  brand        text default 'institute',             -- preschool | institute
   sort_order   int default 0,
   created_at   timestamptz not null default now()
 );
@@ -78,6 +79,7 @@ create table if not exists public.gallery (
   image_url   text not null,
   alt         text,
   category    text default 'campus',                 -- campus | classroom | preschool | events | achievements
+  brand       text default 'institute',              -- preschool | institute
   sort_order  int default 0,
   created_at  timestamptz not null default now()
 );
