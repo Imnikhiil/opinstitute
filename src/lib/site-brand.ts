@@ -36,8 +36,8 @@ export function getNavLinksForBrand(mode: SiteBrandMode): BrandNavLink[] {
 
   if (mode === "institute") {
     return [
+      { href: "/institute", label: "Institute Home" },
       { href: "/courses", label: "Courses" },
-      { href: "/about", label: "About" },
       { href: "/faculty?category=institute", label: "Faculty" },
       { href: "/gallery?brand=institute", label: "Gallery" },
       { href: "/events?brand=institute", label: "Events" },

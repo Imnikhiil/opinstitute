@@ -9,6 +9,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import {
   formatContactWhatsAppMessage,
   openWhatsApp,
@@ -21,6 +22,7 @@ interface ContactFormProps {
 
 export function ContactForm({ className, variant = "default" }: ContactFormProps) {
   const siteConfig = useSiteConfig();
+  const { isKids, brand: siteBrand } = useSiteBrand();
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const {
@@ -43,6 +45,10 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
         phone: data.phone,
         subject: data.subject,
         message: data.message,
+        brand:
+          siteBrand === "preschool" || siteBrand === "institute"
+            ? siteBrand
+            : null,
       });
       if (error) {
         console.error("Query save failed:", error.message);
@@ -51,7 +57,7 @@ export function ContactForm({ className, variant = "default" }: ContactFormProps
       }
 
       openWhatsApp(
-        siteConfig.whatsapp,
+        isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp,
         formatContactWhatsAppMessage(data)
       );
 

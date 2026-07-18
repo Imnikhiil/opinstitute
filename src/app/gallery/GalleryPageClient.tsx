@@ -11,6 +11,7 @@ import {
   type BrandFilter,
 } from "@/data/brands";
 import { galleryTopics, type GalleryImage } from "@/data/gallery";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { cn } from "@/lib/utils";
 
 type TopicFilter = (typeof galleryTopics)[number]["id"];
@@ -33,9 +34,21 @@ export function GalleryPageClient({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const activeBrand = parseBrandFilter(
-    searchParams.get("brand") ?? initialBrand
-  );
+  const { isKids, isInstitute } = useSiteBrand();
+
+  // In Kids / Institute world, lock brand tabs to that world only
+  const brandFilters = useMemo(() => {
+    if (isKids) return contentBrandFilters.filter((b) => b.id === "preschool");
+    if (isInstitute)
+      return contentBrandFilters.filter((b) => b.id === "institute");
+    return contentBrandFilters;
+  }, [isKids, isInstitute]);
+
+  const activeBrand = isKids
+    ? "preschool"
+    : isInstitute
+      ? "institute"
+      : parseBrandFilter(searchParams.get("brand") ?? initialBrand);
   const activeTopic = parseTopic(searchParams.get("topic"));
 
   const setParams = useCallback(
@@ -109,26 +122,28 @@ export function GalleryPageClient({
 
       <section className="section-padding">
         <div className="container-custom">
-          {/* Brand tabs */}
-          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4 sm:mb-5">
-            {contentBrandFilters.map((brand) => (
-              <button
-                key={brand.id}
-                type="button"
-                onClick={() => setParams({ brand: brand.id, topic: "all" })}
-                className={cn(
-                  "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
-                  activeBrand === brand.id
-                    ? brand.id === "preschool"
-                      ? "bg-kids-500 text-white"
-                      : "bg-brand-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                )}
-              >
-                {brand.label}
-              </button>
-            ))}
-          </div>
+          {/* Brand tabs — hidden when already locked in Kids / Institute world */}
+          {brandFilters.length > 1 && (
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+              {brandFilters.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() => setParams({ brand: b.id, topic: "all" })}
+                  className={cn(
+                    "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
+                    activeBrand === b.id
+                      ? b.id === "preschool"
+                        ? "bg-kids-500 text-white"
+                        : "bg-brand-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  )}
+                >
+                  {b.label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Topic chips */}
           {availableTopics.length > 1 && (

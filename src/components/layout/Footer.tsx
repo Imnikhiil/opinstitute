@@ -21,7 +21,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link
-              href={isKids ? "/op-kids" : isInstitute ? "/courses" : "/"}
+              href={isKids ? "/op-kids" : isInstitute ? "/institute" : "/"}
               className="flex items-center gap-3"
             >
               <Image

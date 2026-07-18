@@ -13,6 +13,7 @@ import {
   type BrandFilter,
 } from "@/data/brands";
 import { eventTypeFilters, type Event } from "@/data/events";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { cn } from "@/lib/utils";
 
 type TypeFilter = (typeof eventTypeFilters)[number]["id"];
@@ -41,10 +42,20 @@ export function EventsPageClient({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { isKids, isInstitute } = useSiteBrand();
 
-  const activeBrand = parseBrandFilter(
-    searchParams.get("brand") ?? initialBrand
-  );
+  const brandFilters = useMemo(() => {
+    if (isKids) return contentBrandFilters.filter((b) => b.id === "preschool");
+    if (isInstitute)
+      return contentBrandFilters.filter((b) => b.id === "institute");
+    return contentBrandFilters;
+  }, [isKids, isInstitute]);
+
+  const activeBrand = isKids
+    ? "preschool"
+    : isInstitute
+      ? "institute"
+      : parseBrandFilter(searchParams.get("brand") ?? initialBrand);
   const activeType = parseType(searchParams.get("type"));
 
   const setParams = useCallback(
@@ -129,25 +140,27 @@ export function EventsPageClient({
             />
           </ScrollReveal>
 
-          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4 sm:mb-5">
-            {contentBrandFilters.map((brand) => (
-              <button
-                key={brand.id}
-                type="button"
-                onClick={() => setParams({ brand: brand.id, type: "all" })}
-                className={cn(
-                  "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
-                  activeBrand === brand.id
-                    ? brand.id === "preschool"
-                      ? "bg-kids-500 text-white"
-                      : "bg-brand-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                )}
-              >
-                {brand.label}
-              </button>
-            ))}
-          </div>
+          {brandFilters.length > 1 && (
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+              {brandFilters.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() => setParams({ brand: b.id, type: "all" })}
+                  className={cn(
+                    "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
+                    activeBrand === b.id
+                      ? b.id === "preschool"
+                        ? "bg-kids-500 text-white"
+                        : "bg-brand-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  )}
+                >
+                  {b.label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {availableTypes.length > 1 && (
             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">

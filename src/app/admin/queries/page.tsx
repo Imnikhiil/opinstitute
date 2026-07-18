@@ -21,7 +21,7 @@ export default async function QueriesPage() {
     <div>
       <PageHeader
         title="Queries"
-        subtitle="All enquiries from Contact and Admission forms — reply via WhatsApp or call."
+        subtitle="Filter by OP Kids / Institute — or by Contact vs Admission. Reply via WhatsApp or call."
       />
       <QueriesClient initialQueries={queries} />
     </div>

@@ -71,11 +71,15 @@ export function SiteBrandProvider({ children }: { children: React.ReactNode }) {
     persistBrand(mode);
   }, []);
 
-  // Landing on main home always means mixed browsing
+  // Landing on brand homes locks the world; main home resets to mixed
   useEffect(() => {
     if (!ready) return;
     if (pathname === "/op-kids" || pathname.startsWith("/op-kids/")) {
       if (brand !== "preschool") setBrand("preschool");
+      return;
+    }
+    if (pathname === "/institute" || pathname.startsWith("/institute/")) {
+      if (brand !== "institute") setBrand("institute");
       return;
     }
     if (pathname === "/") {

@@ -24,6 +24,7 @@ import {
   ChevronDown,
   CalendarDays,
   Images,
+  GraduationCap,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal, StatCounter } from "@/components/ui/ScrollReveal";
@@ -40,10 +41,6 @@ import {
 } from "@/data/site";
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
-import type { FacultyMember } from "@/data/faculty";
-import { FACULTY_PHOTO_ASPECT, facultyInitials } from "@/data/faculty";
-import type { GalleryImage } from "@/data/gallery";
-import type { Event } from "@/data/events";
 
 const iconMap: Record<string, LucideIcon> = {
   Puzzle,
@@ -107,23 +104,37 @@ const floatingEmojis = [
   { e: "🌈", cls: "bottom-[12%] left-[38%] text-4xl", dur: 8, y: 14 },
 ];
 
-const teacherPalettes = [
-  { ring: "ring-amber-200", blob: "bg-amber-300/30", accent: "text-amber-600" },
-  { ring: "ring-pink-200", blob: "bg-pink-300/30", accent: "text-pink-600" },
-  { ring: "ring-violet-200", blob: "bg-violet-300/30", accent: "text-violet-600" },
-  { ring: "ring-sky-200", blob: "bg-sky-300/30", accent: "text-sky-600" },
+const exploreLinks = [
+  {
+    href: "/faculty?category=preschool",
+    title: "Meet Our Teachers",
+    detail: "Founder, management & caring faculty",
+    icon: GraduationCap,
+    tone: "from-kids-500 to-accent-pink",
+    ring: "ring-kids-200",
+  },
+  {
+    href: "/gallery?brand=preschool",
+    title: "Kids Gallery",
+    detail: "Classrooms, playtime & smiles",
+    icon: Images,
+    tone: "from-pink-500 to-rose-500",
+    ring: "ring-pink-200",
+  },
+  {
+    href: "/events?brand=preschool",
+    title: "Kids Events",
+    detail: "Camps, celebrations & fun days",
+    icon: CalendarDays,
+    tone: "from-amber-500 to-orange-500",
+    ring: "ring-amber-200",
+  },
 ];
 
 export function OpKidsPage({
   testimonials,
-  faculty,
-  gallery = [],
-  events = [],
 }: {
   testimonials: Testimonial[];
-  faculty: FacultyMember[];
-  gallery?: GalleryImage[];
-  events?: Event[];
 }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -524,234 +535,67 @@ export function OpKidsPage({
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* OP Kids Faculty */}
-      {faculty.length > 0 && (
-        <section className="section-padding relative overflow-hidden bg-gradient-to-br from-kids-50 via-pink-50 to-purple-50 dark:from-kids-950/20 dark:via-pink-950/10 dark:to-purple-950/10">
-          <div className="absolute top-10 left-[6%] w-64 h-64 rounded-full bg-kids-300/15 blur-3xl" />
-          <div className="absolute bottom-10 right-[8%] w-72 h-72 rounded-full bg-accent-pink/15 blur-3xl" />
-          <div className="container-custom relative">
-            <ScrollReveal>
-              <SectionHeader
-                badge="Our Teachers"
-                title="Meet the OP Kids Pre School Faculty"
-                subtitle="Caring educators who make every day joyful, safe, and full of discovery"
-                variant="kids"
-              />
-            </ScrollReveal>
-
-            <div
-              className={cn(
-                "grid gap-4 sm:gap-6",
-                faculty.length === 1
-                  ? "grid-cols-1 max-w-sm mx-auto"
-                  : faculty.length === 2
-                    ? "grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
-                    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-              )}
-            >
-              {faculty.map((member, i) => {
-                const p = teacherPalettes[i % teacherPalettes.length];
-                return (
-                  <motion.div
-                    key={member.id}
-                    initial={{ opacity: 0, y: 36, scale: 0.95 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{
-                      duration: 0.55,
-                      delay: i * 0.1,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    whileHover={{ y: -8 }}
-                    className="group relative bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden text-center"
-                  >
-                    <div
-                      className={`absolute -top-12 -right-12 w-32 h-32 rounded-full ${p.blob} blur-2xl opacity-60 group-hover:opacity-100 transition-opacity`}
-                    />
-                    <div className="relative flex flex-col items-center">
-                      <div
-                        className={cn(
-                          "relative w-full max-w-[160px] mx-auto rounded-xl overflow-hidden shadow-md mb-3 ring-2",
-                          p.ring
-                        )}
-                        style={{ aspectRatio: String(FACULTY_PHOTO_ASPECT) }}
-                      >
-                        {member.image ? (
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            quality={90}
-                            className="object-cover object-center"
-                            sizes="160px"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-kids-400 to-accent-pink">
-                            <span className="font-display text-3xl font-bold text-white/95">
-                              {facultyInitials(member.name)}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <h3 className="font-display font-bold text-lg sm:text-xl">
-                        {member.name}
-                      </h3>
-                      {(member.department || member.subject) && (
-                        <p
-                          className={cn(
-                            "text-sm font-semibold mt-1",
-                            p.accent
-                          )}
-                        >
-                          {member.department || member.subject}
-                        </p>
-                      )}
-                      {member.qualification && (
-                        <p className="text-muted-foreground text-xs sm:text-sm mt-2 leading-relaxed">
-                          {member.qualification}
-                        </p>
-                      )}
-                      {member.experience && (
-                        <span className="mt-3 inline-block px-3 py-1 rounded-full bg-kids-100 text-kids-700 dark:bg-kids-900/40 dark:text-kids-300 text-xs font-semibold">
-                          {member.experience} experience
-                        </span>
-                      )}
-                      {member.quote && (
-                        <p className="mt-4 text-xs sm:text-sm text-muted-foreground italic leading-relaxed border-t border-gray-100 dark:border-white/10 pt-4">
-                          &ldquo;{member.quote}&rdquo;
-                        </p>
-                      )}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 sm:mt-10 text-center">
-              <Link href="/faculty?category=preschool">
+          <ScrollReveal delay={0.2}>
+            <div className="mt-8 text-center">
+              <Link href="/gallery?brand=preschool">
                 <Button variant="kids" className="group rounded-full">
-                  View Full Faculty Profiles
+                  Explore Full Gallery
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
             </div>
-          </div>
-        </section>
-      )}
+          </ScrollReveal>
+        </div>
+      </section>
 
-      {/* Kids Gallery + Events — deep-linked, already filtered */}
-      <section className="section-padding bg-white dark:bg-gray-950">
-        <div className="container-custom">
+      {/* Quick nav — Faculty / Gallery / Events live on their own pages */}
+      <section className="section-padding relative overflow-hidden bg-gradient-to-br from-kids-50 via-pink-50 to-purple-50 dark:from-kids-950/20 dark:via-pink-950/10 dark:to-purple-950/10">
+        <div className="absolute top-8 left-[8%] w-56 h-56 rounded-full bg-kids-300/20 blur-3xl" />
+        <div className="absolute bottom-8 right-[10%] w-64 h-64 rounded-full bg-accent-pink/15 blur-3xl" />
+        <div className="container-custom relative">
           <ScrollReveal>
             <SectionHeader
-              badge="Kids World"
-              title="Photos & Events for Little Ones"
-              subtitle="See only OP Kids Pre School moments — no need to hunt through filters"
+              badge="Explore Kids World"
+              title="Want to See More?"
+              subtitle="Teachers, photos and events — open from the menu, or jump in here"
               variant="kids"
             />
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
-            <ScrollReveal>
-              <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-kids-50 to-pink-50 dark:from-kids-950/30 dark:to-pink-950/20 border border-kids-100 dark:border-kids-900/40 p-5 sm:p-6 h-full flex flex-col">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-kids-500 text-white">
-                    <Images className="w-5 h-5" />
-                  </span>
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-kids-800 dark:text-kids-200">
-                      Kids Gallery
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      Classrooms, play & celebrations
-                    </p>
-                  </div>
-                </div>
-
-                {gallery.length > 0 ? (
-                  <div className="grid grid-cols-3 gap-2 mb-5">
-                    {gallery.slice(0, 3).map((img) => (
-                      <div
-                        key={img.id}
-                        className="relative aspect-square rounded-xl overflow-hidden"
-                      >
-                        <Image
-                          src={img.src}
-                          alt={img.alt}
-                          fill
-                          className="object-cover"
-                          sizes="120px"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground mb-5 flex-1">
-                    Kids photos will appear here as they are added from Admin.
-                  </p>
-                )}
-
-                <Link href="/gallery?brand=preschool" className="mt-auto">
-                  <Button variant="kids" className="w-full group rounded-full">
-                    Open Kids Gallery
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                  </Button>
-                </Link>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.08}>
-              <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-100 dark:border-amber-900/40 p-5 sm:p-6 h-full flex flex-col">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500 text-white">
-                    <CalendarDays className="w-5 h-5" />
-                  </span>
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-amber-900 dark:text-amber-200">
-                      Kids Events
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      Camps, fancy dress & fun days
-                    </p>
-                  </div>
-                </div>
-
-                {events.length > 0 ? (
-                  <ul className="space-y-2.5 mb-5 flex-1">
-                    {events.slice(0, 3).map((event) => (
-                      <li
-                        key={event.id}
-                        className="rounded-xl bg-white/80 dark:bg-gray-900/60 px-3 py-2.5"
-                      >
-                        <p className="font-medium text-sm text-foreground line-clamp-1">
-                          {event.title}
-                        </p>
-                        <p className="text-[11px] text-muted-foreground mt-0.5">
-                          {event.date}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-muted-foreground mb-5 flex-1">
-                    Kids events will appear here as they are added from Admin.
-                  </p>
-                )}
-
-                <Link href="/events?brand=preschool" className="mt-auto">
-                  <Button
-                    variant="outline"
-                    className="w-full group rounded-full border-amber-300 text-amber-800 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-200 dark:hover:bg-amber-950/40"
+          <div className="grid sm:grid-cols-3 gap-4 sm:gap-5 max-w-4xl mx-auto">
+            {exploreLinks.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <ScrollReveal key={item.href} delay={i * 0.08}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "group flex flex-col items-center text-center rounded-3xl bg-white dark:bg-gray-900 p-6 sm:p-7 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 ring-2 ring-transparent hover:ring-offset-2",
+                      item.ring
+                    )}
                   >
-                    Open Kids Events
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                  </Button>
-                </Link>
-              </div>
-            </ScrollReveal>
+                    <span
+                      className={cn(
+                        "flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg mb-4 transition-transform duration-300 group-hover:scale-110",
+                        item.tone
+                      )}
+                    >
+                      <Icon className="w-6 h-6" />
+                    </span>
+                    <h3 className="font-display font-bold text-lg text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1.5 mb-4">
+                      {item.detail}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-kids-600 dark:text-kids-400">
+                      Open
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>

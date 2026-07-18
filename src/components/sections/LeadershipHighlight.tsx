@@ -5,6 +5,7 @@ import { Award, Briefcase, GraduationCap, Clock } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { leadership as staticLeadership, type Leader } from "@/data/leadership";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { cn } from "@/lib/utils";
 
 function Avatar({
@@ -66,6 +67,23 @@ function Avatar({
 
 function isFounder(leader: Leader) {
   return /founder/i.test(leader.title) || /om\s*prakash/i.test(leader.name);
+}
+
+function isKidsManagementLeader(leader: Leader) {
+  const org = leader.organization.toLowerCase();
+  return (
+    org.includes("kids") ||
+    org.includes("preschool") ||
+    /mona/i.test(leader.name)
+  );
+}
+
+function isInstituteManagementLeader(leader: Leader) {
+  const org = leader.organization.toLowerCase();
+  return (
+    (/institute/i.test(org) && !/kids|preschool/i.test(org)) ||
+    /meenakshi/i.test(leader.name)
+  );
 }
 
 /** Compact, professional founder message — portrait + quote + meta in one organised block */
@@ -311,14 +329,32 @@ export function LeadershipHighlight({
   badge?: string;
   leaders?: Leader[];
 }) {
+  const { brand, isKids, isInstitute } = useSiteBrand();
   const data = leaders && leaders.length > 0 ? leaders : staticLeadership;
   const founder = data.find(isFounder);
-  const others = sortManagementHeads(data.filter((l) => !isFounder(l)));
+  const others = sortManagementHeads(
+    data.filter((l) => {
+      if (isFounder(l)) return false;
+      if (brand === "preschool") return isKidsManagementLeader(l);
+      if (brand === "institute") return isInstituteManagementLeader(l);
+      return true;
+    })
+  );
+
+  const resolvedSubtitle = isKids
+    ? "Founder Om Prakash and the leadership of OP Kids Pre School"
+    : isInstitute
+      ? "Founder Om Prakash and the leadership of OP Institute of Studies"
+      : subtitle;
 
   return (
     <div>
       <ScrollReveal>
-        <SectionHeader badge={badge} title={title} subtitle={subtitle} />
+        <SectionHeader
+          badge={badge}
+          title={title}
+          subtitle={resolvedSubtitle}
+        />
       </ScrollReveal>
 
       <div className="space-y-6 lg:space-y-8">

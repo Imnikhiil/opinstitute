@@ -221,7 +221,7 @@ export function SplitHero() {
             </div>
 
             <Link
-              href="/courses"
+              href="/institute"
               onClick={() => enterInstitute()}
               className="group/btn mt-5 sm:mt-8 inline-flex items-center gap-2 pl-4 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-brand-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-900/40 hover:bg-brand-400 transition-all duration-300"
             >

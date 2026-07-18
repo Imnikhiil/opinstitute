@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { isBrandNavActive } from "@/lib/site-brand";
 import { cn } from "@/lib/utils";
 
-const DARK_HERO_ROUTES = new Set(["/", "/op-kids"]);
+const DARK_HERO_ROUTES = new Set(["/", "/op-kids", "/institute"]);
 
 export function Navbar() {
   const siteConfig = useSiteConfig();
@@ -31,7 +31,7 @@ export function Navbar() {
   const overHero = hasDarkHero && !isScrolled;
 
   const phone = isKids ? siteConfig.kidsPhone : siteConfig.phone;
-  const logoHref = isKids ? "/op-kids" : isInstitute ? "/courses" : "/";
+  const logoHref = isKids ? "/op-kids" : isInstitute ? "/institute" : "/";
   const logoSrc = isKids
     ? "/logos/op-kids-logo.png"
     : "/logos/op-institute-logo.png";
@@ -210,37 +210,6 @@ export function Navbar() {
           </div>
         </Link>
 
-        {!isMixed && (
-          <div
-            className={cn(
-              "hidden md:flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold",
-              isKids
-                ? overHero
-                  ? "bg-white/15 text-white ring-1 ring-white/20"
-                  : "bg-kids-50 text-kids-700 ring-1 ring-kids-200"
-                : overHero
-                  ? "bg-white/15 text-white ring-1 ring-white/20"
-                  : "bg-brand-50 text-brand-700 ring-1 ring-brand-200"
-            )}
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span
-                className={cn(
-                  "absolute inset-0 animate-ping rounded-full opacity-75",
-                  isKids ? "bg-kids-400" : "bg-brand-400"
-                )}
-              />
-              <span
-                className={cn(
-                  "relative h-1.5 w-1.5 rounded-full",
-                  isKids ? "bg-kids-500" : "bg-brand-500"
-                )}
-              />
-            </span>
-            {isKids ? "Kids World" : "Institute"}
-          </div>
-        )}
-
         <div className="hidden lg:flex items-center gap-0.5">
           {navLinks.map((link) => {
             const active = isBrandNavActive(link.href, pathname, search);
@@ -362,23 +331,19 @@ export function Navbar() {
             >
               <div className="p-3 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
                 {!isMixed && (
-                  <div
+                  <Link
+                    href="/"
+                    onClick={() => exitToMainSite()}
                     className={cn(
-                      "mb-2 flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold",
+                      "mb-2 flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold",
                       isKids
                         ? "bg-kids-50 text-kids-700"
                         : "bg-brand-50 text-brand-700"
                     )}
                   >
-                    <span>{isKids ? "Kids World mode" : "Institute mode"}</span>
-                    <Link
-                      href="/"
-                      onClick={() => exitToMainSite()}
-                      className="underline underline-offset-2"
-                    >
-                      Main site
-                    </Link>
-                  </div>
+                    <Home className="w-3.5 h-3.5" />
+                    Main site
+                  </Link>
                 )}
 
                 {navLinks.map((link, i) => {

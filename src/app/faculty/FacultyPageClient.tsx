@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import {
   facultyCategories,
   facultyCategoryLabels,
@@ -29,7 +30,6 @@ function FacultyCard({ member }: { member: FacultyMember }) {
 
   return (
     <div className="group glass-card overflow-hidden hover:shadow-card-hover transition-all hover:-translate-y-0.5 rounded-xl h-full flex flex-col max-w-[220px] w-full mx-auto">
-      {/* Same ratio as admin crop (4:5) so faces match upload */}
       <div
         className="relative w-full overflow-hidden bg-gray-100 dark:bg-gray-800"
         style={{ aspectRatio: String(FACULTY_PHOTO_ASPECT) }}
@@ -69,7 +69,10 @@ function FacultyCard({ member }: { member: FacultyMember }) {
           </p>
         )}
         <p className="text-muted-foreground text-[10px] sm:text-[11px] mt-1 leading-snug line-clamp-2">
-          {[member.qualification, member.experience && `Experience: ${member.experience}`]
+          {[
+            member.qualification,
+            member.experience && `Experience: ${member.experience}`,
+          ]
             .filter(Boolean)
             .join(", ")}
         </p>
@@ -119,7 +122,11 @@ function FacultyGrid({ members }: { members: FacultyMember[] }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 justify-items-center">
       {members.map((member, index) => (
-        <ScrollReveal key={member.id} delay={index * 0.05} className="w-full flex justify-center">
+        <ScrollReveal
+          key={member.id}
+          delay={index * 0.05}
+          className="w-full flex justify-center"
+        >
           <FacultyCard member={member} />
         </ScrollReveal>
       ))}
@@ -139,12 +146,21 @@ export function FacultyPageClient({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const activeCategory = parseCategory(
+  const { isKids, isInstitute } = useSiteBrand();
+
+  const urlCategory = parseCategory(
     searchParams.get("category") ?? initialCategory
   );
 
+  const activeCategory: FilterId = isKids
+    ? "preschool"
+    : isInstitute
+      ? "institute"
+      : urlCategory;
+
   const setCategory = useCallback(
     (next: FilterId) => {
+      if (isKids || isInstitute) return;
       const params = new URLSearchParams(searchParams.toString());
       if (next === "all") {
         params.delete("category");
@@ -156,8 +172,25 @@ export function FacultyPageClient({
         scroll: false,
       });
     },
-    [pathname, router, searchParams]
+    [isKids, isInstitute, pathname, router, searchParams]
   );
+
+  useEffect(() => {
+    if (!isKids && !isInstitute) return;
+    const locked = isKids ? "preschool" : "institute";
+    if (searchParams.get("category") !== locked) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("category", locked);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  }, [isKids, isInstitute, pathname, router, searchParams]);
+
+  const visibleCategories = useMemo(() => {
+    if (isKids) return facultyCategories.filter((c) => c.id === "preschool");
+    if (isInstitute)
+      return facultyCategories.filter((c) => c.id === "institute");
+    return facultyCategories;
+  }, [isKids, isInstitute]);
 
   const preschool = useMemo(
     () => faculty.filter((m) => m.category === "preschool"),
@@ -170,17 +203,25 @@ export function FacultyPageClient({
 
   const showAll = activeCategory === "all";
   const empty = faculty.length === 0;
+  const showFilterTabs = visibleCategories.length > 1;
 
   return (
     <>
       <section className="page-hero">
         <div className="container-custom relative z-10">
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900 mb-3 sm:mb-4">
-            Our Faculty
+            {isKids
+              ? "OP Kids Faculty"
+              : isInstitute
+                ? "Institute Faculty"
+                : "Our Faculty"}
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Led by our Founder and Management Head — supported by passionate
-            educators dedicated to every student&apos;s success.
+            {isKids
+              ? "Founder Om Prakash, Kids management, and our caring preschool teachers."
+              : isInstitute
+                ? "Founder Om Prakash, Institute management, and our expert teaching team."
+                : "Led by our Founder and Management Head — supported by passionate educators dedicated to every student\u2019s success."}
           </p>
         </div>
       </section>
@@ -201,30 +242,44 @@ export function FacultyPageClient({
           <ScrollReveal>
             <SectionHeader
               badge="Teaching Team"
-              title="Meet Our Expert Teachers"
-              subtitle="Dedicated educators committed to academic excellence and student success"
+              title={
+                isKids
+                  ? "Meet Our Kids Teachers"
+                  : isInstitute
+                    ? "Meet Our Institute Teachers"
+                    : "Meet Our Expert Teachers"
+              }
+              subtitle={
+                isKids
+                  ? "Caring educators at OP Kids Pre School"
+                  : isInstitute
+                    ? "Dedicated educators at OP Institute of Studies"
+                    : "Dedicated educators committed to academic excellence and student success"
+              }
             />
           </ScrollReveal>
 
-          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
-            {facultyCategories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setCategory(cat.id)}
-                className={cn(
-                  "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
-                  activeCategory === cat.id
-                    ? cat.id === "preschool"
-                      ? "bg-kids-500 text-white"
-                      : "bg-brand-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                )}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
+          {showFilterTabs && (
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
+              {visibleCategories.map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setCategory(cat.id)}
+                  className={cn(
+                    "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
+                    activeCategory === cat.id
+                      ? cat.id === "preschool"
+                        ? "bg-kids-500 text-white"
+                        : "bg-brand-600 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  )}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {empty ? (
             <p className="text-center text-muted-foreground py-10">

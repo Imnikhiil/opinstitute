@@ -15,6 +15,7 @@ create table if not exists public.queries (
   program     text,          -- admission: selected program
   age         text,          -- admission: age/class
   message     text,
+  brand       text,          -- preschool | institute (which world the enquiry belongs to)
   status      text not null default 'new',          -- 'new' | 'read' | 'done'
   created_at  timestamptz not null default now()
 );
