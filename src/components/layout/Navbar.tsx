@@ -73,7 +73,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out",
+        "fixed inset-x-0 top-[var(--op-announce-h,0px)] z-50 transition-all duration-300 ease-out",
         overHero
           ? "bg-transparent"
           : "bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/70 dark:border-white/10",
@@ -127,21 +127,6 @@ export function Navbar() {
                 Main site
               </Link>
             )}
-            <Link
-              href="/admissions"
-              className={cn(
-                "group inline-flex items-center gap-1.5 font-semibold transition-colors",
-                overHero
-                  ? "text-white/90 hover:text-white"
-                  : "text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
-              )}
-            >
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-kids-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-kids-500" />
-              </span>
-              Admissions Open 2026-27
-            </Link>
             <ThemeToggle />
           </div>
         </div>

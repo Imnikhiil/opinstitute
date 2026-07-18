@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    --op-announce-h: 0px;
     --background: 240 5% 96%;
     --foreground: 222 47% 21%;
     --card: 0 0% 100%;
