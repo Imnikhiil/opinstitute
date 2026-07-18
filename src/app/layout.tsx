@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SiteConfigProvider } from "@/components/providers/SiteConfigProvider";
+import { SiteBrandProvider } from "@/components/providers/SiteBrandProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { siteConfig } from "@/data/site";
 import { getSiteConfig } from "@/lib/supabase/public-data";
@@ -89,7 +90,9 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
         <ThemeProvider>
           <SiteConfigProvider config={config}>
-            <SiteChrome>{children}</SiteChrome>
+            <SiteBrandProvider>
+              <SiteChrome>{children}</SiteChrome>
+            </SiteBrandProvider>
           </SiteConfigProvider>
         </ThemeProvider>
       </body>

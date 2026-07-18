@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -19,7 +20,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <ScrollProgress />
-      <Navbar />
+      <Suspense fallback={null}>
+        <Navbar />
+      </Suspense>
       <main className="min-h-screen">
         <PageTransition>{children}</PageTransition>
       </main>

@@ -5,16 +5,18 @@ import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function FloatingButtons() {
   const siteConfig = useSiteConfig();
+  const { isKids } = useSiteBrand();
   const pathname = usePathname();
   const [show, setShow] = useState(false);
-  const isKids = pathname.startsWith("/op-kids");
-  const phone = isKids ? siteConfig.kidsPhone : siteConfig.phone;
-  const wa = isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp;
-  const waText = isKids
+  const kidsContext = isKids || pathname.startsWith("/op-kids");
+  const phone = kidsContext ? siteConfig.kidsPhone : siteConfig.phone;
+  const wa = kidsContext ? siteConfig.kidsWhatsapp : siteConfig.whatsapp;
+  const waText = kidsContext
     ? "Hi, I would like to enquire about OP Kids Pre School."
     : "Hi, I would like to enquire about admissions at OP Institute of Studies.";
 
@@ -53,7 +55,7 @@ export function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-lg ${
-              isKids
+              kidsContext
                 ? "bg-kids-500 shadow-kids-500/40"
                 : "bg-brand-600 shadow-brand-600/40"
             }`}

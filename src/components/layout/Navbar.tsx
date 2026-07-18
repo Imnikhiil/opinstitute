@@ -3,29 +3,46 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, ArrowRight } from "lucide-react";
-import { navLinks } from "@/data/site";
+import { Menu, X, Phone, ArrowRight, Home } from "lucide-react";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Button } from "@/components/ui/Button";
+import { isBrandNavActive } from "@/lib/site-brand";
 import { cn } from "@/lib/utils";
 
-// Routes that render a dark, full-bleed hero behind the header. On these the
-// navbar can float transparently with light text at the top of the page. On
-// every other route the hero is light, so the navbar must stay solid/visible.
 const DARK_HERO_ROUTES = new Set(["/", "/op-kids"]);
 
 export function Navbar() {
   const siteConfig = useSiteConfig();
+  const { brand, navLinks, isKids, isInstitute, isMixed, exitToMainSite } =
+    useSiteBrand();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const search = searchParams.toString()
+    ? `?${searchParams.toString()}`
+    : "";
 
   const hasDarkHero = DARK_HERO_ROUTES.has(pathname);
-  // Only float over the hero when we're on a dark-hero page AND at the top.
   const overHero = hasDarkHero && !isScrolled;
+
+  const phone = isKids ? siteConfig.kidsPhone : siteConfig.phone;
+  const logoHref = isKids ? "/op-kids" : isInstitute ? "/courses" : "/";
+  const logoSrc = isKids
+    ? "/logos/op-kids-logo.png"
+    : "/logos/op-institute-logo.png";
+  const brandTitle = isKids
+    ? "OP Kids Pre School"
+    : "OP Institute of Studies";
+  const brandSubtitle = isKids
+    ? "Joyful early learning"
+    : isInstitute
+      ? "Since 2003"
+      : "Since 2003 · OP Kids Pre School";
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 16);
@@ -36,15 +53,22 @@ export function Navbar() {
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname]);
+  }, [pathname, search]);
 
-  // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
+
+  const activePillClass = isKids
+    ? overHero
+      ? "bg-white/20 ring-1 ring-inset ring-white/25"
+      : "bg-kids-500 shadow-sm shadow-kids-500/30"
+    : overHero
+      ? "bg-white/20 ring-1 ring-inset ring-white/25"
+      : "bg-brand-600 shadow-sm shadow-brand-600/30";
 
   return (
     <header
@@ -53,11 +77,12 @@ export function Navbar() {
         overHero
           ? "bg-transparent"
           : "bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/70 dark:border-white/10",
-        !overHero && isScrolled && "shadow-[0_10px_30px_-12px_rgba(15,23,42,0.18)]",
+        !overHero &&
+          isScrolled &&
+          "shadow-[0_10px_30px_-12px_rgba(15,23,42,0.18)]",
         isScrolled ? "py-1.5" : "py-2.5"
       )}
     >
-      {/* Top utility bar (desktop only) */}
       <div
         className={cn(
           "hidden lg:block overflow-hidden transition-all duration-300",
@@ -67,11 +92,13 @@ export function Navbar() {
         <div
           className={cn(
             "container-custom flex items-center justify-between py-1.5 text-[13px] border-b",
-            overHero ? "border-white/15" : "border-gray-200/70 dark:border-white/10"
+            overHero
+              ? "border-white/15"
+              : "border-gray-200/70 dark:border-white/10"
           )}
         >
           <a
-            href={`tel:${siteConfig.phone}`}
+            href={`tel:${phone}`}
             className={cn(
               "flex items-center gap-1.5 font-medium transition-colors",
               overHero
@@ -80,9 +107,26 @@ export function Navbar() {
             )}
           >
             <Phone className="w-3.5 h-3.5" />
-            {siteConfig.phone}
+            {phone}
           </a>
           <div className="flex items-center gap-4">
+            {!isMixed && (
+              <Link
+                href="/"
+                onClick={() => exitToMainSite()}
+                className={cn(
+                  "inline-flex items-center gap-1.5 font-semibold transition-colors",
+                  overHero
+                    ? "text-white/90 hover:text-white"
+                    : isKids
+                      ? "text-kids-600 hover:text-kids-700"
+                      : "text-brand-600 hover:text-brand-700"
+                )}
+              >
+                <Home className="w-3.5 h-3.5" />
+                Main site
+              </Link>
+            )}
             <Link
               href="/admissions"
               className={cn(
@@ -103,25 +147,33 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Main navigation row */}
       <nav className="container-custom flex items-center justify-between gap-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+        <Link
+          href={logoHref}
+          className="flex items-center gap-2 sm:gap-2.5 group shrink-0"
+        >
           <span
             className={cn(
               "flex items-center justify-center rounded-xl transition-all duration-300",
               overHero
                 ? "bg-white/10 ring-1 ring-white/20 p-0.5 sm:p-1"
-                : "bg-transparent p-0"
+                : isKids
+                  ? "bg-white ring-1 ring-kids-100 p-0.5"
+                  : "bg-transparent p-0"
             )}
           >
             <Image
-              src="/logos/op-institute-logo.png"
-              alt="OP Institute of Studies logo"
-              width={56}
-              height={56}
+              src={logoSrc}
+              alt={`${brandTitle} logo`}
+              width={isKids ? 120 : 56}
+              height={isKids ? 64 : 56}
               priority
-              className="h-9 w-9 sm:h-11 sm:w-11 object-contain transition-transform duration-300 group-hover:scale-105"
+              className={cn(
+                "object-contain transition-transform duration-300 group-hover:scale-105",
+                isKids
+                  ? "h-8 w-auto sm:h-9"
+                  : "h-9 w-9 sm:h-11 sm:w-11"
+              )}
             />
           </span>
           <div className="hidden sm:block">
@@ -131,7 +183,7 @@ export function Navbar() {
                 overHero ? "text-white" : "text-brand-900 dark:text-white"
               )}
             >
-              OP Institute of Studies
+              {brandTitle}
             </p>
             <p
               className={cn(
@@ -139,26 +191,62 @@ export function Navbar() {
                 overHero ? "text-white/70" : "text-gray-500 dark:text-gray-400"
               )}
             >
-              Since 2003
-              <span
-                className={cn(
-                  "font-semibold",
-                  overHero ? "text-kids-200" : "text-kids-500"
-                )}
-              >
-                {" · OP Kids Pre School"}
-              </span>
+              {isMixed ? (
+                <>
+                  Since 2003
+                  <span
+                    className={cn(
+                      "font-semibold",
+                      overHero ? "text-kids-200" : "text-kids-500"
+                    )}
+                  >
+                    {" · OP Kids Pre School"}
+                  </span>
+                </>
+              ) : (
+                brandSubtitle
+              )}
             </p>
           </div>
         </Link>
 
-        {/* Desktop links */}
+        {!isMixed && (
+          <div
+            className={cn(
+              "hidden md:flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold",
+              isKids
+                ? overHero
+                  ? "bg-white/15 text-white ring-1 ring-white/20"
+                  : "bg-kids-50 text-kids-700 ring-1 ring-kids-200"
+                : overHero
+                  ? "bg-white/15 text-white ring-1 ring-white/20"
+                  : "bg-brand-50 text-brand-700 ring-1 ring-brand-200"
+            )}
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span
+                className={cn(
+                  "absolute inset-0 animate-ping rounded-full opacity-75",
+                  isKids ? "bg-kids-400" : "bg-brand-400"
+                )}
+              />
+              <span
+                className={cn(
+                  "relative h-1.5 w-1.5 rounded-full",
+                  isKids ? "bg-kids-500" : "bg-brand-500"
+                )}
+              />
+            </span>
+            {isKids ? "Kids World" : "Institute"}
+          </div>
+        )}
+
         <div className="hidden lg:flex items-center gap-0.5">
           {navLinks.map((link) => {
-            const active = pathname === link.href;
+            const active = isBrandNavActive(link.href, pathname, search);
             return (
               <Link
-                key={link.href}
+                key={`${brand}-${link.href}-${link.label}`}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
@@ -173,12 +261,7 @@ export function Navbar() {
                 {active && (
                   <motion.span
                     layoutId="nav-active-pill"
-                    className={cn(
-                      "absolute inset-0 rounded-full",
-                      overHero
-                        ? "bg-white/20 ring-1 ring-inset ring-white/25"
-                        : "bg-brand-600 shadow-sm shadow-brand-600/30"
-                    )}
+                    className={cn("absolute inset-0 rounded-full", activePillClass)}
                     transition={{ type: "spring", stiffness: 420, damping: 34 }}
                   />
                 )}
@@ -186,34 +269,29 @@ export function Navbar() {
                   <span
                     className={cn(
                       "absolute inset-0 rounded-full opacity-0 transition-opacity duration-200 hover:opacity-100",
-                      overHero ? "bg-white/10" : "bg-brand-50 dark:bg-white/5"
+                      overHero
+                        ? "bg-white/10"
+                        : isKids
+                          ? "bg-kids-50 dark:bg-white/5"
+                          : "bg-brand-50 dark:bg-white/5"
                     )}
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-1">
                   {link.label}
-                  {link.highlight && (
-                    <span
-                      className={cn(
-                        "rounded-full px-1.5 py-px text-[9px] font-bold uppercase leading-none tracking-wide",
-                        active ? "bg-white/25 text-white" : "bg-kids-500 text-white"
-                      )}
-                    >
-                      New
-                    </span>
-                  )}
                 </span>
               </Link>
             );
           })}
         </div>
 
-        {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-2 shrink-0">
           <Link href="/admissions">
             <Button
               size="sm"
-              variant={overHero ? "secondary" : "primary"}
+              variant={
+                overHero ? "secondary" : isKids ? "kids" : "primary"
+              }
               className="group"
             >
               Enquire Now
@@ -222,7 +300,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile controls */}
         <div className="flex lg:hidden items-center gap-2">
           <ThemeToggle />
           <button
@@ -231,7 +308,9 @@ export function Navbar() {
               "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
               overHero
                 ? "bg-white/15 ring-1 ring-white/25 text-white backdrop-blur-sm"
-                : "bg-brand-50 dark:bg-white/5 text-brand-700 dark:text-white"
+                : isKids
+                  ? "bg-kids-50 dark:bg-white/5 text-kids-700 dark:text-white"
+                  : "bg-brand-50 dark:bg-white/5 text-brand-700 dark:text-white"
             )}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
@@ -263,7 +342,6 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -283,11 +361,31 @@ export function Navbar() {
               className="lg:hidden absolute inset-x-3 top-full mt-2 origin-top rounded-2xl border border-gray-200/80 dark:border-white/10 bg-white dark:bg-gray-950 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.35)] overflow-hidden"
             >
               <div className="p-3 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                {!isMixed && (
+                  <div
+                    className={cn(
+                      "mb-2 flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold",
+                      isKids
+                        ? "bg-kids-50 text-kids-700"
+                        : "bg-brand-50 text-brand-700"
+                    )}
+                  >
+                    <span>{isKids ? "Kids World mode" : "Institute mode"}</span>
+                    <Link
+                      href="/"
+                      onClick={() => exitToMainSite()}
+                      className="underline underline-offset-2"
+                    >
+                      Main site
+                    </Link>
+                  </div>
+                )}
+
                 {navLinks.map((link, i) => {
-                  const active = pathname === link.href;
+                  const active = isBrandNavActive(link.href, pathname, search);
                   return (
                     <motion.div
-                      key={link.href}
+                      key={`${brand}-${link.href}-${link.label}`}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.04 * i, duration: 0.2 }}
@@ -298,23 +396,13 @@ export function Navbar() {
                         className={cn(
                           "flex items-center justify-between px-4 py-3 rounded-xl text-[15px] font-medium transition-colors",
                           active
-                            ? "bg-brand-600 text-white"
+                            ? isKids
+                              ? "bg-kids-500 text-white"
+                              : "bg-brand-600 text-white"
                             : "text-gray-700 dark:text-gray-200 hover:bg-brand-50 dark:hover:bg-white/5"
                         )}
                       >
                         {link.label}
-                        {link.highlight && (
-                          <span
-                            className={cn(
-                              "rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide",
-                              active
-                                ? "bg-white/25 text-white"
-                                : "bg-kids-500 text-white"
-                            )}
-                          >
-                            New
-                          </span>
-                        )}
                       </Link>
                     </motion.div>
                   );
@@ -322,17 +410,20 @@ export function Navbar() {
 
                 <div className="pt-2 mt-1 border-t border-gray-100 dark:border-white/10 space-y-3">
                   <Link href="/admissions" className="block pt-1">
-                    <Button className="w-full group">
+                    <Button
+                      variant={isKids ? "kids" : "primary"}
+                      className="w-full group"
+                    >
                       Enquire Now
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </Button>
                   </Link>
                   <a
-                    href={`tel:${siteConfig.phone}`}
+                    href={`tel:${phone}`}
                     className="flex items-center justify-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
-                    {siteConfig.phone}
+                    {phone}
                   </a>
                 </div>
               </div>

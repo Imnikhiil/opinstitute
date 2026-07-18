@@ -14,6 +14,7 @@ import {
   Sparkles,
   MousePointerClick,
 } from "lucide-react";
+import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 
 type Side = "kids" | "institute" | null;
 
@@ -22,6 +23,7 @@ const instituteHighlights = ["CMA Coaching", "B.Com & Class I–XII", "Since 200
 
 export function SplitHero() {
   const [active, setActive] = useState<Side>(null);
+  const { enterKidsWorld, enterInstitute } = useSiteBrand();
 
   return (
     <section className="relative w-full min-h-[100svh] flex flex-col lg:flex-row overflow-hidden bg-brand-950">
@@ -108,6 +110,7 @@ export function SplitHero() {
 
             <Link
               href="/op-kids"
+              onClick={() => enterKidsWorld()}
               className="group/btn mt-5 sm:mt-8 inline-flex items-center gap-2 pl-4 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-white text-accent-purple font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Enter Kids World
@@ -219,6 +222,7 @@ export function SplitHero() {
 
             <Link
               href="/courses"
+              onClick={() => enterInstitute()}
               className="group/btn mt-5 sm:mt-8 inline-flex items-center gap-2 pl-4 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2 rounded-full bg-brand-500 text-white font-semibold text-sm sm:text-base shadow-lg shadow-brand-900/40 hover:bg-brand-400 transition-all duration-300"
             >
               Explore Institute
