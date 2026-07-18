@@ -59,7 +59,7 @@ export function AboutKids() {
               </div>
               <Link href="/op-kids">
                 <Button variant="kids" size="lg">
-                  Discover OP Kids
+                  Discover OP Kids Pre School
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>

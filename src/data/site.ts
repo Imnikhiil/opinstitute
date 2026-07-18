@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "O.P. Institute of Studies",
+  name: "OP Institute of Studies",
   kidsName: "OP Kids Pre School",
   established: "2003",
   director: "Om Prakash",
@@ -7,7 +7,7 @@ export const siteConfig = {
     "Excellence in Education Since 2003 — CMA, B.Com & School Tuition",
   kidsTagline: "Where Kids Love to Learn",
   description:
-    "O.P. Institute of Studies (since 2003) — expert coaching for CMA, B.Com (Pass/Hons) and school tuition for Classes I–XII, along with OP Kids Pre School for joyful, safe early childhood learning.",
+    "OP Institute of Studies (since 2003) — expert coaching for CMA, B.Com (Pass/Hons) and school tuition for Classes I–XII, along with OP Kids Pre School for joyful, safe early childhood learning.",
   url: "https://opinstitute.vercel.app",
   phone: "+91 92136 10182",
   phoneRaw: "919213610182",
@@ -18,7 +18,7 @@ export const siteConfig = {
   kidsEmail: "opkidspreschool@gmail.com",
   whatsapp: "919213610182",
   kidsWhatsapp: "919220825187",
-  /** O.P. Institute — Google Business listing */
+  /** OP Institute of Studies — Google Business listing */
   address:
     "A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
   /** Kept for admin settings compatibility; campus details live in `campuses` */
@@ -33,7 +33,7 @@ export const siteConfig = {
   workingHours: {
     weekdays: "Monday – Saturday: Open · Closes 9:00 PM",
     sunday: "Sunday: Closed",
-    preschool: "OP Kids: Open · Closes 6:00 PM",
+    preschool: "OP Kids Pre School: Open · Closes 6:00 PM",
   },
   /** Institute social (legacy shape — also in brandChannels) */
   social: {
@@ -55,8 +55,8 @@ export const siteConfig = {
 export const brandChannels = [
   {
     id: "institute" as const,
-    name: "O.P. Institute of Studies",
-    shortName: "OP Institute",
+    name: "OP Institute of Studies",
+    shortName: "OP Institute of Studies",
     accent: "brand" as const,
     phone: "+91 92136 10182",
     phoneRaw: "919213610182",
@@ -71,7 +71,7 @@ export const brandChannels = [
   {
     id: "kids" as const,
     name: "OP Kids Pre School",
-    shortName: "OP Kids",
+    shortName: "OP Kids Pre School",
     accent: "kids" as const,
     phone: "+91 92208 25187",
     phoneRaw: "919220825187",
@@ -89,8 +89,8 @@ export const brandChannels = [
 export const campuses = [
   {
     id: "institute",
-    name: "O.P. Institute of Studies",
-    shortName: "OP Institute",
+    name: "OP Institute of Studies",
+    shortName: "OP Institute of Studies",
     category: "Coaching centre · Delhi",
     address:
       "A-374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
@@ -109,8 +109,8 @@ export const campuses = [
   {
     id: "kids",
     name: "OP Kids Pre School",
-    shortName: "OP Kids",
-    category: "Preschool · Delhi",
+    shortName: "OP Kids Pre School",
+    category: "Pre School · Delhi",
     address:
       "A Block, Part-2, 374, Street No. 11, Mahavir Enclave Part 2, Mahavir Enclave, New Delhi, Delhi 110059",
     phone: "+91 92208 25187",
@@ -315,17 +315,17 @@ export const admissionSteps = [
 
 export const aboutContent = {
   history:
-    "Founded in 2003 with a vision to transform education, O.P. Institute of Studies has been a trusted name in commerce and school education for over two decades. From professional courses like CMA and B.Com to school tuition for Classes I–XII, we help students build strong careers. With the launch of OP Kids Pre School, we now nurture learners from their earliest years right through to professional success.",
+    "Founded in 2003 with a vision to transform education, OP Institute of Studies has been a trusted name in commerce and school education for over two decades. From professional courses like CMA and B.Com to school tuition for Classes I–XII, we help students build strong careers. With the launch of OP Kids Pre School, we now nurture learners from their earliest years right through to professional success.",
   vision:
     "To be the most trusted educational institution, empowering students of all ages to achieve their fullest potential through innovative teaching, caring mentorship, and a culture of excellence.",
   mission:
     "To provide quality education that combines academic rigor with holistic development, fostering curious minds, confident learners, and successful professionals who contribute positively to society.",
   directorMessage:
-    "Education is the most powerful tool we can use to change the world. At OP Institute of Studies, we are committed to nurturing every student's unique potential — from a child's first day at OP Kids to cracking professional exams like CMA. Our dedicated team works tirelessly to create an environment where learning is joyful, meaningful, and transformative. I invite you to join our family and experience the difference.",
+    "Education is the most powerful tool we can use to change the world. At OP Institute of Studies, we are committed to nurturing every student's unique potential — from a child's first day at OP Kids Pre School to cracking professional exams like CMA. Our dedicated team works tirelessly to create an environment where learning is joyful, meaningful, and transformative. I invite you to join our family and experience the difference.",
   directorName: "Om Prakash",
-  directorTitle: "Founder & Director, O.P. Institute of Studies",
+  directorTitle: "Founder & Director, OP Institute of Studies",
   principalMessage:
-    "At OP Kids Pre School, the focus is strong foundations in the early years — caring classrooms, joyful learning, and close parent coordination. At O.P. Institute of Studies, academic quality and day-to-day management keep every learner supported toward strong results.",
+    "At OP Kids Pre School, the focus is strong foundations in the early years — caring classrooms, joyful learning, and close parent coordination. At OP Institute of Studies, academic quality and day-to-day management keep every learner supported toward strong results.",
   principalName: "Mona & Meenakshi",
   principalTitle: "Academic & Management Heads",
   values: [

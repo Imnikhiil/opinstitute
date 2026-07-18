@@ -24,7 +24,7 @@ export function formatContactWhatsAppMessage(data: {
   message: string;
 }): string {
   return [
-    "*New Contact Enquiry — OP Institute*",
+    "*New Contact Enquiry — OP Institute of Studies*",
     "",
     `*Name:* ${data.name}`,
     `*Phone:* ${data.phone}`,
@@ -46,7 +46,7 @@ export function formatAdmissionWhatsAppMessage(data: {
   message?: string;
 }): string {
   const lines = [
-    "*New Admission Enquiry — OP Institute*",
+    "*New Admission Enquiry — OP Institute of Studies*",
     "",
     `*Student:* ${data.studentName}`,
     `*Parent:* ${data.parentName}`,

@@ -14,7 +14,7 @@ const config: CrudConfig = {
     { name: "image_url", label: "Photo", type: "image" },
     { name: "name", label: "Name", type: "text", required: true, placeholder: "Om Prakash" },
     { name: "title", label: "Title / Role", type: "text", required: true, placeholder: "Founder & Director" },
-    { name: "organization", label: "Organization", type: "text", placeholder: "O.P. Institute of Studies" },
+    { name: "organization", label: "Organization", type: "text", placeholder: "OP Institute of Studies" },
     { name: "initials", label: "Initials (for fallback avatar)", type: "text", placeholder: "OP" },
     { name: "accent", label: "Card Color", type: "select", options: ["brand", "gold"] },
     { name: "credentials", label: "Credentials (tags)", type: "tags", placeholder: "Founder, Since 2003", fullWidth: true },

@@ -16,7 +16,7 @@ export function FloatingButtons() {
   const wa = isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp;
   const waText = isKids
     ? "Hi, I would like to enquire about OP Kids Pre School."
-    : "Hi, I would like to enquire about admissions at OP Institute.";
+    : "Hi, I would like to enquire about admissions at OP Institute of Studies.";
 
   useEffect(() => {
     const handleScroll = () => setShow(window.scrollY > 300);

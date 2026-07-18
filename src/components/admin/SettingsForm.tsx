@@ -11,7 +11,7 @@ const groups: {
   fields: { name: string; label: string; placeholder?: string }[];
 }[] = [
   {
-    title: "O.P. Institute — Contact",
+    title: "OP Institute of Studies — Contact",
     fields: [
       { name: "phone", label: "Phone", placeholder: "+91 92136 10182" },
       { name: "whatsapp", label: "WhatsApp (numbers only)", placeholder: "919213610182" },
@@ -25,7 +25,7 @@ const groups: {
     ],
   },
   {
-    title: "O.P. Institute — Social",
+    title: "OP Institute of Studies — Social",
     fields: [
       {
         name: "instagram",
@@ -45,7 +45,7 @@ const groups: {
     ],
   },
   {
-    title: "OP Kids — Contact",
+    title: "OP Kids Pre School — Contact",
     fields: [
       { name: "kids_phone", label: "Phone", placeholder: "+91 92208 25187" },
       {
@@ -68,7 +68,7 @@ const groups: {
     ],
   },
   {
-    title: "OP Kids — Social",
+    title: "OP Kids Pre School — Social",
     fields: [
       {
         name: "kids_instagram",
@@ -92,14 +92,14 @@ const groups: {
     fields: [
       {
         name: "weekday_hours",
-        label: "OP Institute hours",
+        label: "OP Institute of Studies hours",
         placeholder: "Monday – Saturday: Open · Closes 9:00 PM",
       },
       { name: "sunday_hours", label: "Sunday", placeholder: "Sunday: Closed" },
       {
         name: "preschool_hours",
-        label: "OP Kids hours",
-        placeholder: "OP Kids: Open · Closes 6:00 PM",
+        label: "OP Kids Pre School hours",
+        placeholder: "OP Kids Pre School: Open · Closes 6:00 PM",
       },
       {
         name: "branch_address",

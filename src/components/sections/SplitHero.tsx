@@ -136,7 +136,7 @@ export function SplitHero() {
         <div className="relative w-14 h-14 rounded-full bg-white shadow-xl flex items-center justify-center border-2 border-white">
           <Image
             src="/logos/op-institute-logo.png"
-            alt="O.P. Institute of Studies"
+            alt="OP Institute of Studies"
             width={40}
             height={40}
             className="w-9 h-9 object-contain"
@@ -161,7 +161,7 @@ export function SplitHero() {
         >
           <Image
             src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1000&q=80"
-            alt="Students at O.P. Institute of Studies"
+            alt="Students at OP Institute of Studies"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 60vw"
@@ -197,7 +197,7 @@ export function SplitHero() {
               Class I – XII · CMA
             </span>
             <h2 className="font-display text-[1.75rem] sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-              O.P. Institute
+              OP Institute
               <span className="block text-brand-200 text-lg sm:text-2xl lg:text-3xl mt-0.5 sm:mt-1">
                 of Studies
               </span>
@@ -260,7 +260,7 @@ export function SplitHero() {
             <div className="relative w-24 h-24 rounded-full bg-white shadow-2xl flex items-center justify-center border-4 border-white">
               <Image
                 src="/logos/op-institute-logo.png"
-                alt="O.P. Institute of Studies"
+                alt="OP Institute of Studies"
                 width={64}
                 height={64}
                 className="w-14 h-14 object-contain"

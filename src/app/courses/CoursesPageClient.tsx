@@ -105,7 +105,7 @@ export function CoursesPageClient({
         filter="institute"
         badge="Success Stories"
         title="What Our Students Say"
-        subtitle="Hear from students who achieved their goals with OP Institute"
+        subtitle="Hear from students who achieved their goals with OP Institute of Studies"
       />
     </>
   );

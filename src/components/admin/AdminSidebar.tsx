@@ -86,7 +86,7 @@ export function AdminSidebar({ email }: { email?: string }) {
             <p className="font-display font-bold text-sm text-white leading-tight">
               Admin Panel
             </p>
-            <p className="text-[10px] text-white/55">OP Institute</p>
+            <p className="text-[10px] text-white/55">OP Institute of Studies</p>
           </div>
         </div>
         <button
@@ -142,7 +142,7 @@ export function AdminSidebar({ email }: { email?: string }) {
                 Admin Panel
               </p>
               <p className="text-[11px] text-white/50 mt-0.5">
-                OP Institute · OP Kids
+                OP Institute of Studies · OP Kids Pre School
               </p>
             </div>
           </div>

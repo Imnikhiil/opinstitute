@@ -6,7 +6,7 @@ import { getFaculty, getLeadership } from "@/lib/supabase/public-data";
 export const metadata: Metadata = {
   title: "Faculty",
   description:
-    "Meet our leadership and expert faculty at OP Institute — Founder Om Prakash, Academic & Management Head Meenakshi, and our dedicated teaching team.",
+    "Meet our leadership and expert faculty at OP Institute of Studies — Founder Om Prakash, Academic & Management Heads, and our dedicated teaching team.",
 };
 
 export const revalidate = 60;

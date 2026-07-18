@@ -21,7 +21,7 @@ export default function AdmissionsPage() {
             Admissions
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Begin your journey with OP Institute. Admissions open for the 2026-27 academic year.
+            Begin your journey with OP Institute of Studies. Admissions open for the 2026-27 academic year.
           </p>
         </div>
       </section>

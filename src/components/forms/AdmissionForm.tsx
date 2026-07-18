@@ -15,10 +15,10 @@ import {
 } from "@/lib/whatsapp";
 
 const programs = [
-  "OP Kids - Play Group",
-  "OP Kids - Nursery",
-  "OP Kids - LKG",
-  "OP Kids - UKG",
+  "OP Kids Pre School - Play Group",
+  "OP Kids Pre School - Nursery",
+  "OP Kids Pre School - LKG",
+  "OP Kids Pre School - UKG",
   "CMA - Cost & Management Accountancy",
   "B.Com (Pass / Honours)",
   "School Tuition (Class I-VIII)",
@@ -61,7 +61,7 @@ export function AdmissionForm({ className }: { className?: string }) {
       }
 
       openWhatsApp(
-        data.program.startsWith("OP Kids")
+        data.program.startsWith("OP Kids Pre School")
           ? siteConfig.kidsWhatsapp
           : siteConfig.whatsapp,
         formatAdmissionWhatsAppMessage(data)

@@ -18,7 +18,7 @@ import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Visit O.P. Institute of Studies and OP Kids Pre School at Mahavir Enclave Part 2, New Delhi. Call, WhatsApp, or send an enquiry.",
+    "Visit OP Institute of Studies and OP Kids Pre School at Mahavir Enclave Part 2, New Delhi. Call, WhatsApp, or send an enquiry.",
 };
 
 export const revalidate = 60;
@@ -34,8 +34,8 @@ export default async function ContactPage() {
             Contact Us
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Two Google listings at Mahavir Enclave Part 2 — OP Institute and OP
-            Kids, each with its own phone, email, and social links.
+            Two Google listings at Mahavir Enclave Part 2 — OP Institute of Studies and OP
+            Kids Pre School, each with its own phone, email, and social links.
           </p>
         </div>
       </section>

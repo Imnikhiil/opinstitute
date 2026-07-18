@@ -74,7 +74,7 @@ export function PreschoolPrograms() {
       <div className="container-custom relative">
         <SectionHeader
           badge="OP Kids Programs"
-          title="Preschool Programs"
+          title="OP Kids Pre School Programs"
           subtitle="Age-appropriate programs designed for holistic early childhood development"
           variant="kids"
         />
@@ -158,7 +158,7 @@ export function PreschoolPrograms() {
         >
           <Link href="/op-kids">
             <Button variant="kids">
-              Explore OP Kids
+              Explore OP Kids Pre School
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>

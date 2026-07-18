@@ -50,7 +50,7 @@ export function CTABand() {
 
               <div className="flex gap-3">
                 <a
-                  href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I would like to enquire about admissions at OP Institute.`}
+                  href={`https://wa.me/${siteConfig.whatsapp}?text=Hi, I would like to enquire about admissions at OP Institute of Studies.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-4 rounded-full bg-[#25D366] text-white font-semibold shadow-lg hover:brightness-105 active:scale-95 transition"

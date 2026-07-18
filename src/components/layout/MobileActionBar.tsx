@@ -14,7 +14,7 @@ export function MobileActionBar() {
   const wa = isKids ? siteConfig.kidsWhatsapp : siteConfig.whatsapp;
   const waText = isKids
     ? "Hi, I would like to enquire about OP Kids Pre School."
-    : "Hi, I would like to enquire about admissions at OP Institute.";
+    : "Hi, I would like to enquire about admissions at OP Institute of Studies.";
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t border-gray-200/80 dark:border-white/10 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl safe-area-pb">

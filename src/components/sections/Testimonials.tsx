@@ -39,7 +39,7 @@ export function Testimonials({
   filter,
   badge = "Testimonials",
   title = "What Parents & Students Say",
-  subtitle = "Real stories from our OP Institute family",
+  subtitle = "Real stories from our OP Institute of Studies family",
   variant = "default",
   className,
 }: TestimonialsProps) {

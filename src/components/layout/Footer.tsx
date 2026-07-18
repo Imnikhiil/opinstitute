@@ -21,14 +21,14 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/logos/op-institute-logo.png"
-                alt="O.P. Institute of Studies logo"
+                alt="OP Institute of Studies logo"
                 width={52}
                 height={52}
                 className="h-12 w-12 object-contain"
               />
               <div>
                 <p className="font-display font-bold text-white text-base leading-tight">
-                  O.P. Institute of Studies
+                  OP Institute of Studies
                 </p>
                 <p className="text-gray-400 text-xs">Since 2003</p>
               </div>
@@ -44,7 +44,7 @@ export function Footer() {
             </div>
             <p className="text-sm leading-relaxed text-gray-400">
               Empowering students and nurturing young minds with excellence in
-              education since 2003 — from joyful preschool at OP Kids to CMA,
+              education since 2003 — from joyful learning at OP Kids Pre School to CMA,
               B.Com and school tuition success.
             </p>
           </div>
@@ -185,7 +185,7 @@ export function Footer() {
                   href={`https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
                     brand.id === "kids"
                       ? "Hi, I would like to enquire about OP Kids Pre School."
-                      : "Hi, I would like to enquire about admissions at OP Institute."
+                      : "Hi, I would like to enquire about admissions at OP Institute of Studies."
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

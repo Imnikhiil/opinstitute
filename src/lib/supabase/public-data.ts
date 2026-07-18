@@ -192,6 +192,16 @@ function enrichLeader(leader: Leader): Leader {
     organization = "OP Kids Pre School";
   }
 
+  // Normalize known brand spellings
+  if (/kids/i.test(organization) && /pre\s*school|preschool/i.test(organization)) {
+    organization = "OP Kids Pre School";
+  } else if (
+    /institute/i.test(organization) &&
+    !/kids/i.test(organization)
+  ) {
+    organization = "OP Institute of Studies";
+  }
+
   return {
     ...leader,
     message:

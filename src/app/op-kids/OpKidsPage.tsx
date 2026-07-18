@@ -262,7 +262,7 @@ export function OpKidsPage({
         <div className="container-custom relative">
           <ScrollReveal>
             <SectionHeader
-              badge="Why OP Kids"
+              badge="Why OP Kids Pre School"
               title="Everything Your Child Needs to Thrive"
               subtitle="A nurturing environment designed for happy, confident learners"
               variant="kids"
@@ -427,7 +427,7 @@ export function OpKidsPage({
         <div className="container-custom relative max-w-4xl">
           <ScrollReveal>
             <SectionHeader
-              badge="A Day at OP Kids"
+              badge="A Day at OP Kids Pre School"
               title="A Joyful Day, Start to Finish"
               subtitle="Every day is thoughtfully planned to balance learning, play and rest"
               variant="kids"
@@ -480,7 +480,7 @@ export function OpKidsPage({
         <div className="container-custom">
           <ScrollReveal>
             <SectionHeader
-              badge="Life at OP Kids"
+              badge="Life at OP Kids Pre School"
               title="Little Moments, Big Smiles"
               subtitle="A peek into our colorful, joyful world of learning and play"
               variant="kids"
@@ -504,7 +504,7 @@ export function OpKidsPage({
               >
                 <Image
                   src={item.src}
-                  alt={`OP Kids — ${item.label}`}
+                  alt={`OP Kids Pre School — ${item.label}`}
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -528,7 +528,7 @@ export function OpKidsPage({
             <ScrollReveal>
               <SectionHeader
                 badge="Our Teachers"
-                title="Meet the OP Kids Faculty"
+                title="Meet the OP Kids Pre School Faculty"
                 subtitle="Caring educators who make every day joyful, safe, and full of discovery"
                 variant="kids"
               />

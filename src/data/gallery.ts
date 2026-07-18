@@ -84,7 +84,7 @@ export const galleryCategories = [
   { id: "all", label: "All" },
   { id: "campus", label: "Campus" },
   { id: "classroom", label: "Classroom" },
-  { id: "preschool", label: "OP Kids" },
+  { id: "preschool", label: "OP Kids Pre School" },
   { id: "events", label: "Events" },
   { id: "achievements", label: "Achievements" },
 ];

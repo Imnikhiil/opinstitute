@@ -8,7 +8,7 @@ import { getEvents } from "@/lib/supabase/public-data";
 export const metadata: Metadata = {
   title: "Events",
   description:
-    "Upcoming and past events at OP Institute — academic programs, cultural celebrations, sports day, and OP Kids activities.",
+    "Upcoming and past events at OP Institute of Studies — academic programs, cultural celebrations, sports day, and OP Kids Pre School activities.",
 };
 
 export const revalidate = 60;

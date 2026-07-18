@@ -20,7 +20,7 @@ export function ContactSection() {
           <SectionHeader
             badge="Contact"
             title="Get in Touch"
-            subtitle="Both listings are at Mahavir Enclave Part 2 — pick Institute or OP Kids."
+            subtitle="Both listings are at Mahavir Enclave Part 2 — pick OP Institute of Studies or OP Kids Pre School."
           />
         </ScrollReveal>
 

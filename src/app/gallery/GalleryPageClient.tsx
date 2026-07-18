@@ -22,7 +22,7 @@ export function GalleryPageClient({ images }: { images: GalleryImage[] }) {
             Gallery
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Explore moments of learning, celebration, and achievement at OP Institute.
+            Explore moments of learning, celebration, and achievement at OP Institute of Studies.
           </p>
         </div>
       </section>

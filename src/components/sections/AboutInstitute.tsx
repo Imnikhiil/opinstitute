@@ -37,7 +37,7 @@ export function AboutInstitute() {
           <ScrollReveal direction="right" delay={0.2}>
             <SectionHeader
               badge="Since 2003"
-              title="O.P. Institute of Studies"
+              title="OP Institute of Studies"
               subtitle="Two decades of academic excellence and holistic development"
               align="left"
             />

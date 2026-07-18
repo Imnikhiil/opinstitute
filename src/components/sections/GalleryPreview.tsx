@@ -17,7 +17,7 @@ export function GalleryPreview({ images }: { images: GalleryImage[] }) {
         <ScrollReveal>
           <SectionHeader
             badge="Gallery"
-            title="Life at OP Institute"
+            title="Life at OP Institute of Studies"
             subtitle="Glimpses of learning, celebrations, and achievements"
           />
         </ScrollReveal>

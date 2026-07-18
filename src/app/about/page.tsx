@@ -24,8 +24,7 @@ export default async function AboutPage() {
             About Us
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Discover our journey, values, and the people behind OP Institute of
-            Studies & OP Kids Pre School.
+            Discover our journey, values, and the people behind OP Institute of Studies & OP Kids Pre School.
           </p>
         </div>
       </section>
@@ -47,7 +46,7 @@ export default async function AboutPage() {
               <div className="rounded-2xl overflow-hidden shadow-premium">
                 <Image
                   src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=700&q=80"
-                  alt="OP Institute history"
+                  alt="OP Institute of Studies history"
                   width={600}
                   height={400}
                   className="w-full h-[250px] sm:h-[300px] lg:h-[350px] object-cover"
@@ -63,7 +62,7 @@ export default async function AboutPage() {
           <LeadershipHighlight
             badge="Leadership"
             title="A Message from Our Founder"
-            subtitle="Founder Om Prakash, with Academic & Management Heads for OP Kids and OP Institute"
+            subtitle="Founder Om Prakash, with Academic & Management Heads for OP Kids Pre School and OP Institute of Studies"
             leaders={leaders}
           />
         </div>

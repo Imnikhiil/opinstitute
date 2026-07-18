@@ -117,7 +117,7 @@ export function Navbar() {
           >
             <Image
               src="/logos/op-institute-logo.png"
-              alt="O.P. Institute of Studies logo"
+              alt="OP Institute of Studies logo"
               width={48}
               height={48}
               priority
@@ -131,7 +131,7 @@ export function Navbar() {
                 overHero ? "text-white" : "text-brand-900 dark:text-white"
               )}
             >
-              O.P. Institute of Studies
+              OP Institute of Studies
             </p>
             <p
               className={cn(

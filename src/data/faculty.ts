@@ -21,13 +21,13 @@ export const FACULTY_PHOTO_ASPECT = 4 / 5;
 
 export const facultyCategories = [
   { id: "all" as const, label: "All Faculty" },
-  { id: "preschool" as const, label: "OP KIDS PRE SCHOOL" },
-  { id: "institute" as const, label: "OP INSTITUTE OF STUDIES" },
+  { id: "preschool" as const, label: "OP Kids Pre School" },
+  { id: "institute" as const, label: "OP Institute of Studies" },
 ];
 
 export const facultyCategoryLabels: Record<FacultyCategory, string> = {
-  preschool: "OP KIDS PRE SCHOOL",
-  institute: "OP INSTITUTE OF STUDIES",
+  preschool: "OP Kids Pre School",
+  institute: "OP Institute of Studies",
 };
 
 /**

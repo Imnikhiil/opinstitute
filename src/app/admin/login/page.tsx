@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
           <div className="mx-auto mb-4 inline-flex rounded-2xl bg-white p-3.5 shadow-xl shadow-black/15">
             <Image
               src="/logos/op-institute-logo.png"
-              alt="O.P. Institute of Studies"
+              alt="OP Institute of Studies"
               width={56}
               height={56}
               className="h-12 w-12 object-contain"
@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
             Admin Panel
           </h1>
           <p className="text-white/70 text-sm mt-1.5">
-            O.P. Institute · OP Kids Pre School
+            OP Institute of Studies · OP Kids Pre School
           </p>
         </div>
 
