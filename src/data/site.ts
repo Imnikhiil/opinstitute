@@ -509,10 +509,9 @@ export const kidsDayRoutine = [
   { time: "9:00 AM", title: "Warm Welcome", detail: "Cheerful greetings, free play and settling in.", emoji: "👋" },
   { time: "9:30 AM", title: "Circle Time", detail: "Prayer, rhymes, calendar and the day's fun theme.", emoji: "⭕" },
   { time: "10:00 AM", title: "Learning Activity", detail: "Montessori-based, hands-on concept learning.", emoji: "📚" },
-  { time: "10:45 AM", title: "Snack & Hygiene", detail: "Healthy snack break and good-habit routines.", emoji: "🍎" },
-  { time: "11:15 AM", title: "Creative Play", detail: "Art, craft, music, dance and story time.", emoji: "🎨" },
-  { time: "12:00 PM", title: "Outdoor Fun", detail: "Safe playground games and physical activity.", emoji: "⚽" },
-  { time: "12:45 PM", title: "Happy Goodbye", detail: "Recap, goodbye song and joyful home time.", emoji: "🎈" },
+  { time: "10:30 AM", title: "Snack & Hygiene", detail: "Healthy snack break and good-habit routines.", emoji: "🍎" },
+  { time: "11:30 AM", title: "Creative Play", detail: "Art, craft, music, dance and story time.", emoji: "🎨" },
+  { time: "12:00 PM", title: "Happy Goodbye", detail: "Recap, goodbye song and joyful home time.", emoji: "🎈" },
 ];
 
 // Common questions from parents about OP Kids
