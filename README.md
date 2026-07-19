@@ -1,66 +1,73 @@
 # OP Institute of Studies & OP Kids Pre School
 
-Premium, modern, responsive website for OP Institute of Studies and OP Kids Pre School.
+Website for OP Institute of Studies and OP Kids Pre School — dual brand worlds, admin CMS, and enquiry forms.
 
-## Tech Stack
+## Tech stack
 
-- **Next.js 15** (App Router)
-- **TypeScript**
-- **Tailwind CSS**
-- **Framer Motion** (animations)
-- **React Hook Form + Zod** (form validation)
-- **next-themes** (dark mode)
-- **Lucide React** (icons)
+- Next.js 16 (App Router) + TypeScript
+- Tailwind CSS + Framer Motion
+- Supabase (content, auth, forms)
+- React Hook Form + Zod
 
-## Getting Started
+## Setup
 
 ```bash
 npm install
+cp .env.example .env.local
+# Fill NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Build for Production
+### Database
+
+1. Supabase → SQL Editor → run `supabase/schema.sql` (fresh project)
+2. Existing project: run any pending files under `supabase/migrations/` (see `supabase/README.md`)
+3. Optional: `supabase/seed.sql` for starter content
+4. Auth → disable public signups; create admin user manually
+
+## Scripts
 
 ```bash
-npm run build
-npm start
+npm run dev      # local development
+npm run build    # production build
+npm start        # serve build
+npm run lint     # ESLint
 ```
 
-## Project Structure
+## Project structure
 
 ```
 src/
-├── app/              # Pages and routing
-├── components/       # Reusable UI components
-│   ├── home/         # Home page sections
-│   ├── layout/       # Navbar, Footer, etc.
-│   ├── forms/        # Contact & Admission forms
-│   └── ui/           # Shared UI primitives
-├── data/             # Site content and data
-└── lib/              # Utilities and schemas
+├── app/                 # Routes (pages + admin + API)
+│   ├── admin/           # CMS dashboard
+│   ├── api/enquiry/     # Form submit (spam-guarded)
+│   ├── institute/       # Institute world home
+│   └── op-kids/         # Kids world home
+├── components/
+│   ├── admin/           # Admin UI
+│   ├── forms/           # Admission & contact forms
+│   ├── layout/          # Navbar, footer, announcements
+│   ├── providers/       # Theme, site config, brand mode
+│   ├── sections/        # Marketing sections
+│   └── ui/              # Shared primitives
+├── data/                # Static fallback content
+└── lib/                 # Schemas, Supabase, spam-guard, brand helpers
+public/logos/            # Brand logos
+supabase/
+├── schema.sql           # Full schema (greenfield)
+├── seed.sql
+└── migrations/          # Incremental upgrades for existing DBs
 ```
 
-## Customization
+## Brand worlds
 
-- Update contact info, address, and social links in `src/data/site.ts`
-- Modify courses in `src/data/courses.ts`
-- Add faculty members in `src/data/faculty.ts`
-- Replace placeholder images with your own
+- `/` — main site (both brands)
+- `/op-kids` — Kids world
+- `/institute` — Institute world
+- Admin → Announcements — notices with Main / Kids / Institute targeting
 
-## Deployment
+## Deploy
 
-Deploy to Vercel, Netlify, or any Node.js hosting platform. The project is production-ready.
-
-## Features
-
-- Premium responsive UI with glassmorphism and gradients
-- OP Kids Pre School focus with colorful dedicated page
-- SEO optimized with metadata, sitemap, and robots.txt
-- Dark mode support
-- Floating WhatsApp & call buttons
-- Animated statistics counter
-- Scroll reveal animations
-- Form validation with React Hook Form + Zod
-- Image lazy loading via Next.js Image
+Deploy on Vercel (or any Node host). Set the same env vars as `.env.local`. Point your custom domain and update `siteConfig.url` in `src/data/site.ts` (or env-driven URL when you add it).

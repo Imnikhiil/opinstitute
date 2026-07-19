@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Download } from "lucide-react";
+import Link from "next/link";
+import { Phone } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { AdmissionForm } from "@/components/forms/AdmissionForm";
@@ -21,7 +22,8 @@ export default function AdmissionsPage() {
             Admissions
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Begin your journey with OP Institute of Studies. Admissions open for the 2026-27 academic year.
+            Begin your journey with OP Institute of Studies and OP Kids Pre
+            School. Admissions open for the 2026–27 academic year.
           </p>
         </div>
       </section>
@@ -43,8 +45,12 @@ export default function AdmissionsPage() {
                   <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-white font-bold text-base sm:text-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     {step.step}
                   </div>
-                  <h3 className="font-display font-semibold text-sm sm:text-lg mb-1 sm:mb-2">{step.title}</h3>
-                  <p className="text-muted-foreground text-xs sm:text-sm">{step.description}</p>
+                  <h3 className="font-display font-semibold text-sm sm:text-lg mb-1 sm:mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm">
+                    {step.description}
+                  </p>
                 </div>
               </ScrollReveal>
             ))}
@@ -64,15 +70,18 @@ export default function AdmissionsPage() {
               <div className="space-y-6">
                 <div className="glass-card p-6">
                   <h3 className="font-display font-semibold text-lg mb-3">
-                    Download Brochure
+                    Prefer to talk?
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4">
-                    Get detailed information about our programs, fees, and facilities.
+                    Visit campus or call our team for program details, fees, and
+                    a personal counselling session.
                   </p>
-                  <Button variant="outline" className="w-full">
-                    <Download className="w-4 h-4" />
-                    Download PDF
-                  </Button>
+                  <Link href="/contact">
+                    <Button variant="outline" className="w-full">
+                      <Phone className="w-4 h-4" />
+                      Contact us
+                    </Button>
+                  </Link>
                 </div>
                 <div className="glass-card p-6 bg-brand-50 dark:bg-brand-950/30 border-brand-200 dark:border-brand-800">
                   <h3 className="font-display font-semibold text-lg mb-2">
@@ -80,7 +89,8 @@ export default function AdmissionsPage() {
                   </h3>
                   <p className="text-muted-foreground text-sm">
                     Our admissions counsellors are available Monday to Saturday,
-                    9 AM to 6 PM. Call us or visit the campus for a personal tour.
+                    9 AM to 6 PM. Call us or visit the campus for a personal
+                    tour.
                   </p>
                 </div>
               </div>

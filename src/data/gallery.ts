@@ -116,6 +116,3 @@ export const galleryTopics = [
   { id: "events" as const, label: "Events" },
   { id: "achievements" as const, label: "Achievements" },
 ];
-
-/** @deprecated use galleryTopics — kept for any old imports */
-export const galleryCategories = galleryTopics;

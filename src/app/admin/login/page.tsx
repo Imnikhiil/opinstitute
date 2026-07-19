@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Lock, Mail, LogIn, AlertCircle, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,16 +19,25 @@ export default function AdminLoginPage() {
     try {
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithPassword({
-        email,
+        email: email.trim(),
         password,
       });
       if (error) {
-        setError("Incorrect email or password. Please try again.");
+        const message = error.message?.toLowerCase() ?? "";
+        if (
+          message.includes("invalid login") ||
+          message.includes("invalid credentials") ||
+          error.status === 400
+        ) {
+          setError("Incorrect email or password. Please try again.");
+        } else {
+          setError(error.message || "Unable to log in. Please try again.");
+        }
         setLoading(false);
         return;
       }
-      router.push("/admin");
-      router.refresh();
+      // Hard redirect so the new session cookies are applied cleanly
+      window.location.assign("/admin");
     } catch {
       setError(
         "Unable to log in. Please check your connection and try again."

@@ -121,7 +121,26 @@ alter table public.site_settings add column if not exists kids_youtube text;
 
 insert into public.site_settings (id) values (1) on conflict (id) do nothing;
 
--- ---------- 8. ANNOUNCEMENTS (site notices / admissions banners) ----------
+-- ---------- 8. LEADERSHIP (Founder & Management) ----------
+create table if not exists public.leadership (
+  id           uuid primary key default gen_random_uuid(),
+  name         text not null,
+  title        text not null default '',
+  organization text default '',
+  initials     text default '',
+  accent       text default 'brand',
+  credentials  jsonb default '[]',
+  experience   text default '',
+  education    text default '',
+  since_year   text default '',
+  stats        jsonb default '[]',
+  message      text default '',
+  image_url    text default '',
+  sort_order   int default 0,
+  created_at   timestamptz not null default now()
+);
+
+-- ---------- 9. ANNOUNCEMENTS (site notices / admissions banners) ----------
 create table if not exists public.announcements (
   id                uuid primary key default gen_random_uuid(),
   title             text not null,
@@ -150,6 +169,7 @@ alter table public.testimonials  enable row level security;
 alter table public.events        enable row level security;
 alter table public.gallery       enable row level security;
 alter table public.site_settings enable row level security;
+alter table public.leadership    enable row level security;
 alter table public.announcements enable row level security;
 
 -- QUERIES: anyone can submit; only admins can view/update/delete
@@ -162,7 +182,7 @@ create policy "admin can delete queries"  on public.queries for delete to authen
 do $$
 declare t text;
 begin
-  foreach t in array array['courses','faculty','testimonials','events','gallery','site_settings','announcements']
+  foreach t in array array['courses','faculty','testimonials','events','gallery','site_settings','leadership','announcements']
   loop
     execute format('create policy "public can read %1$s" on public.%1$s for select to anon, authenticated using (true);', t);
     execute format('create policy "admin can insert %1$s" on public.%1$s for insert to authenticated with check (true);', t);
