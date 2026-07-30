@@ -154,9 +154,12 @@ function mapGallery(row: Row): GalleryImage {
     (str(row.category) as GalleryImage["category"]) || "campus";
   return {
     id: str(row.id),
-    src:
-      src ||
-      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
+    src: src
+      ? sharpImageUrl(src, 1200)
+      : sharpImageUrl(
+          "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=90",
+          1200
+        ),
     alt: str(row.alt, "OP Institute gallery"),
     category,
     brand: resolveContentBrand(row, category),
@@ -311,28 +314,40 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
 const KIDS_SHOWCASE_FALLBACKS: GalleryImage[] = [
   {
     id: "kids-fallback-1",
-    src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80",
+    src: sharpImageUrl(
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=90",
+      1200
+    ),
     alt: "Kids playing outdoors",
     category: "preschool",
     brand: "preschool",
   },
   {
     id: "kids-fallback-2",
-    src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80",
+    src: sharpImageUrl(
+      "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=90",
+      1200
+    ),
     alt: "Learning together",
     category: "preschool",
     brand: "preschool",
   },
   {
     id: "kids-fallback-3",
-    src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=80",
+    src: sharpImageUrl(
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=90",
+      1200
+    ),
     alt: "Happy faces",
     category: "preschool",
     brand: "preschool",
   },
   {
     id: "kids-fallback-4",
-    src: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&q=80",
+    src: sharpImageUrl(
+      "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=1200&q=90",
+      1200
+    ),
     alt: "Fun activities",
     category: "preschool",
     brand: "preschool",
@@ -343,18 +358,19 @@ const KIDS_SHOWCASE_FALLBACKS: GalleryImage[] = [
  * First N OP Kids (preschool) gallery photos by sort_order.
  * Used on home About Kids collage + Kids world showcase.
  * Manage in Admin → Gallery (brand = OP Kids Pre School).
+ *
+ * Fallbacks only when there are ZERO preschool photos in CMS —
+ * so partial uploads never mix with leftover stock images.
  */
 export async function getKidsShowcaseImages(
   count = 4
 ): Promise<GalleryImage[]> {
   const all = await getGalleryImages();
   const kids = all.filter((img) => img.brand === "preschool");
-  const picked = kids.slice(0, count);
-  if (picked.length >= count) return picked;
-  return [
-    ...picked,
-    ...KIDS_SHOWCASE_FALLBACKS.slice(picked.length, count),
-  ];
+  if (kids.length === 0) {
+    return KIDS_SHOWCASE_FALLBACKS.slice(0, count);
+  }
+  return kids.slice(0, count);
 }
 
 export type Announcement = {

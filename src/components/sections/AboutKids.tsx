@@ -94,15 +94,20 @@ export function AboutKids({
               <div className="absolute -inset-4 bg-kids-gradient opacity-20 rounded-3xl blur-2xl" />
               <div className="relative grid grid-cols-2 gap-2 sm:gap-3">
                 {images.map((img, i) => (
-                  <Image
+                  <div
                     key={img.id}
-                    src={img.src}
-                    alt={img.alt || "OP Kids Pre School"}
-                    width={250}
-                    height={200}
-                    className={`rounded-xl sm:rounded-2xl object-cover h-28 sm:h-40 w-full ${collageOffsets[i] ?? "shadow-card"}`}
-                    loading="lazy"
-                  />
+                    className={`relative overflow-hidden rounded-xl sm:rounded-2xl h-32 sm:h-44 w-full ${collageOffsets[i] ?? "shadow-card"}`}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt || "OP Kids Pre School"}
+                      fill
+                      sizes="(max-width: 1024px) 45vw, 280px"
+                      quality={90}
+                      className="object-cover"
+                      loading="lazy"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
