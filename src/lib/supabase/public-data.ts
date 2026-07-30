@@ -307,6 +307,56 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
   return rows.length ? rows.map(mapGallery) : staticGallery;
 }
 
+/** Default collage when fewer than N preschool gallery rows exist */
+const KIDS_SHOWCASE_FALLBACKS: GalleryImage[] = [
+  {
+    id: "kids-fallback-1",
+    src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80",
+    alt: "Kids playing outdoors",
+    category: "preschool",
+    brand: "preschool",
+  },
+  {
+    id: "kids-fallback-2",
+    src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80",
+    alt: "Learning together",
+    category: "preschool",
+    brand: "preschool",
+  },
+  {
+    id: "kids-fallback-3",
+    src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=80",
+    alt: "Happy faces",
+    category: "preschool",
+    brand: "preschool",
+  },
+  {
+    id: "kids-fallback-4",
+    src: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&q=80",
+    alt: "Fun activities",
+    category: "preschool",
+    brand: "preschool",
+  },
+];
+
+/**
+ * First N OP Kids (preschool) gallery photos by sort_order.
+ * Used on home About Kids collage + Kids world showcase.
+ * Manage in Admin → Gallery (brand = OP Kids Pre School).
+ */
+export async function getKidsShowcaseImages(
+  count = 4
+): Promise<GalleryImage[]> {
+  const all = await getGalleryImages();
+  const kids = all.filter((img) => img.brand === "preschool");
+  const picked = kids.slice(0, count);
+  if (picked.length >= count) return picked;
+  return [
+    ...picked,
+    ...KIDS_SHOWCASE_FALLBACKS.slice(picked.length, count),
+  ];
+}
+
 export type Announcement = {
   id: string;
   title: string;

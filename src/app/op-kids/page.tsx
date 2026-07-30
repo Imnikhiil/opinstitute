@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { getTestimonials } from "@/lib/supabase/public-data";
+import {
+  getKidsShowcaseImages,
+  getTestimonials,
+} from "@/lib/supabase/public-data";
 import { OpKidsPage } from "./OpKidsPage";
 
 export const metadata: Metadata = {
@@ -11,6 +14,14 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function Page() {
-  const testimonials = await getTestimonials();
-  return <OpKidsPage testimonials={testimonials} />;
+  const [testimonials, showcaseImages] = await Promise.all([
+    getTestimonials(),
+    getKidsShowcaseImages(4),
+  ]);
+  return (
+    <OpKidsPage
+      testimonials={testimonials}
+      showcaseImages={showcaseImages}
+    />
+  );
 }

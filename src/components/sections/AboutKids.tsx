@@ -7,9 +7,22 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
+import type { GalleryImage } from "@/data/gallery";
 
-export function AboutKids() {
+const collageOffsets = [
+  "shadow-card",
+  "shadow-card mt-6 sm:mt-8",
+  "shadow-card -mt-2 sm:-mt-4",
+  "shadow-card mt-2 sm:mt-4",
+];
+
+export function AboutKids({
+  showcaseImages = [],
+}: {
+  showcaseImages?: GalleryImage[];
+}) {
   const { enterKidsWorld } = useSiteBrand();
+  const images = showcaseImages.slice(0, 4);
 
   return (
     <section className="section-padding relative overflow-hidden">
@@ -38,9 +51,13 @@ export function AboutKids() {
                 />
               </div>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Welcome to <strong className="text-kids-600 dark:text-kids-400">OP Kids Pre School</strong> — 
-                where kids love to learn! Our play-based curriculum, caring teachers, and 
-                vibrant environment make learning natural and fun for children aged 2-6 years.
+                Welcome to{" "}
+                <strong className="text-kids-600 dark:text-kids-400">
+                  OP Kids Pre School
+                </strong>{" "}
+                — where kids love to learn! Our play-based curriculum, caring
+                teachers, and vibrant environment make learning natural and fun
+                for children aged 2-6 years.
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 {["Play Group", "Nursery", "LKG", "UKG"].map((prog) => (
@@ -54,7 +71,10 @@ export function AboutKids() {
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-kids-400 text-kids-400" />
+                  <Star
+                    key={i}
+                    className="w-4 h-4 sm:w-5 sm:h-5 fill-kids-400 text-kids-400"
+                  />
                 ))}
                 <span className="text-xs sm:text-sm text-muted-foreground ml-1 sm:ml-2">
                   Loved by 200+ parents
@@ -73,38 +93,17 @@ export function AboutKids() {
             <div className="relative">
               <div className="absolute -inset-4 bg-kids-gradient opacity-20 rounded-3xl blur-2xl" />
               <div className="relative grid grid-cols-2 gap-2 sm:gap-3">
-                <Image
-                  src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&q=80"
-                  alt="Kids playing outdoors"
-                  width={250}
-                  height={200}
-                  className="rounded-xl sm:rounded-2xl object-cover h-28 sm:h-40 w-full shadow-card"
-                  loading="lazy"
-                />
-                <Image
-                  src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=300&q=80"
-                  alt="Art and craft activity"
-                  width={250}
-                  height={200}
-                  className="rounded-xl sm:rounded-2xl object-cover h-28 sm:h-40 w-full shadow-card mt-6 sm:mt-8"
-                  loading="lazy"
-                />
-                <Image
-                  src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=300&q=80"
-                  alt="Classroom learning"
-                  width={250}
-                  height={200}
-                  className="rounded-xl sm:rounded-2xl object-cover h-28 sm:h-40 w-full shadow-card -mt-2 sm:-mt-4"
-                  loading="lazy"
-                />
-                <Image
-                  src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=300&q=80"
-                  alt="Kids celebration"
-                  width={250}
-                  height={200}
-                  className="rounded-xl sm:rounded-2xl object-cover h-28 sm:h-40 w-full shadow-card mt-2 sm:mt-4"
-                  loading="lazy"
-                />
+                {images.map((img, i) => (
+                  <Image
+                    key={img.id}
+                    src={img.src}
+                    alt={img.alt || "OP Kids Pre School"}
+                    width={250}
+                    height={200}
+                    className={`rounded-xl sm:rounded-2xl object-cover h-28 sm:h-40 w-full ${collageOffsets[i] ?? "shadow-card"}`}
+                    loading="lazy"
+                  />
+                ))}
               </div>
             </div>
           </ScrollReveal>

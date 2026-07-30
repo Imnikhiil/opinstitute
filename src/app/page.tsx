@@ -9,12 +9,18 @@ import { AdmissionProcess } from "@/components/sections/AdmissionProcess";
 import { FAQs } from "@/components/sections/FAQs";
 import { CTABand } from "@/components/sections/CTABand";
 import { ContactSection } from "@/components/sections/ContactSection";
-import { getTestimonials } from "@/lib/supabase/public-data";
+import {
+  getKidsShowcaseImages,
+  getTestimonials,
+} from "@/lib/supabase/public-data";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const testimonials = await getTestimonials();
+  const [testimonials, kidsShowcase] = await Promise.all([
+    getTestimonials(),
+    getKidsShowcaseImages(4),
+  ]);
 
   return (
     <>
@@ -22,7 +28,7 @@ export default async function HomePage() {
       <Marquee />
       <LearningJourney />
       <AboutInstitute />
-      <AboutKids />
+      <AboutKids showcaseImages={kidsShowcase} />
       <WhyChooseUs />
       <Testimonials testimonials={testimonials} />
       <AdmissionProcess />

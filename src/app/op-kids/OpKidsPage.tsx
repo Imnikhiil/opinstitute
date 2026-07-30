@@ -41,6 +41,14 @@ import {
 } from "@/data/site";
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
+import type { GalleryImage } from "@/data/gallery";
+
+const showcaseRings = [
+  "ring-amber-300",
+  "ring-pink-300",
+  "ring-violet-300",
+  "ring-sky-300",
+];
 
 const iconMap: Record<string, LucideIcon> = {
   Puzzle,
@@ -133,10 +141,18 @@ const exploreLinks = [
 
 export function OpKidsPage({
   testimonials,
+  showcaseImages = [],
 }: {
   testimonials: Testimonial[];
+  showcaseImages?: GalleryImage[];
 }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const showcase = showcaseImages.slice(0, 4).map((img, i) => ({
+    src: img.src,
+    label: img.alt || "OP Kids",
+    ring: showcaseRings[i] ?? "ring-kids-300",
+    id: img.id,
+  }));
 
   return (
     <>
@@ -506,14 +522,9 @@ export function OpKidsPage({
             />
           </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            {[
-              { src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80", label: "Creative Play", ring: "ring-amber-300" },
-              { src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80", label: "Learning Together", ring: "ring-pink-300" },
-              { src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=80", label: "Happy Faces", ring: "ring-violet-300" },
-              { src: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&q=80", label: "Fun Activities", ring: "ring-sky-300" },
-            ].map((item, i) => (
+            {showcase.map((item, i) => (
               <motion.div
-                key={i}
+                key={item.id}
                 initial={{ opacity: 0, y: 30, scale: 0.94 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}

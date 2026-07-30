@@ -2,6 +2,23 @@
 
 Website for OP Institute of Studies and OP Kids Pre School — dual brand worlds, admin CMS, and enquiry forms.
 
+## Docs
+
+Start with **[docs/HANDOVER.md](docs/HANDOVER.md)** if you are taking over the project.
+
+| Doc | Purpose |
+|-----|---------|
+| [docs/HANDOVER.md](docs/HANDOVER.md) | Handover checklist + doc map |
+| [docs/PRD.md](docs/PRD.md) | Product requirements |
+| [docs/Architecture.md](docs/Architecture.md) | Technical architecture |
+| [docs/SETUP.md](docs/SETUP.md) | Local + Supabase + deploy |
+| [docs/DATABASE.md](docs/DATABASE.md) | Schema, RLS, migrations |
+| [docs/CMS-GUIDE.md](docs/CMS-GUIDE.md) | Staff admin guide |
+| [docs/Rules.md](docs/Rules.md) | Coding conventions |
+| [docs/Design.md](docs/Design.md) | Visual system |
+| [docs/Phases.md](docs/Phases.md) | Roadmap |
+| [docs/Memory.md](docs/Memory.md) | Decisions & gotchas |
+
 ## Tech stack
 
 - Next.js 16 (App Router) + TypeScript
