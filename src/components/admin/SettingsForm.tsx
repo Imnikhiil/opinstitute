@@ -144,7 +144,7 @@ const groups: {
     ],
   },
   {
-    title: "Front Desk (Home / About / Admissions)",
+    title: "Front Desk (Home / Admissions)",
     hint: "Name and message on the Front Desk section. Change the photo in Gallery → Show as = Front desk.",
     fields: [
       {
