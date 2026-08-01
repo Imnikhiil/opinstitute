@@ -152,10 +152,10 @@ export function OpKidsPage({
 }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const showcase = showcaseImages.slice(0, 4).map((img, i) => ({
-    src: img.src,
-    label: img.alt || "OP Kids",
-    ring: showcaseRings[i] ?? "ring-kids-300",
     id: img.id,
+    src: img.src,
+    alt: img.alt || "OP Kids Pre School",
+    ring: showcaseRings[i] ?? "ring-kids-300",
   }));
 
   return (
@@ -538,16 +538,13 @@ export function OpKidsPage({
               >
                 <Image
                   src={item.src}
-                  alt={`OP Kids Pre School — ${item.label}`}
+                  alt={item.alt || "OP Kids Pre School"}
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
                   quality={95}
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="absolute bottom-3 left-3 right-3 text-white text-sm font-semibold translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  {item.label}
-                </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.div>
             ))}
           </div>

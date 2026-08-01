@@ -171,6 +171,9 @@ function mapGallery(row: Row): GalleryImage {
   const src = str(row.image_url);
   const category =
     (str(row.category) as GalleryImage["category"]) || "campus";
+  const brand = resolveContentBrand(row, category);
+  const defaultAlt =
+    brand === "preschool" ? "OP Kids Pre School" : "OP Institute of Studies";
   return {
     id: str(row.id),
     src: src
@@ -179,9 +182,9 @@ function mapGallery(row: Row): GalleryImage {
           "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=90",
           1200
         ),
-    alt: str(row.alt, "OP Institute gallery"),
+    alt: str(row.alt, defaultAlt),
     category,
-    brand: resolveContentBrand(row, category),
+    brand,
   };
 }
 
