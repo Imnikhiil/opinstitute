@@ -14,24 +14,24 @@ interface ScrollRevealProps {
 
 const variants = {
   up: {
-    hidden: { opacity: 0, y: 48, filter: "blur(6px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+    hidden: { opacity: 0, y: 48 },
+    visible: { opacity: 1, y: 0 },
   },
   down: {
-    hidden: { opacity: 0, y: -48, filter: "blur(6px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+    hidden: { opacity: 0, y: -48 },
+    visible: { opacity: 1, y: 0 },
   },
   left: {
-    hidden: { opacity: 0, x: -48, filter: "blur(6px)" },
-    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+    hidden: { opacity: 0, x: -48 },
+    visible: { opacity: 1, x: 0 },
   },
   right: {
-    hidden: { opacity: 0, x: 48, filter: "blur(6px)" },
-    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+    hidden: { opacity: 0, x: 48 },
+    visible: { opacity: 1, x: 0 },
   },
   none: {
-    hidden: { opacity: 0, scale: 0.96, filter: "blur(6px)" },
-    visible: { opacity: 1, scale: 1, filter: "blur(0px)" },
+    hidden: { opacity: 0, scale: 0.96 },
+    visible: { opacity: 1, scale: 1 },
   },
 };
 

@@ -91,19 +91,22 @@ export function AboutKids({
 
           <ScrollReveal direction="right" delay={0.2}>
             <div className="relative">
-              <div className="absolute -inset-4 bg-kids-gradient opacity-20 rounded-3xl blur-2xl" />
-              <div className="relative grid grid-cols-2 gap-2 sm:gap-3">
+              <div
+                className="pointer-events-none absolute -inset-4 bg-kids-gradient opacity-20 rounded-3xl blur-2xl -z-10"
+                aria-hidden
+              />
+              <div className="relative z-10 grid grid-cols-2 gap-2 sm:gap-3">
                 {images.map((img, i) => (
                   <div
                     key={img.id}
-                    className={`relative overflow-hidden rounded-xl sm:rounded-2xl h-32 sm:h-44 w-full ${collageOffsets[i] ?? "shadow-card"}`}
+                    className={`relative isolate overflow-hidden rounded-xl sm:rounded-2xl h-36 sm:h-48 w-full bg-kids-100/40 ${collageOffsets[i] ?? "shadow-card"}`}
                   >
                     <Image
                       src={img.src}
                       alt={img.alt || "OP Kids Pre School"}
                       fill
-                      sizes="(max-width: 1024px) 45vw, 280px"
-                      quality={90}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 400px"
+                      quality={95}
                       className="object-cover"
                       loading="lazy"
                     />

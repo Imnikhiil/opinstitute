@@ -70,6 +70,7 @@ Defaults live in `src/data/site.ts`; live overrides in Admin → **Settings** (`
 - Lots of gallery/events imagery may still be **Unsplash placeholders** — replace with real photos (Phase 2).
 - Announcements: must set which surfaces they show on (Main / Kids / Institute) + date window.
 - Home About Kids collage + `/op-kids` showcase = first **4** Admin Gallery rows with brand **`preschool`** (`getKidsShowcaseImages`).
+- ScrollReveal must **not** use CSS `filter: blur()` — it made photos look soft on screen.
 
 ### Forms / spam
 
