@@ -5,7 +5,9 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { AdmissionForm } from "@/components/forms/AdmissionForm";
 import { Button } from "@/components/ui/Button";
-import { admissionSteps } from "@/data/site";
+import { FrontDeskHighlight } from "@/components/sections/FrontDeskHighlight";
+import { admissionSteps, frontDeskStaff } from "@/data/site";
+import { getReceptionPhoto } from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "Admissions",
@@ -13,7 +15,11 @@ export const metadata: Metadata = {
     "Apply for admission at OP Institute of Studies and OP Kids Pre School. Simple 4-step process with online enquiry form.",
 };
 
-export default function AdmissionsPage() {
+export const revalidate = 60;
+
+export default async function AdmissionsPage() {
+  const receptionPhoto = await getReceptionPhoto();
+
   return (
     <>
       <section className="page-hero">
@@ -66,31 +72,36 @@ export default function AdmissionsPage() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="right" delay={0.2} className="lg:col-span-2">
+            <ScrollReveal
+              direction="right"
+              delay={0.2}
+              className="lg:col-span-2"
+            >
               <div className="space-y-6">
                 <div className="glass-card p-6">
                   <h3 className="font-display font-semibold text-lg mb-3">
-                    Prefer to talk?
+                    Prefer to talk at the front desk?
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4">
-                    Visit campus or call our team for program details, fees, and
-                    a personal counselling session.
+                    Walk in or call — our front desk handles admissions
+                    guidance, programme queries, and campus visits for both OP
+                    Kids and OP Institute.
                   </p>
                   <Link href="/contact">
                     <Button variant="outline" className="w-full">
                       <Phone className="w-4 h-4" />
-                      Contact us
+                      Contact front desk
                     </Button>
                   </Link>
                 </div>
                 <div className="glass-card p-6 bg-brand-50 dark:bg-brand-950/30 border-brand-200 dark:border-brand-800">
                   <h3 className="font-display font-semibold text-lg mb-2">
-                    Need Help?
+                    Need help with the form?
                   </h3>
                   <p className="text-muted-foreground text-sm">
-                    Our admissions counsellors are available Monday to Saturday,
-                    9 AM to 6 PM. Call us or visit the campus for a personal
-                    tour.
+                    {frontDeskStaff.displayName} can walk you through the next
+                    steps Monday to Saturday during campus hours — or submit the
+                    form and we&apos;ll follow up on WhatsApp / phone.
                   </p>
                 </div>
               </div>
@@ -98,6 +109,8 @@ export default function AdmissionsPage() {
           </div>
         </div>
       </section>
+
+      <FrontDeskHighlight photo={receptionPhoto} />
     </>
   );
 }

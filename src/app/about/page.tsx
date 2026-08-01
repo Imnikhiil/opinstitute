@@ -4,10 +4,12 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
 import { VideoShowcase } from "@/components/sections/VideoShowcase";
+import { FrontDeskHighlight } from "@/components/sections/FrontDeskHighlight";
 import { aboutContent } from "@/data/site";
 import {
   getFrontDeskPhoto,
   getLeadership,
+  getReceptionPhoto,
   getVideos,
 } from "@/lib/supabase/public-data";
 
@@ -20,11 +22,13 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function AboutPage() {
-  const [leaders, frontDeskPhoto, founderVideos] = await Promise.all([
-    getLeadership(),
-    getFrontDeskPhoto(),
-    getVideos({ kind: "founder" }),
-  ]);
+  const [leaders, frontDeskPhoto, receptionPhoto, founderVideos] =
+    await Promise.all([
+      getLeadership(),
+      getFrontDeskPhoto(),
+      getReceptionPhoto(),
+      getVideos({ kind: "founder" }),
+    ]);
 
   return (
     <>
@@ -87,6 +91,8 @@ export default async function AboutPage() {
         subtitle="Hear directly from Founder Om Prakash"
         className="bg-white dark:bg-transparent"
       />
+
+      <FrontDeskHighlight photo={receptionPhoto} />
 
       <section className="section-padding">
         <div className="container-custom">

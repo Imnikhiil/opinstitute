@@ -9,23 +9,31 @@ import { AdmissionProcess } from "@/components/sections/AdmissionProcess";
 import { FAQs } from "@/components/sections/FAQs";
 import { CTABand } from "@/components/sections/CTABand";
 import { ContactSection } from "@/components/sections/ContactSection";
+import { FrontDeskHighlight } from "@/components/sections/FrontDeskHighlight";
 import {
   getFrontDeskPhoto,
   getKidsShowcaseImages,
   getLeadership,
+  getReceptionPhoto,
   getTestimonials,
 } from "@/lib/supabase/public-data";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [testimonials, kidsShowcase, frontDeskPhoto, leaders] =
-    await Promise.all([
-      getTestimonials(),
-      getKidsShowcaseImages(4),
-      getFrontDeskPhoto(),
-      getLeadership(),
-    ]);
+  const [
+    testimonials,
+    kidsShowcase,
+    frontDeskPhoto,
+    receptionPhoto,
+    leaders,
+  ] = await Promise.all([
+    getTestimonials(),
+    getKidsShowcaseImages(4),
+    getFrontDeskPhoto(),
+    getReceptionPhoto(),
+    getLeadership(),
+  ]);
 
   return (
     <>
@@ -37,6 +45,7 @@ export default async function HomePage() {
       <WhyChooseUs />
       <Testimonials testimonials={testimonials} />
       <AdmissionProcess />
+      <FrontDeskHighlight photo={receptionPhoto} />
       <FAQs />
       <CTABand />
       <ContactSection />

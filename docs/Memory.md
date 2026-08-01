@@ -71,6 +71,7 @@ Defaults live in `src/data/site.ts`; live overrides in Admin → **Settings** (`
 - Announcements: must set which surfaces they show on (Main / Kids / Institute) + date window.
 - Home About Kids collage + `/op-kids` showcase = first **4** Admin Gallery rows with brand **`preschool`** (`getKidsShowcaseImages`).
 - Front desk / reception photos: Gallery **Show as** `front_desk` or `reception` → home About + About page (`getFrontDeskPhoto`). Local fallbacks in `public/images/campus/`.
+- Receptionist section: `FrontDeskHighlight` on Home (after Admissions process), About, and Admissions — copy in `frontDeskStaff` (`src/data/site.ts`). Update `displayName` when her personal name should show.
 - Videos: Admin → Videos (`kind`: founder | parent_review | student_experience). Run `supabase/migrations/add_videos.sql` once on Supabase.
 - ScrollReveal must **not** use CSS `filter: blur()` — it made photos look soft on screen.
 

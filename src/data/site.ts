@@ -49,6 +49,39 @@ export const siteConfig = {
 };
 
 /**
+ * Front desk / receptionist — first person parents & students meet.
+ * Update `displayName` when you want her personal name on the site.
+ */
+export const frontDeskStaff = {
+  badge: "Campus welcome",
+  sectionTitle: "Meet Our Front Desk",
+  sectionSubtitle:
+    "Warm, clear help for admissions, queries, and day-to-day campus support — for OP Institute and OP Kids.",
+  displayName: "Our Front Desk Executive",
+  title: "Admissions, Queries & Operations",
+  organization: "OP Institute of Studies · OP Kids Pre School",
+  message:
+    "When you walk into our campus or call with a question, our front desk is your first point of contact. She guides parents and students through admissions, answers day-to-day queries, coordinates visits, and keeps campus operations running smoothly — so you always know who to talk to and what to do next.",
+  highlights: [
+    {
+      title: "Admissions support",
+      detail:
+        "Helps with programme info, forms, campus visits, and the next steps for OP Kids and OP Institute admissions.",
+    },
+    {
+      title: "Queries & follow-ups",
+      detail:
+        "Handles phone, WhatsApp, and walk-in questions from parents and students — and connects you to the right person when needed.",
+    },
+    {
+      title: "Day-to-day operations",
+      detail:
+        "Coordinates front-office work so both brands stay organised — from visitor welcome to smooth campus communication.",
+    },
+  ],
+};
+
+/**
  * Clean dual-brand channels — Institute vs Kids.
  * Used in Footer / Contact so each brand stays clear (no stacked messy icons).
  */
