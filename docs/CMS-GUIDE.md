@@ -34,12 +34,13 @@ Admin URL: **`/admin/login`** on your live site
 | **Queries** | Contact + admission form leads | Not public (staff only) |
 | **Announcements** | Top notice bar | Main / Kids / Institute (you choose) |
 | **Courses** | Coaching programs | Courses page / Institute |
-| **Leadership** | Founder & heads | About / leadership sections |
+| **Leadership** | Founder & heads (+ photos) | About / home founder strip |
 | **Faculty** | Teachers | Faculty page |
-| **Testimonials** | Parent / student reviews | Home & related sections |
+| **Testimonials** | Parent / student text reviews | Home & brand pages |
 | **Events** | Events list | Events page |
-| **Gallery** | Photos | Gallery page |
-| **Settings** | Phones, emails, WhatsApp, address, hours, social links | Whole site (footer, contact, buttons) |
+| **Gallery** | Photos (front desk, Kids collage, etc.) | Gallery + home About photo |
+| **Videos** | Founder / parent / student videos | About, OP Kids, Institute |
+| **Settings** | Phones, emails, WhatsApp, address, hours, social links | Whole site |
 
 After you save, the public site usually updates within **about 1 minute** (sometimes a refresh is needed).
 
@@ -92,9 +93,27 @@ Use for admissions open, holidays, special notices.
 
 - Add alt text when possible (short description).
 - Tag brand correctly so Kids gallery doesn’t mix with Institute.
-- **Home “About Kids” collage + Kids world showcase:** first Kids photos by **Order** (lower first), up to 4. Upload 4 Kids photos to fill all slots.
+- **Show as = Front desk / office** → home About Institute photo + About page story image.
+- **Show as = Reception** → fallback front-office photo.
+- **Kids brand + low Order** → home Kids collage / Kids world showcase (up to 4).
 - Caption/alt is the label on the Kids world showcase.
-- Topic chips (Campus / Classroom / etc.) are removed from the public Gallery page.
+
+### Videos (Admin → Videos)
+
+| Type | Where it shows |
+|------|----------------|
+| **Founder message** | About page |
+| **Parent review — OP Kids** | `/op-kids` |
+| **Student experience — Institute** | `/institute` |
+
+- Prefer a **YouTube link** (easy + fast). Or upload a small MP4.
+- Turn **Show on website** on.
+- Use Order so the best video appears first.
+
+### Leadership photos
+
+- Admin → **Leadership** → upload Founder / Mona / Meenakshi photos (square crop).
+- These appear on About and the home founder strip.
 
 ### Courses
 

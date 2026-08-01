@@ -22,10 +22,12 @@ import { ScrollReveal, StatCounter } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import { stats, whyChooseUs, facilities } from "@/data/site";
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
 import type { Course } from "@/data/courses";
+import type { SiteVideo } from "@/data/videos";
 
 const iconMap: Record<string, LucideIcon> = {
   Award,
@@ -88,9 +90,11 @@ const pathway = [
 export function InstitutePage({
   testimonials,
   courses,
+  studentVideos = [],
 }: {
   testimonials: Testimonial[];
   courses: Course[];
+  studentVideos?: SiteVideo[];
 }) {
   const featuredCourses = courses.slice(0, 4);
 
@@ -399,6 +403,13 @@ export function InstitutePage({
         badge="Student Voices"
         title="What Students & Parents Say"
         subtitle="Trusted by families across Mahavir Enclave and beyond"
+      />
+
+      <VideoShowcase
+        videos={studentVideos}
+        badge="On Camera"
+        title="Student Experiences"
+        subtitle="Hear from OP Institute students about their journey"
       />
 
       {/* CTA */}

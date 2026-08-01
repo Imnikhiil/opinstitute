@@ -13,6 +13,7 @@ import {
   MessageSquareQuote,
   CalendarDays,
   Images,
+  Video,
   Settings,
   Menu,
   X,
@@ -44,6 +45,7 @@ const navGroups = [
       },
       { href: "/admin/events", label: "Events", icon: CalendarDays },
       { href: "/admin/gallery", label: "Gallery", icon: Images },
+      { href: "/admin/videos", label: "Videos", icon: Video },
     ],
   },
   {

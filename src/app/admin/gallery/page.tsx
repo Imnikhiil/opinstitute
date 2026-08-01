@@ -8,7 +8,7 @@ const config: CrudConfig = {
   table: "gallery",
   singular: "Photo",
   titleField: "alt",
-  subtitleField: "brand",
+  subtitleField: "category",
   imageField: "image_url",
   brandField: "brand",
   fields: [
@@ -17,7 +17,7 @@ const config: CrudConfig = {
       name: "alt",
       label: "Caption / Description",
       type: "text",
-      placeholder: "Annual day celebration",
+      placeholder: "Front desk — Founder Om Prakash",
     },
     {
       name: "brand",
@@ -30,6 +30,29 @@ const config: CrudConfig = {
       },
       required: true,
     },
+    {
+      name: "category",
+      label: "Show as",
+      type: "select",
+      options: [
+        "front_desk",
+        "reception",
+        "campus",
+        "classroom",
+        "preschool",
+        "events",
+        "achievements",
+      ],
+      optionLabels: {
+        front_desk: "Front desk / office (home About photo)",
+        reception: "Reception desk",
+        campus: "Campus / general gallery",
+        classroom: "Classroom",
+        preschool: "Kids moments",
+        events: "Events",
+        achievements: "Achievements",
+      },
+    },
     { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
@@ -40,7 +63,7 @@ export default async function AdminGalleryPage() {
     <div>
       <PageHeader
         title="Gallery"
-        subtitle="Upload photos and set Brand (Kids or Institute). Order controls which Kids photos appear first on the home collage."
+        subtitle="Upload photos. Use Show as = Front desk for the home About image. Kids brand + low Order = home Kids collage."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>

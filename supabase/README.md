@@ -20,6 +20,7 @@ Run any migrations you have **not** applied yet, in order:
 | `migrations/add_announcements.sql` | Announcements table |
 | `migrations/fix_faculty_categories.sql` | One-shot data fix (optional) |
 | `migrations/split_management_heads.sql` | One-shot leadership split (optional) |
+| `migrations/add_videos.sql` | Videos table (founder / parent / student) |
 
 Safe to re-run files that use `IF NOT EXISTS` / `ADD COLUMN IF NOT EXISTS`.
 

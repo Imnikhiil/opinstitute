@@ -31,6 +31,7 @@ import { ScrollReveal, StatCounter } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import {
   kidsFeatures,
   preschoolPrograms,
@@ -42,6 +43,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/data/testimonials";
 import type { GalleryImage } from "@/data/gallery";
+import type { SiteVideo } from "@/data/videos";
 
 const showcaseRings = [
   "ring-amber-300",
@@ -142,9 +144,11 @@ const exploreLinks = [
 export function OpKidsPage({
   testimonials,
   showcaseImages = [],
+  parentVideos = [],
 }: {
   testimonials: Testimonial[];
   showcaseImages?: GalleryImage[];
+  parentVideos?: SiteVideo[];
 }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const showcase = showcaseImages.slice(0, 4).map((img, i) => ({
@@ -620,6 +624,15 @@ export function OpKidsPage({
         badge="Happy Parents"
         title="What Parents Say"
         subtitle="Loved by families who trust us with their little ones"
+      />
+
+      <VideoShowcase
+        videos={parentVideos}
+        badge="Parent Voices"
+        title="Parents on Camera"
+        subtitle="Real reviews from OP Kids Pre School families"
+        variant="kids"
+        className="bg-gradient-to-br from-kids-50 via-pink-50 to-purple-50 dark:from-kids-950/20 dark:via-pink-950/10 dark:to-purple-950/10"
       />
 
       {/* Parent FAQs */}

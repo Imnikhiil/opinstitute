@@ -31,6 +31,7 @@ Run only pending files under `supabase/migrations/` in this order:
 | 5 | `migrations/add_announcements.sql` | Announcements |
 | 6 | `migrations/fix_faculty_categories.sql` | Optional one-shot data fix |
 | 7 | `migrations/split_management_heads.sql` | Optional leadership split |
+| 8 | `migrations/add_videos.sql` | Videos table |
 
 Files using `IF NOT EXISTS` / `ADD COLUMN IF NOT EXISTS` are generally safe to re-run. One-shot data fixes: run once and skip if already applied.
 
@@ -83,6 +84,10 @@ Founder / management heads: title, organization, credentials (jsonb), message, i
 
 Banner notices: `title`, `message`, optional link, `show_on_main` / `show_on_kids` / `show_on_institute`, `active`, `starts_on` / `ends_on`, `sort_order`.
 
+### `videos`
+
+Founder / parent / student videos: `title`, `description`, `video_url`, `thumbnail_url`, `brand`, `kind` (`founder` | `parent_review` | `student_experience` | `general`), `active`, `sort_order`.
+
 ### `site_settings`
 
 **Single row** (`id = 1` enforced). Phones, emails, WhatsApp, addresses, hours, social URLs for both brands. Edited via Admin → Settings.
@@ -112,7 +117,7 @@ Intent:
 | Content tables* | **Select** | Insert / update / delete |
 | `site_settings` | **Select** | Insert / update / delete |
 
-\* `courses`, `faculty`, `testimonials`, `events`, `gallery`, `leadership`, `announcements`
+\* `courses`, `faculty`, `testimonials`, `events`, `gallery`, `leadership`, `announcements`, `videos`
 
 Policies are created in `schema.sql`. If Admin can read but not write, check the user is actually logged in (Auth session) and policies exist.
 

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { getCourses, getTestimonials } from "@/lib/supabase/public-data";
+import {
+  getCourses,
+  getTestimonials,
+  getVideos,
+} from "@/lib/supabase/public-data";
 import { InstitutePage } from "./InstitutePage";
 
 export const metadata: Metadata = {
@@ -11,9 +15,16 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function Page() {
-  const [testimonials, courses] = await Promise.all([
+  const [testimonials, courses, studentVideos] = await Promise.all([
     getTestimonials(),
     getCourses(),
+    getVideos({ kind: "student_experience", brand: "institute" }),
   ]);
-  return <InstitutePage testimonials={testimonials} courses={courses} />;
+  return (
+    <InstitutePage
+      testimonials={testimonials}
+      courses={courses}
+      studentVideos={studentVideos}
+    />
+  );
 }

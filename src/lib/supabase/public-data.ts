@@ -7,6 +7,7 @@ import { events as staticEvents, type Event } from "@/data/events";
 import { galleryImages as staticGallery, type GalleryImage } from "@/data/gallery";
 import type { ContentBrand } from "@/data/brands";
 import { siteConfig as staticSiteConfig } from "@/data/site";
+import type { SiteVideo, VideoKind, VideoBrand } from "@/data/videos";
 import { sharpImageUrl } from "@/lib/utils";
 
 type Row = Record<string, unknown>;
@@ -310,6 +311,41 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
   return rows.length ? rows.map(mapGallery) : staticGallery;
 }
 
+const FRONT_DESK_FALLBACK: GalleryImage = {
+  id: "front-desk-fallback",
+  src: "/images/campus/front-desk.jpg",
+  alt: "OP Institute front desk — Founder Om Prakash",
+  category: "front_desk",
+  brand: "institute",
+};
+
+const RECEPTION_FALLBACK: GalleryImage = {
+  id: "reception-fallback",
+  src: "/images/campus/reception.jpg",
+  alt: "OP Institute reception desk",
+  category: "reception",
+  brand: "institute",
+};
+
+/** First gallery photo with category front_desk (or reception), else local campus photo */
+export async function getFrontDeskPhoto(): Promise<GalleryImage> {
+  const all = await getGalleryImages();
+  const front = all.find((img) => img.category === "front_desk");
+  if (front) return front;
+  const reception = all.find((img) => img.category === "reception");
+  if (reception) return reception;
+  return FRONT_DESK_FALLBACK;
+}
+
+export async function getReceptionPhoto(): Promise<GalleryImage> {
+  const all = await getGalleryImages();
+  const reception = all.find((img) => img.category === "reception");
+  if (reception) return reception;
+  const front = all.find((img) => img.category === "front_desk");
+  if (front) return front;
+  return RECEPTION_FALLBACK;
+}
+
 /** Default collage when fewer than N preschool gallery rows exist */
 const KIDS_SHOWCASE_FALLBACKS: GalleryImage[] = [
   {
@@ -371,6 +407,48 @@ export async function getKidsShowcaseImages(
     return KIDS_SHOWCASE_FALLBACKS.slice(0, count);
   }
   return kids.slice(0, count);
+}
+
+function mapVideo(row: Row): SiteVideo {
+  const kindRaw = str(row.kind, "general") as VideoKind;
+  const kind: VideoKind = [
+    "founder",
+    "parent_review",
+    "student_experience",
+    "general",
+  ].includes(kindRaw)
+    ? kindRaw
+    : "general";
+  const brandRaw = str(row.brand).toLowerCase();
+  const brand: VideoBrand =
+    brandRaw === "preschool" || brandRaw === "institute" ? brandRaw : "";
+
+  return {
+    id: str(row.id),
+    title: str(row.title),
+    description: str(row.description),
+    videoUrl: str(row.video_url),
+    thumbnailUrl: str(row.thumbnail_url),
+    brand,
+    kind,
+    active: row.active !== false,
+    sortOrder: Number(row.sort_order) || 0,
+  };
+}
+
+export async function getVideos(filter?: {
+  kind?: VideoKind;
+  brand?: "preschool" | "institute";
+}): Promise<SiteVideo[]> {
+  const rows = await fetchTable("videos");
+  let list = rows.map(mapVideo).filter((v) => v.active && v.videoUrl);
+  if (filter?.kind) list = list.filter((v) => v.kind === filter.kind);
+  if (filter?.brand) {
+    list = list.filter(
+      (v) => v.brand === filter.brand || v.brand === "" || !v.brand
+    );
+  }
+  return list.sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 export type Announcement = {

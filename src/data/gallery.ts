@@ -5,7 +5,9 @@ export type GalleryTopic =
   | "events"
   | "classroom"
   | "preschool"
-  | "achievements";
+  | "achievements"
+  | "front_desk"
+  | "reception";
 
 export interface GalleryImage {
   id: string;

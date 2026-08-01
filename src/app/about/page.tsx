@@ -3,8 +3,13 @@ import Image from "next/image";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LeadershipHighlight } from "@/components/sections/LeadershipHighlight";
+import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import { aboutContent } from "@/data/site";
-import { getLeadership } from "@/lib/supabase/public-data";
+import {
+  getFrontDeskPhoto,
+  getLeadership,
+  getVideos,
+} from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -15,7 +20,12 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function AboutPage() {
-  const leaders = await getLeadership();
+  const [leaders, frontDeskPhoto, founderVideos] = await Promise.all([
+    getLeadership(),
+    getFrontDeskPhoto(),
+    getVideos({ kind: "founder" }),
+  ]);
+
   return (
     <>
       <section className="page-hero">
@@ -24,7 +34,8 @@ export default async function AboutPage() {
             About Us
           </h1>
           <p className="text-[#666666] text-base sm:text-lg max-w-2xl">
-            Discover our journey, values, and the people behind OP Institute of Studies & OP Kids Pre School.
+            Discover our journey, values, and the people behind OP Institute of
+            Studies & OP Kids Pre School.
           </p>
         </div>
       </section>
@@ -43,13 +54,14 @@ export default async function AboutPage() {
               </p>
             </ScrollReveal>
             <ScrollReveal direction="right">
-              <div className="rounded-2xl overflow-hidden shadow-premium">
+              <div className="relative rounded-2xl overflow-hidden shadow-premium aspect-[4/3]">
                 <Image
-                  src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=700&q=80"
-                  alt="OP Institute of Studies history"
-                  width={600}
-                  height={400}
-                  className="w-full h-[250px] sm:h-[300px] lg:h-[350px] object-cover"
+                  src={frontDeskPhoto.src}
+                  alt={frontDeskPhoto.alt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={90}
+                  className="object-cover object-center"
                 />
               </div>
             </ScrollReveal>
@@ -68,21 +80,41 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      <VideoShowcase
+        videos={founderVideos}
+        badge="Watch"
+        title="Message from Our Founder"
+        subtitle="Hear directly from Founder Om Prakash"
+        className="bg-white dark:bg-transparent"
+      />
+
       <section className="section-padding">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-8">
             <ScrollReveal>
               <div className="glass-card p-5 sm:p-8 h-full">
-                <span className="text-brand-600 font-semibold text-sm">Vision</span>
-                <h2 className="font-display text-xl sm:text-2xl font-bold mt-2 mb-3 sm:mb-4">Our Vision</h2>
-                <p className="text-muted-foreground leading-relaxed">{aboutContent.vision}</p>
+                <span className="text-brand-600 font-semibold text-sm">
+                  Vision
+                </span>
+                <h2 className="font-display text-xl sm:text-2xl font-bold mt-2 mb-3 sm:mb-4">
+                  Our Vision
+                </h2>
+                <p className="text-muted-foreground leading-relaxed">
+                  {aboutContent.vision}
+                </p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="glass-card p-5 sm:p-8 h-full">
-                <span className="text-brand-600 font-semibold text-sm">Mission</span>
-                <h2 className="font-display text-xl sm:text-2xl font-bold mt-2 mb-3 sm:mb-4">Our Mission</h2>
-                <p className="text-muted-foreground leading-relaxed">{aboutContent.mission}</p>
+                <span className="text-brand-600 font-semibold text-sm">
+                  Mission
+                </span>
+                <h2 className="font-display text-xl sm:text-2xl font-bold mt-2 mb-3 sm:mb-4">
+                  Our Mission
+                </h2>
+                <p className="text-muted-foreground leading-relaxed">
+                  {aboutContent.mission}
+                </p>
               </div>
             </ScrollReveal>
           </div>
@@ -101,7 +133,9 @@ export default async function AboutPage() {
                   <h3 className="font-display font-semibold text-lg text-brand-600 dark:text-brand-400 mb-2">
                     {value.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm">{value.description}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {value.description}
+                  </p>
                 </div>
               </ScrollReveal>
             ))}

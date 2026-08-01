@@ -157,6 +157,21 @@ create table if not exists public.announcements (
   created_at        timestamptz not null default now()
 );
 
+-- ---------- 10. VIDEOS (founder / parent reviews / student experiences) ----------
+create table if not exists public.videos (
+  id            uuid primary key default gen_random_uuid(),
+  title         text not null,
+  description   text default '',
+  video_url     text not null,
+  thumbnail_url text default '',
+  brand         text,              -- preschool | institute | null
+  kind          text not null default 'general',
+  -- founder | parent_review | student_experience | general
+  active        boolean not null default true,
+  sort_order    int not null default 0,
+  created_at    timestamptz not null default now()
+);
+
 -- ============================================================
 --  ROW LEVEL SECURITY
 --  Public site can: submit queries + read content
@@ -171,6 +186,7 @@ alter table public.gallery       enable row level security;
 alter table public.site_settings enable row level security;
 alter table public.leadership    enable row level security;
 alter table public.announcements enable row level security;
+alter table public.videos        enable row level security;
 
 -- QUERIES: anyone can submit; only admins can view/update/delete
 create policy "anyone can submit query"   on public.queries for insert to anon, authenticated with check (true);
@@ -182,7 +198,7 @@ create policy "admin can delete queries"  on public.queries for delete to authen
 do $$
 declare t text;
 begin
-  foreach t in array array['courses','faculty','testimonials','events','gallery','site_settings','leadership','announcements']
+  foreach t in array array['courses','faculty','testimonials','events','gallery','site_settings','leadership','announcements','videos']
   loop
     execute format('create policy "public can read %1$s" on public.%1$s for select to anon, authenticated using (true);', t);
     execute format('create policy "admin can insert %1$s" on public.%1$s for insert to authenticated with check (true);', t);

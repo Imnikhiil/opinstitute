@@ -25,7 +25,8 @@ export type FieldType =
   | "boolean"
   | "select"
   | "tags"
-  | "image";
+  | "image"
+  | "video";
 
 export interface CrudField {
   name: string;
@@ -146,6 +147,32 @@ export function CrudManager({
         .upload(path, file, { upsert: true });
       if (error) {
         alert("Image upload failed: " + error.message);
+        return;
+      }
+      const { data } = supabase.storage.from("media").getPublicUrl(path);
+      setField(fieldName, data.publicUrl);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const uploadVideoFile = async (file: File, fieldName: string) => {
+    setUploading(true);
+    try {
+      const supabase = createClient();
+      const ext = file.name.split(".").pop() || "mp4";
+      const path = `${config.table}/${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2)}.${ext}`;
+      const { error } = await supabase.storage
+        .from("media")
+        .upload(path, file, { upsert: true, contentType: file.type });
+      if (error) {
+        alert(
+          "Video upload failed: " +
+            error.message +
+            "\n\nTip: Prefer a YouTube link (easier). Or raise Supabase Storage file size limit."
+        );
         return;
       }
       const { data } = supabase.storage.from("media").getPublicUrl(path);
@@ -537,6 +564,43 @@ export function CrudManager({
                                 setCropFile(file);
                                 setCropFieldName(f.name);
                               }
+                              e.target.value = "";
+                            }}
+                          />
+                        </label>
+                      </div>
+                    )}
+
+                    {f.type === "video" && (
+                      <div className="space-y-2">
+                        <input
+                          type="url"
+                          value={(value as string) ?? ""}
+                          onChange={(e) => setField(f.name, e.target.value)}
+                          placeholder={
+                            f.placeholder ||
+                            "https://youtube.com/watch?v=… or paste after upload"
+                          }
+                          className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Best: YouTube / Vimeo link. Or upload an MP4 below
+                          (keep files small).
+                        </p>
+                        <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition text-sm">
+                          {uploading ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Upload className="w-4 h-4" />
+                          )}
+                          Upload video file
+                          <input
+                            type="file"
+                            accept="video/mp4,video/webm,video/quicktime"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) uploadVideoFile(file, f.name);
                               e.target.value = "";
                             }}
                           />
