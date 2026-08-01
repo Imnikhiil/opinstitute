@@ -106,13 +106,3 @@ export const galleryImages: GalleryImage[] = [
 
 /** Brand tabs on Gallery / Events */
 export { contentBrandFilters as galleryBrandFilters } from "@/data/brands";
-
-/** Topic chips (shown after brand is chosen / for All) */
-export const galleryTopics = [
-  { id: "all" as const, label: "All Photos" },
-  { id: "campus" as const, label: "Campus" },
-  { id: "classroom" as const, label: "Classroom" },
-  { id: "preschool" as const, label: "Kids Moments" },
-  { id: "events" as const, label: "Events" },
-  { id: "achievements" as const, label: "Achievements" },
-];

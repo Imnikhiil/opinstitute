@@ -10,18 +10,9 @@ import {
   parseBrandFilter,
   type BrandFilter,
 } from "@/data/brands";
-import { galleryTopics, type GalleryImage } from "@/data/gallery";
+import type { GalleryImage } from "@/data/gallery";
 import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { cn } from "@/lib/utils";
-
-type TopicFilter = (typeof galleryTopics)[number]["id"];
-
-function parseTopic(value: string | null | undefined): TopicFilter {
-  if (galleryTopics.some((t) => t.id === value)) {
-    return value as TopicFilter;
-  }
-  return "all";
-}
 
 export function GalleryPageClient({
   images,
@@ -36,7 +27,6 @@ export function GalleryPageClient({
 
   const { isKids, isInstitute } = useSiteBrand();
 
-  // In Kids / Institute world, lock brand tabs to that world only
   const brandFilters = useMemo(() => {
     if (isKids) return contentBrandFilters.filter((b) => b.id === "preschool");
     if (isInstitute)
@@ -49,44 +39,25 @@ export function GalleryPageClient({
     : isInstitute
       ? "institute"
       : parseBrandFilter(searchParams.get("brand") ?? initialBrand);
-  const activeTopic = parseTopic(searchParams.get("topic"));
 
-  const setParams = useCallback(
-    (next: { brand?: BrandFilter; topic?: TopicFilter }) => {
+  const setBrand = useCallback(
+    (brand: BrandFilter) => {
       const params = new URLSearchParams(searchParams.toString());
-      const brand = next.brand ?? activeBrand;
-      const topic = next.topic ?? activeTopic;
-
+      params.delete("topic");
       if (brand === "all") params.delete("brand");
       else params.set("brand", brand);
-
-      if (topic === "all") params.delete("topic");
-      else params.set("topic", topic);
-
       const query = params.toString();
       router.replace(query ? `${pathname}?${query}` : pathname, {
         scroll: false,
       });
     },
-    [activeBrand, activeTopic, pathname, router, searchParams]
+    [pathname, router, searchParams]
   );
 
-  const byBrand = useMemo(() => {
+  const filtered = useMemo(() => {
     if (activeBrand === "all") return images;
     return images.filter((img) => img.brand === activeBrand);
   }, [images, activeBrand]);
-
-  const availableTopics = useMemo(() => {
-    const present = new Set(byBrand.map((img) => img.category));
-    return galleryTopics.filter(
-      (t) => t.id === "all" || present.has(t.id)
-    );
-  }, [byBrand]);
-
-  const filtered = useMemo(() => {
-    if (activeTopic === "all") return byBrand;
-    return byBrand.filter((img) => img.category === activeTopic);
-  }, [byBrand, activeTopic]);
 
   const heroCopy =
     activeBrand === "preschool"
@@ -122,14 +93,13 @@ export function GalleryPageClient({
 
       <section className="section-padding">
         <div className="container-custom">
-          {/* Brand tabs — hidden when already locked in Kids / Institute world */}
           {brandFilters.length > 1 && (
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
               {brandFilters.map((b) => (
                 <button
                   key={b.id}
                   type="button"
-                  onClick={() => setParams({ brand: b.id, topic: "all" })}
+                  onClick={() => setBrand(b.id)}
                   className={cn(
                     "px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all",
                     activeBrand === b.id
@@ -140,29 +110,6 @@ export function GalleryPageClient({
                   )}
                 >
                   {b.label}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Topic chips */}
-          {availableTopics.length > 1 && (
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
-              {availableTopics.map((topic) => (
-                <button
-                  key={topic.id}
-                  type="button"
-                  onClick={() => setParams({ topic: topic.id })}
-                  className={cn(
-                    "px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all border",
-                    activeTopic === topic.id
-                      ? activeBrand === "preschool"
-                        ? "border-kids-400 bg-kids-50 text-kids-700 dark:bg-kids-950/40 dark:text-kids-300"
-                        : "border-brand-400 bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300"
-                      : "border-transparent bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  )}
-                >
-                  {topic.label}
                 </button>
               ))}
             </div>
