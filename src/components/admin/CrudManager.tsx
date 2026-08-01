@@ -669,9 +669,16 @@ export function CrudManager({
                           </div>
                         ) : (
                           <p className="text-xs text-muted-foreground">
-                            No album photos yet — upload several at once.
+                            No album photos yet — you can select 20–25 at once.
                           </p>
                         )}
+                        {Array.isArray(value) &&
+                        (value as string[]).length > 0 ? (
+                          <p className="text-xs text-muted-foreground">
+                            {(value as string[]).length} photos — keep adding
+                            anytime.
+                          </p>
+                        ) : null}
                         <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition text-sm">
                           {uploading ? (
                             <Loader2 className="w-4 h-4 animate-spin" />

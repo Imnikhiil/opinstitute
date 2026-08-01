@@ -1,9 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Image from "next/image";
-import { Calendar, Camera, X } from "lucide-react";
+import { Calendar, Camera } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  EventAlbumModal,
+  albumPhotos,
+} from "@/components/events/EventAlbumModal";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
@@ -15,18 +19,6 @@ import {
 import type { Event } from "@/data/events";
 import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
 import { cn } from "@/lib/utils";
-
-const typeLabels: Record<string, string> = {
-  academic: "Academic",
-  cultural: "Cultural",
-  sports: "Sports",
-  preschool: "Kids Activity",
-};
-
-function albumPhotos(event: Event): string[] {
-  if (event.photos?.length) return event.photos;
-  return event.image ? [event.image] : [];
-}
 
 export function EventsPageClient({
   events,
@@ -73,20 +65,6 @@ export function EventsPageClient({
     return events.filter((e) => e.brand === activeBrand);
   }, [events, activeBrand]);
 
-  useEffect(() => {
-    if (!activeEvent) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActiveEvent(null);
-    };
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [activeEvent]);
-
   const heroCopy =
     activeBrand === "preschool"
       ? {
@@ -105,8 +83,6 @@ export function EventsPageClient({
             subtitle:
               "Mixed events from OP Institute of Studies and OP Kids Pre School. Filter by brand, then tap an album.",
           };
-
-  const modalPhotos = activeEvent ? albumPhotos(activeEvent) : [];
 
   return (
     <>
@@ -241,91 +217,12 @@ export function EventsPageClient({
         </div>
       </section>
 
-      {activeEvent && (
-        <div
-          className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-0 sm:p-6"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="event-album-title"
-        >
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/55 backdrop-blur-[2px]"
-            aria-label="Close gallery"
-            onClick={() => setActiveEvent(null)}
-          />
-          <div className="relative z-10 w-full sm:max-w-4xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white dark:bg-gray-900 shadow-2xl border border-white/20 dark:border-white/10">
-            <div className="sticky top-0 z-10 flex items-start justify-between gap-4 px-5 sm:px-6 pt-5 pb-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur border-b border-gray-100 dark:border-white/10">
-              <div className="min-w-0">
-                <p
-                  className={cn(
-                    "text-[11px] font-bold uppercase tracking-[0.16em] mb-1",
-                    activeEvent.brand === "preschool"
-                      ? "text-kids-600 dark:text-kids-400"
-                      : "text-brand-600 dark:text-brand-400"
-                  )}
-                >
-                  {activeEvent.brand === "preschool"
-                    ? "OP Kids Pre School"
-                    : "OP Institute of Studies"}
-                  {" · "}
-                  {typeLabels[activeEvent.type] ?? activeEvent.type}
-                </p>
-                <h2
-                  id="event-album-title"
-                  className="font-display text-xl sm:text-2xl font-bold text-foreground leading-tight"
-                >
-                  {activeEvent.title}
-                </h2>
-                {activeEvent.date ? (
-                  <p className="mt-1 text-sm text-muted-foreground flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {activeEvent.date}
-                  </p>
-                ) : null}
-                {activeEvent.description ? (
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                    {activeEvent.description}
-                  </p>
-                ) : null}
-              </div>
-              <button
-                type="button"
-                onClick={() => setActiveEvent(null)}
-                className="shrink-0 p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="p-5 sm:p-6">
-              {modalPhotos.length === 0 ? (
-                <p className="text-center text-muted-foreground py-10 text-sm">
-                  No photos in this album yet.
-                </p>
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
-                  {modalPhotos.map((src, i) => (
-                    <div
-                      key={`${src}-${i}`}
-                      className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800"
-                    >
-                      <Image
-                        src={src}
-                        alt={`${activeEvent.title} photo ${i + 1}`}
-                        fill
-                        sizes="(max-width: 640px) 50vw, 33vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {activeEvent ? (
+        <EventAlbumModal
+          event={activeEvent}
+          onClose={() => setActiveEvent(null)}
+        />
+      ) : null}
     </>
   );
 }

@@ -3,153 +3,60 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight, Camera } from "lucide-react";
 import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  Camera,
-  X,
-} from "lucide-react";
+  EventAlbumModal,
+  albumPhotos,
+} from "@/components/events/EventAlbumModal";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { contentBrandFilters, type BrandFilter } from "@/data/brands";
 import type { Event } from "@/data/events";
 import { cn } from "@/lib/utils";
 
-const typeLabels: Record<string, string> = {
-  academic: "Academic",
-  cultural: "Cultural",
-  sports: "Sports",
-  preschool: "Kids Activity",
-};
-
-function albumPhotos(event: Event): string[] {
-  if (event.photos?.length) return event.photos;
-  return event.image ? [event.image] : [];
-}
-
-function EventAlbumModal({
-  event,
-  onClose,
-}: {
-  event: Event;
-  onClose: () => void;
-}) {
-  const photos = albumPhotos(event);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
-
-  return (
-    <div
-      className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-0 sm:p-6"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="home-event-album-title"
-    >
-      <button
-        type="button"
-        className="absolute inset-0 bg-black/55 backdrop-blur-[2px]"
-        aria-label="Close gallery"
-        onClick={onClose}
-      />
-      <div className="relative z-10 w-full sm:max-w-4xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white dark:bg-gray-900 shadow-2xl border border-white/20 dark:border-white/10">
-        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 px-5 sm:px-6 pt-5 pb-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur border-b border-gray-100 dark:border-white/10">
-          <div className="min-w-0">
-            <p
-              className={cn(
-                "text-[11px] font-bold uppercase tracking-[0.16em] mb-1",
-                event.brand === "preschool"
-                  ? "text-kids-600 dark:text-kids-400"
-                  : "text-brand-600 dark:text-brand-400"
-              )}
-            >
-              {event.brand === "preschool"
-                ? "OP Kids Pre School"
-                : "OP Institute of Studies"}
-              {" · "}
-              {typeLabels[event.type] ?? event.type}
-            </p>
-            <h2
-              id="home-event-album-title"
-              className="font-display text-xl sm:text-2xl font-bold text-foreground leading-tight"
-            >
-              {event.title}
-            </h2>
-            {event.date ? (
-              <p className="mt-1 text-sm text-muted-foreground flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" />
-                {event.date}
-              </p>
-            ) : null}
-            {event.description ? (
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                {event.description}
-              </p>
-            ) : null}
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="shrink-0 p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="p-5 sm:p-6">
-          {photos.length === 0 ? (
-            <p className="text-center text-muted-foreground py-10 text-sm">
-              No photos in this album yet.
-            </p>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
-              {photos.map((src, i) => (
-                <div
-                  key={`${src}-${i}`}
-                  className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800"
-                >
-                  <Image
-                    src={src}
-                    alt={`${event.title} photo ${i + 1}`}
-                    fill
-                    sizes="(max-width: 640px) 50vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function EventsCarousel({ events }: { events: Event[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [brand, setBrand] = useState<BrandFilter>("all");
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
+  const [paused, setPaused] = useState(false);
 
   const filtered =
     brand === "all" ? events : events.filter((e) => e.brand === brand);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (el) el.scrollTo({ left: 0 });
+  }, [brand]);
 
   const scrollBy = (dir: -1 | 1) => {
     const el = scrollerRef.current;
     if (!el) return;
     const amount = Math.min(360, el.clientWidth * 0.8);
+    const max = el.scrollWidth - el.clientWidth;
+    if (dir === 1 && el.scrollLeft >= max - 8) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+    if (dir === -1 && el.scrollLeft <= 8) {
+      el.scrollTo({ left: max, behavior: "smooth" });
+      return;
+    }
     el.scrollBy({ left: dir * amount, behavior: "smooth" });
   };
+
+  // Auto-scroll; pause on hover / modal / reduced motion
+  useEffect(() => {
+    if (filtered.length < 2) return;
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const id = window.setInterval(() => {
+      if (paused || activeEvent) return;
+      scrollBy(1);
+    }, 3500);
+
+    return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- scrollBy is stable enough via ref
+  }, [filtered.length, paused, activeEvent, brand]);
 
   return (
     <section className="section-padding bg-[#f5f5f7] dark:bg-gray-900/40 overflow-hidden">
@@ -202,7 +109,17 @@ export function EventsCarousel({ events }: { events: Event[] }) {
             No events in this category yet.
           </p>
         ) : (
-          <div className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onFocusCapture={() => setPaused(true)}
+            onBlurCapture={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setPaused(false);
+              }
+            }}
+          >
             <button
               type="button"
               onClick={() => scrollBy(-1)}
