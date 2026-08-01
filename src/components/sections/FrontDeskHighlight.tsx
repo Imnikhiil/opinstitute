@@ -100,7 +100,7 @@ export function FrontDeskHighlight({
                   const Icon = highlightIcons[i] ?? ClipboardList;
                   return (
                     <li
-                      key={item}
+                      key={item.title}
                       className="flex items-start gap-3 rounded-2xl border border-brand-100/80 dark:border-white/10 bg-white/80 dark:bg-gray-900/60 px-4 py-3.5 shadow-sm"
                     >
                       <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 dark:bg-brand-950/50 dark:text-brand-300">
