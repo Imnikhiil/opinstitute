@@ -8,7 +8,7 @@ const config: CrudConfig = {
   table: "gallery",
   singular: "Photo",
   titleField: "alt",
-  subtitleField: "category",
+  subtitleField: "brand",
   imageField: "image_url",
   brandField: "brand",
   fields: [
@@ -30,19 +30,6 @@ const config: CrudConfig = {
       },
       required: true,
     },
-    {
-      name: "category",
-      label: "Topic",
-      type: "select",
-      options: ["campus", "classroom", "preschool", "events", "achievements"],
-      optionLabels: {
-        campus: "Campus",
-        classroom: "Classroom",
-        preschool: "Kids Moments",
-        events: "Events",
-        achievements: "Achievements",
-      },
-    },
     { name: "sort_order", label: "Order (lower shows first)", type: "number" },
   ],
 };
@@ -53,7 +40,7 @@ export default async function AdminGalleryPage() {
     <div>
       <PageHeader
         title="Gallery"
-        subtitle="Set Brand first (Kids or Institute), then Topic — so each photo shows in the right filter."
+        subtitle="Upload photos and set Brand (Kids or Institute). Order controls which Kids photos appear first on the home collage."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>

@@ -75,7 +75,7 @@ export function GalleryPageClient({
         : {
             title: "Gallery",
             subtitle:
-              "Moments from OP Institute of Studies and OP Kids Pre School — pick a brand below to explore.",
+              "Moments from OP Institute of Studies and OP Kids Pre School.",
           };
 
   return (

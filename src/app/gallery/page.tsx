@@ -7,7 +7,7 @@ import { GalleryPageClient } from "./GalleryPageClient";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Photo gallery of OP Institute of Studies and OP Kids Pre School — campus, classrooms, events, and achievements.",
+    "Photo gallery of OP Institute of Studies and OP Kids Pre School.",
 };
 
 export const revalidate = 60;

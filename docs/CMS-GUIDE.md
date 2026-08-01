@@ -92,9 +92,9 @@ Use for admissions open, holidays, special notices.
 
 - Add alt text when possible (short description).
 - Tag brand correctly so Kids gallery doesn’t mix with Institute.
-- **Home “About Kids” collage + Kids world photo showcase** use photos where Brand = **OP Kids Pre School** (`preschool`), ordered by **Order (lower shows first)** — up to 4.
-- To fill all 4 slots: upload **4 Kids photos** (not Institute). Stock placeholders only appear if there are **zero** Kids gallery photos.
-- Caption/alt becomes the label on the Kids world showcase.
+- **Home “About Kids” collage + Kids world showcase:** first Kids photos by **Order** (lower first), up to 4. Upload 4 Kids photos to fill all slots.
+- Caption/alt is the label on the Kids world showcase.
+- Topic chips (Campus / Classroom / etc.) are removed from the public Gallery page.
 
 ### Courses
 
