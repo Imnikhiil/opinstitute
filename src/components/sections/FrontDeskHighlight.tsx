@@ -28,10 +28,10 @@ export function FrontDeskHighlight({
   className?: string;
 }) {
   const siteConfig = useSiteConfig();
+  const desk = siteConfig.frontDesk;
   const src = photo?.src || "/images/campus/reception.jpg";
   const alt =
-    photo?.alt ||
-    `${frontDeskStaff.displayName} — ${frontDeskStaff.title} at OP Institute`;
+    photo?.alt || `${desk.displayName} — ${desk.title} at OP Institute`;
 
   return (
     <section
@@ -67,11 +67,9 @@ export function FrontDeskHighlight({
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/85 via-brand-900/40 to-transparent p-5 sm:p-6">
                   <p className="text-white font-display font-bold text-lg sm:text-xl">
-                    {frontDeskStaff.displayName}
+                    {desk.displayName}
                   </p>
-                  <p className="text-brand-100 text-sm mt-0.5">
-                    {frontDeskStaff.title}
-                  </p>
+                  <p className="text-brand-100 text-sm mt-0.5">{desk.title}</p>
                 </div>
               </div>
               <div className="absolute -top-2 -right-1 sm:top-4 sm:-right-3 inline-flex items-center gap-1.5 rounded-full bg-white dark:bg-gray-900 shadow-card px-3 py-1.5 text-xs font-semibold text-brand-700 dark:text-brand-300 border border-brand-100 dark:border-brand-800">
@@ -91,7 +89,7 @@ export function FrontDeskHighlight({
                   Here to help you from the first hello
                 </h3>
                 <p className="mt-3 text-muted-foreground leading-relaxed text-sm sm:text-base">
-                  {frontDeskStaff.message}
+                  {desk.message}
                 </p>
               </div>
 

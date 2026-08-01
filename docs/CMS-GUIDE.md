@@ -40,7 +40,7 @@ Admin URL: **`/admin/login`** on your live site
 | **Events** | Event albums (cover + many photos) | Events page — click to open album |
 | **Gallery** | Photos (front desk, Kids collage, etc.) | Gallery + home About photo |
 | **Videos** | Founder / parent / student videos | About, OP Kids, Institute |
-| **Settings** | Phones, emails, WhatsApp, address, hours, social links | Whole site |
+| **Settings** | Phones, WhatsApp, Front Desk text, home Admissions banner, hours, social | Whole site |
 
 After you save, the public site usually updates within **about 1 minute** (sometimes a refresh is needed).
 
@@ -129,9 +129,9 @@ Use for admissions open, holidays, special notices.
 
 ---
 
-## 6. Settings (phones & social)
+## 6. Settings (phones, Front Desk & home banner)
 
-Open **Settings** when numbers, WhatsApp, email, address, hours, or social links change.
+Open **Settings** when numbers, WhatsApp, email, address, hours, social links, Front Desk text, or the home Admissions banner change.
 
 | Update this… | Effect |
 |--------------|--------|
@@ -139,10 +139,14 @@ Open **Settings** when numbers, WhatsApp, email, address, hours, or social links
 | Kids phone / WhatsApp | Same for OP Kids |
 | Emails | Contact / mailto links |
 | Addresses | Contact page |
-| Hours | Contact / footer style info |
+| Hours | Contact page |
 | Facebook / Instagram / YouTube | Footer & social icons (per brand) |
+| **Front Desk** name / title / message | Home, About, Admissions Front Desk section |
+| **Home Admissions banner** badge / title / text | Orange band near the bottom of the homepage |
 
-Double-check WhatsApp numbers include country code digits (e.g. `9192…`) as used on the site.
+**Front Desk photo:** Gallery → set **Show as = Front desk / office** (not Settings).
+
+WhatsApp must be **digits only** with country code (e.g. `919213610182`) — no `+` or spaces.
 
 Save once, then open the public Contact page and tap Call / WhatsApp once to verify.
 

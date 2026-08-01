@@ -22,7 +22,7 @@ export default async function AdminSettingsPage() {
     <div>
       <PageHeader
         title="Site Settings"
-        subtitle="Update phone numbers, addresses, timings and social links here."
+        subtitle="Phone, WhatsApp, address, Front Desk text, and the home Admissions banner — these update the live website."
       />
       <div className="mt-6">
         <SettingsForm initial={initial} />

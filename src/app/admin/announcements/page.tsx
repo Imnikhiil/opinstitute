@@ -9,6 +9,8 @@ const config: CrudConfig = {
   singular: "Announcement",
   titleField: "title",
   subtitleField: "message",
+  emptyHint:
+    "Create a top-of-site notice (e.g. Admissions Open). Choose Main / Kids / Institute where it should appear.",
   fields: [
     {
       name: "title",
@@ -24,12 +26,14 @@ const config: CrudConfig = {
       type: "textarea",
       fullWidth: true,
       placeholder: "Enquire now for new batches / preschool seats…",
+      helpText: "Keep it short — shown in the site banner.",
     },
     {
       name: "link_url",
       label: "Button link (optional)",
       type: "text",
-      placeholder: "/admissions or https://…",
+      placeholder: "/admissions",
+      helpText: "Example: /admissions or a full https://… link.",
     },
     {
       name: "link_label",
@@ -39,9 +43,9 @@ const config: CrudConfig = {
     },
     {
       name: "show_on_main",
-      label: "Show on Main website",
+      label: "Show on main website",
       type: "boolean",
-      placeholder: "Homepage & main browsing",
+      placeholder: "Homepage and general browsing",
     },
     {
       name: "show_on_kids",
@@ -64,19 +68,20 @@ const config: CrudConfig = {
     {
       name: "starts_on",
       label: "Start date (optional)",
-      type: "text",
-      placeholder: "2026-04-01",
+      type: "date",
+      helpText: "Leave empty to start immediately.",
     },
     {
       name: "ends_on",
       label: "End date (optional)",
-      type: "text",
-      placeholder: "2026-07-31",
+      type: "date",
+      helpText: "Leave empty to keep showing until you turn it off.",
     },
     {
       name: "sort_order",
-      label: "Order (lower shows first)",
+      label: "Display order",
       type: "number",
+      helpText: "Lower numbers appear first if several are active.",
     },
   ],
 };
@@ -87,7 +92,7 @@ export default async function AdminAnnouncementsPage() {
     <div>
       <PageHeader
         title="Announcements"
-        subtitle="Create notices like Admissions Open, new batches, or offers — pick Main / Kids / Institute where each one should appear."
+        subtitle="Top site banner notices (Admissions Open, new batches, offers). Pick where each one appears: Main, Kids, or Institute."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>

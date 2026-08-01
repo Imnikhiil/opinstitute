@@ -11,21 +11,26 @@ const config: CrudConfig = {
   subtitleField: "event_date",
   imageField: "image_url",
   brandField: "brand",
+  emptyHint:
+    "Add an event with a cover photo, then upload album photos (20–25 is fine). Visitors open the album when they tap the card.",
   fields: [
     {
       name: "image_url",
-      label: "Cover photo (card)",
+      label: "Cover photo",
       type: "image",
+      helpText: "Shown on the event card on Home and Events.",
     },
     {
       name: "photos",
-      label: "Album photos (shown when visitors click the event)",
+      label: "Album photos",
       type: "images",
       fullWidth: true,
+      helpText:
+        "Shown when someone opens the event. You can select many photos at once.",
     },
     {
       name: "title",
-      label: "Event Title",
+      label: "Event title",
       type: "text",
       required: true,
       placeholder: "Annual Day Celebration 2026",
@@ -35,12 +40,14 @@ const config: CrudConfig = {
       label: "Date",
       type: "text",
       placeholder: "December 15, 2026",
+      helpText: "Write it how you want it to appear (e.g. December 15, 2026).",
     },
     {
       name: "description",
       label: "Description",
       type: "textarea",
       fullWidth: true,
+      helpText: "Short summary under the title.",
     },
     {
       name: "brand",
@@ -52,6 +59,7 @@ const config: CrudConfig = {
         institute: "OP Institute of Studies",
       },
       required: true,
+      helpText: "Controls Kids / Institute filters on the site.",
     },
     {
       name: "type",
@@ -62,10 +70,15 @@ const config: CrudConfig = {
         academic: "Academic",
         cultural: "Cultural",
         sports: "Sports",
-        preschool: "Kids Activity",
+        preschool: "Kids activity",
       },
     },
-    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
+    {
+      name: "sort_order",
+      label: "Display order",
+      type: "number",
+      helpText: "Lower numbers appear first.",
+    },
   ],
 };
 
@@ -75,7 +88,7 @@ export default async function AdminEventsPage() {
     <div>
       <PageHeader
         title="Events"
-        subtitle="Cover = timeline card. Album photos = open when someone clicks the event. Set Brand (Kids / Institute) so filters work."
+        subtitle="Home carousel and Events page. Cover = card image. Album photos open when visitors click the event."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>

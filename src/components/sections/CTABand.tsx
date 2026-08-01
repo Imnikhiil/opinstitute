@@ -9,6 +9,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function CTABand() {
   const siteConfig = useSiteConfig();
+  const cta = siteConfig.homeCta;
 
   return (
     <section className="relative overflow-hidden bg-accent-gradient animate-gradient-x">
@@ -25,15 +26,13 @@ export function CTABand() {
             <div>
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-wider mb-4">
                 <CalendarCheck className="w-4 h-4" />
-                Admissions Open 2026–27
+                {cta.badge}
               </span>
               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance">
-                Ready to Begin Your <br className="hidden md:block" />
-                Learning Journey?
+                {cta.title}
               </h2>
               <p className="mt-4 text-white/85 text-base md:text-lg max-w-xl">
-                From OP Kids Pre School to CMA & B.Com — take the first
-                step today. Talk to our team for a free counselling session.
+                {cta.body}
               </p>
             </div>
           </ScrollReveal>

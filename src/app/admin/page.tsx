@@ -14,6 +14,8 @@ import {
   Crown,
   Settings,
   Megaphone,
+  Video,
+  Lightbulb,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 
@@ -46,6 +48,7 @@ async function getDashboardData() {
     "gallery",
     "leadership",
     "announcements",
+    "videos",
   ] as const;
 
   const [{ data: userData }, ...tableResults] = await Promise.all([
@@ -68,13 +71,21 @@ async function getDashboardData() {
   ]);
 
   const counts: Record<string, number> = {};
+  const tableErrors: string[] = [];
   tables.forEach((t, i) => {
-    counts[t] = tableResults[i].count ?? 0;
+    const result = tableResults[i];
+    counts[t] = result.count ?? 0;
+    if (result.error) tableErrors.push(t);
   });
   const offset = tables.length;
   counts.newQueries = tableResults[offset].count ?? 0;
   counts.kidsQueries = tableResults[offset + 1].count ?? 0;
   counts.instituteQueries = tableResults[offset + 2].count ?? 0;
+
+  // Soft check: event albums need events.photos column
+  let eventsPhotosOk = true;
+  const photosProbe = await supabase.from("events").select("photos").limit(1);
+  if (photosProbe.error) eventsPhotosOk = false;
 
   const user = userData.user;
   const adminName = adminDisplayName(
@@ -82,7 +93,12 @@ async function getDashboardData() {
     user?.user_metadata as Record<string, unknown> | null
   );
 
-  return { counts, adminName };
+  return {
+    counts,
+    adminName,
+    tableErrors,
+    eventsPhotosOk,
+  };
 }
 
 export default async function AdminDashboard() {
@@ -111,7 +127,18 @@ export default async function AdminDashboard() {
     );
   }
 
-  const { counts, adminName } = data;
+  const { counts, adminName, tableErrors, eventsPhotosOk } = data;
+  const setupHints: string[] = [];
+  if (tableErrors.includes("videos")) {
+    setupHints.push(
+      "Videos table is missing — ask the developer to run add_videos.sql in Supabase."
+    );
+  }
+  if (!eventsPhotosOk) {
+    setupHints.push(
+      "Event photo albums need a database update — ask the developer to run add_event_photos.sql."
+    );
+  }
 
   const cards = [
     {
@@ -186,6 +213,15 @@ export default async function AdminDashboard() {
         "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
     },
     {
+      label: "Videos",
+      value: counts.videos ?? 0,
+      href: "/admin/videos",
+      icon: Video,
+      accent: "from-indigo-500 to-indigo-700",
+      iconBg:
+        "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400",
+    },
+    {
       label: "Site Settings",
       value: "→",
       href: "/admin/settings",
@@ -194,6 +230,34 @@ export default async function AdminDashboard() {
       iconBg:
         "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
       isLink: true,
+    },
+  ];
+
+  const howToSteps = [
+    {
+      href: "/admin/queries",
+      title: "Reply to queries",
+      detail: "Open Queries when parents or students send a form.",
+    },
+    {
+      href: "/admin/events",
+      title: "Add event photos",
+      detail: "Events → cover photo + album (you can add 20–25 photos).",
+    },
+    {
+      href: "/admin/gallery",
+      title: "Update Front Desk photo",
+      detail: "Gallery → set Show as = Front desk / office.",
+    },
+    {
+      href: "/admin/settings",
+      title: "Phone, Front Desk & banner",
+      detail: "Settings → contact numbers, Front Desk text, Admissions banner.",
+    },
+    {
+      href: "/admin/announcements",
+      title: "Top site banner",
+      detail: "Announcements → short notice across the website.",
     },
   ];
 
@@ -216,6 +280,47 @@ export default async function AdminDashboard() {
         <p className="text-muted-foreground mt-1.5 text-sm sm:text-[15px]">
           {today} · Manage OP Institute & OP Kids content
         </p>
+      </div>
+
+      {setupHints.length > 0 ? (
+        <div className="mb-6 rounded-2xl border border-amber-300/80 bg-amber-50 dark:bg-amber-950/20 p-4 sm:p-5">
+          <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300 font-semibold text-sm mb-2">
+            <AlertTriangle className="w-4 h-4" />
+            Setup tip
+          </div>
+          <ul className="space-y-1.5 text-sm text-muted-foreground">
+            {setupHints.map((hint) => (
+              <li key={hint}>{hint}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      <div className="mb-7 rounded-2xl border border-brand-200/80 dark:border-brand-800/40 bg-gradient-to-br from-brand-50/80 to-white dark:from-brand-950/20 dark:to-gray-900 p-5 sm:p-6">
+        <div className="flex items-center gap-2 text-brand-700 dark:text-brand-300 font-semibold text-sm mb-3">
+          <Lightbulb className="w-4 h-4" />
+          How to update the website
+        </div>
+        <ol className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {howToSteps.map((step, i) => (
+            <li key={step.href}>
+              <Link
+                href={step.href}
+                className="block h-full rounded-xl border border-gray-200/80 dark:border-white/10 bg-white/80 dark:bg-gray-900/60 p-3.5 hover:border-brand-300 dark:hover:border-brand-700 transition"
+              >
+                <p className="text-[11px] font-bold uppercase tracking-wide text-brand-600 dark:text-brand-400 mb-1">
+                  Step {i + 1}
+                </p>
+                <p className="text-sm font-semibold text-[#1d2951] dark:text-white">
+                  {step.title}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                  {step.detail}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ol>
       </div>
 
       {counts.newQueries > 0 && (

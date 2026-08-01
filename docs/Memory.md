@@ -74,6 +74,7 @@ Defaults live in `src/data/site.ts`; live overrides in Admin → **Settings** (`
 - Receptionist section: `FrontDeskHighlight` on Home (after Admissions process), About, and Admissions — copy in `frontDeskStaff` (`src/data/site.ts`). Update `displayName` when her personal name should show.
 - Videos: Admin → Videos (`kind`: founder | parent_review | student_experience). Run `supabase/migrations/add_videos.sql` once on Supabase.
 - Event albums: `events.photos` jsonb — run `supabase/migrations/add_event_photos.sql`. Admin → Events → Cover + Album photos; public Events page opens modal on click.
+- Front Desk + home CTA copy: Admin → Settings. Run `supabase/migrations/add_site_copy_fields.sql` once.
 - ScrollReveal must **not** use CSS `filter: blur()` — it made photos look soft on screen.
 
 ### Forms / spam

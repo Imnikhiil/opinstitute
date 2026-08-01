@@ -27,7 +27,9 @@ export type FieldType =
   | "tags"
   | "image"
   | "images"
-  | "video";
+  | "video"
+  | "date"
+  | "stat_lines";
 
 export interface CrudField {
   name: string;
@@ -37,6 +39,8 @@ export interface CrudField {
   /** Display labels for select options (value → label) */
   optionLabels?: Record<string, string>;
   placeholder?: string;
+  /** One-line tip under the label for non-technical staff */
+  helpText?: string;
   required?: boolean;
   fullWidth?: boolean;
 }
@@ -50,6 +54,55 @@ export interface CrudConfig {
   imageField?: string;
   /** Field used for Kids / Institute list filter (e.g. brand or category) */
   brandField?: string;
+  /** Shown when the list is empty — plain English guidance */
+  emptyHint?: string;
+}
+
+function statsToLines(raw: unknown): string {
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    if (!trimmed) return "";
+    if (trimmed.includes("|") && !trimmed.startsWith("[")) return trimmed;
+    try {
+      const parsed = JSON.parse(trimmed) as unknown;
+      return statsToLines(parsed);
+    } catch {
+      return trimmed;
+    }
+  }
+  if (!Array.isArray(raw)) return "";
+  return raw
+    .map((item) => {
+      if (!item || typeof item !== "object") return "";
+      const row = item as { value?: unknown; label?: unknown };
+      const value = String(row.value ?? "").trim();
+      const label = String(row.label ?? "").trim();
+      if (!value && !label) return "";
+      return `${value}|${label}`;
+    })
+    .filter(Boolean)
+    .join("\n");
+}
+
+function linesToStats(raw: unknown): { value: string; label: string }[] {
+  const text =
+    typeof raw === "string"
+      ? raw
+      : Array.isArray(raw)
+        ? statsToLines(raw)
+        : "";
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [value, ...rest] = line.split("|");
+      return {
+        value: (value ?? "").trim(),
+        label: rest.join("|").trim(),
+      };
+    })
+    .filter((s) => s.value || s.label);
 }
 
 type Row = Record<string, unknown>;
@@ -111,6 +164,8 @@ export function CrudManager({
           f.name === "popular";
       } else if (f.type === "tags" || f.type === "images") {
         blank[f.name] = [];
+      } else if (f.type === "stat_lines") {
+        blank[f.name] = "";
       } else {
         blank[f.name] = "";
       }
@@ -139,6 +194,9 @@ export function CrudManager({
         } else {
           next[f.name] = [];
         }
+      }
+      if (f.type === "stat_lines") {
+        next[f.name] = statsToLines(next[f.name]);
       }
     });
     setForm(next);
@@ -266,6 +324,12 @@ export function CrudManager({
         if (!Array.isArray(v)) v = [];
         v = (v as unknown[]).map(String).filter(Boolean);
       }
+      if (f.type === "stat_lines") {
+        v = linesToStats(v);
+      }
+      if (f.type === "date") {
+        v = typeof v === "string" && v.trim() ? v.trim() : null;
+      }
       payload[f.name] = v ?? null;
     });
 
@@ -384,9 +448,10 @@ export function CrudManager({
               ? `No ${config.singular.toLowerCase()} yet`
               : "No matches"}
           </p>
-          <p className="text-sm text-muted-foreground mt-1 max-w-sm mx-auto">
+          <p className="text-sm text-muted-foreground mt-1 max-w-md mx-auto">
             {rows.length === 0
-              ? `Click “Add ${config.singular}” to create the first one.`
+              ? config.emptyHint ||
+                `Click “Add ${config.singular}” to create the first one.`
               : "Try another search or brand filter."}
           </p>
           {rows.length === 0 && (
@@ -529,7 +594,12 @@ export function CrudManager({
               {config.fields.map((f) => {
                 const value = form[f.name];
                 const wrapCls =
-                  f.fullWidth || f.type === "textarea" || f.type === "image"
+                  f.fullWidth ||
+                  f.type === "textarea" ||
+                  f.type === "image" ||
+                  f.type === "images" ||
+                  f.type === "video" ||
+                  f.type === "stat_lines"
                     ? "sm:col-span-2"
                     : "";
                 return (
@@ -538,6 +608,11 @@ export function CrudManager({
                       {f.label}
                       {f.required && <span className="text-red-500"> *</span>}
                     </label>
+                    {f.helpText ? (
+                      <p className="text-xs text-muted-foreground mb-1.5 -mt-0.5">
+                        {f.helpText}
+                      </p>
+                    ) : null}
 
                     {f.type === "textarea" && (
                       <textarea
@@ -549,9 +624,30 @@ export function CrudManager({
                       />
                     )}
 
-                    {(f.type === "text" || f.type === "number") && (
+                    {f.type === "stat_lines" && (
+                      <textarea
+                        rows={4}
+                        value={(value as string) ?? ""}
+                        onChange={(e) => setField(f.name, e.target.value)}
+                        placeholder={
+                          f.placeholder ||
+                          "500+|Students mentored\n2|Institutes led"
+                        }
+                        className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none font-mono text-sm"
+                      />
+                    )}
+
+                    {(f.type === "text" ||
+                      f.type === "number" ||
+                      f.type === "date") && (
                       <input
-                        type={f.type === "number" ? "number" : "text"}
+                        type={
+                          f.type === "number"
+                            ? "number"
+                            : f.type === "date"
+                              ? "date"
+                              : "text"
+                        }
                         value={(value as string) ?? ""}
                         onChange={(e) => setField(f.name, e.target.value)}
                         placeholder={f.placeholder}

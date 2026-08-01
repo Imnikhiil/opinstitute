@@ -46,22 +46,32 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/opkidspreschool",
     youtube: "https://www.youtube.com/@opkidspreschool",
   },
+  /** Editable from Admin → Settings (Front Desk) */
+  frontDesk: {
+    displayName: "Our Front Desk Executive",
+    title: "Admissions, Queries & Operations",
+    message:
+      "When you walk into our campus or call with a question, our front desk is your first point of contact. She guides parents and students through admissions, answers day-to-day queries, coordinates visits, and keeps campus operations running smoothly — so you always know who to talk to and what to do next.",
+  },
+  /** Editable from Admin → Settings (Home Admissions banner) */
+  homeCta: {
+    badge: "Admissions Open 2026–27",
+    title: "Ready to Begin Your Learning Journey?",
+    body: "From OP Kids Pre School to CMA & B.Com — take the first step today. Talk to our team for a free counselling session.",
+  },
 };
 
 /**
- * Front desk / receptionist — first person parents & students meet.
- * Update `displayName` when you want her personal name on the site.
+ * Front desk / receptionist — section chrome (badge, highlights).
+ * Name, title, and message are editable in Admin → Settings
+ * (`siteConfig.frontDesk`).
  */
 export const frontDeskStaff = {
   badge: "Campus welcome",
   sectionTitle: "Meet Our Front Desk",
   sectionSubtitle:
     "Warm, clear help for admissions, queries, and day-to-day campus support — for OP Institute and OP Kids.",
-  displayName: "Our Front Desk Executive",
-  title: "Admissions, Queries & Operations",
   organization: "OP Institute of Studies · OP Kids Pre School",
-  message:
-    "When you walk into our campus or call with a question, our front desk is your first point of contact. She guides parents and students through admissions, answers day-to-day queries, coordinates visits, and keeps campus operations running smoothly — so you always know who to talk to and what to do next.",
   highlights: [
     {
       title: "Admissions support",

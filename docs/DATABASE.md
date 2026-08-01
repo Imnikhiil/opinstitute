@@ -33,6 +33,7 @@ Run only pending files under `supabase/migrations/` in this order:
 | 7 | `migrations/split_management_heads.sql` | Optional leadership split |
 | 8 | `migrations/add_videos.sql` | Videos table |
 | 9 | `migrations/add_event_photos.sql` | Events album photos jsonb |
+| 10 | `migrations/add_site_copy_fields.sql` | Front Desk + home CTA fields on `site_settings` |
 
 Files using `IF NOT EXISTS` / `ADD COLUMN IF NOT EXISTS` are generally safe to re-run. One-shot data fixes: run once and skip if already applied.
 
@@ -91,7 +92,12 @@ Founder / parent / student videos: `title`, `description`, `video_url`, `thumbna
 
 ### `site_settings`
 
-**Single row** (`id = 1` enforced). Phones, emails, WhatsApp, addresses, hours, social URLs for both brands. Edited via Admin → Settings.
+**Single row** (`id = 1` enforced). Phones, emails, WhatsApp, addresses, hours, social URLs for both brands, plus:
+
+- `front_desk_name`, `front_desk_title`, `front_desk_message`
+- `cta_badge`, `cta_title`, `cta_body` (home Admissions banner)
+
+Edited via Admin → Settings.
 
 ---
 

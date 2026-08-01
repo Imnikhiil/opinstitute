@@ -109,6 +109,12 @@ create table if not exists public.site_settings (
   weekday_hours text,
   sunday_hours  text,
   preschool_hours text,
+  front_desk_name text,
+  front_desk_title text,
+  front_desk_message text,
+  cta_badge text,
+  cta_title text,
+  cta_body text,
   updated_at    timestamptz not null default now(),
   constraint single_row check (id = 1)
 );
@@ -119,6 +125,12 @@ alter table public.site_settings add column if not exists kids_whatsapp text;
 alter table public.site_settings add column if not exists kids_facebook text;
 alter table public.site_settings add column if not exists kids_instagram text;
 alter table public.site_settings add column if not exists kids_youtube text;
+alter table public.site_settings add column if not exists front_desk_name text;
+alter table public.site_settings add column if not exists front_desk_title text;
+alter table public.site_settings add column if not exists front_desk_message text;
+alter table public.site_settings add column if not exists cta_badge text;
+alter table public.site_settings add column if not exists cta_title text;
+alter table public.site_settings add column if not exists cta_body text;
 
 insert into public.site_settings (id) values (1) on conflict (id) do nothing;
 

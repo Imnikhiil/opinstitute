@@ -6,8 +6,11 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { AdmissionForm } from "@/components/forms/AdmissionForm";
 import { Button } from "@/components/ui/Button";
 import { FrontDeskHighlight } from "@/components/sections/FrontDeskHighlight";
-import { admissionSteps, frontDeskStaff } from "@/data/site";
-import { getReceptionPhoto } from "@/lib/supabase/public-data";
+import { admissionSteps } from "@/data/site";
+import {
+  getReceptionPhoto,
+  getSiteConfig,
+} from "@/lib/supabase/public-data";
 
 export const metadata: Metadata = {
   title: "Admissions",
@@ -18,7 +21,11 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function AdmissionsPage() {
-  const receptionPhoto = await getReceptionPhoto();
+  const [receptionPhoto, siteConfig] = await Promise.all([
+    getReceptionPhoto(),
+    getSiteConfig(),
+  ]);
+  const frontDeskName = siteConfig.frontDesk.displayName;
 
   return (
     <>
@@ -99,7 +106,7 @@ export default async function AdmissionsPage() {
                     Need help with the form?
                   </h3>
                   <p className="text-muted-foreground text-sm">
-                    {frontDeskStaff.displayName} can walk you through the next
+                    {frontDeskName} can walk you through the next
                     steps Monday to Saturday during campus hours — or submit the
                     form and we&apos;ll follow up on WhatsApp / phone.
                   </p>

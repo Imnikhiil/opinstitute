@@ -578,6 +578,22 @@ export async function getSiteConfig(): Promise<SiteConfig> {
         ),
         youtube: str(row.kids_youtube, staticSiteConfig.kidsSocial.youtube),
       },
+      frontDesk: {
+        displayName: str(
+          row.front_desk_name,
+          staticSiteConfig.frontDesk.displayName
+        ),
+        title: str(row.front_desk_title, staticSiteConfig.frontDesk.title),
+        message: str(
+          row.front_desk_message,
+          staticSiteConfig.frontDesk.message
+        ),
+      },
+      homeCta: {
+        badge: str(row.cta_badge, staticSiteConfig.homeCta.badge),
+        title: str(row.cta_title, staticSiteConfig.homeCta.title),
+        body: str(row.cta_body, staticSiteConfig.homeCta.body),
+      },
     };
   } catch {
     return staticSiteConfig;

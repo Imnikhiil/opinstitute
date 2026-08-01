@@ -10,6 +10,8 @@ const config: CrudConfig = {
   titleField: "title",
   subtitleField: "kind",
   brandField: "brand",
+  emptyHint:
+    "Add a YouTube link and pick the type: Founder (About), Parent review (OP Kids), or Student experience (Institute).",
   fields: [
     {
       name: "title",
@@ -27,19 +29,21 @@ const config: CrudConfig = {
     },
     {
       name: "video_url",
-      label: "Video (YouTube link or upload)",
+      label: "Video",
       type: "video",
       required: true,
       fullWidth: true,
+      helpText: "Best option: paste a YouTube link. File upload is optional.",
     },
     {
       name: "thumbnail_url",
-      label: "Thumbnail (optional — for uploaded files)",
+      label: "Thumbnail (optional)",
       type: "image",
+      helpText: "Only needed for uploaded video files (not YouTube).",
     },
     {
       name: "kind",
-      label: "Type",
+      label: "Where it shows",
       type: "select",
       options: [
         "founder",
@@ -64,6 +68,7 @@ const config: CrudConfig = {
         preschool: "OP Kids Pre School",
         institute: "OP Institute of Studies",
       },
+      helpText: "Usually match the type above (Kids vs Institute).",
     },
     {
       name: "active",
@@ -71,7 +76,12 @@ const config: CrudConfig = {
       type: "boolean",
       placeholder: "Visible on the site",
     },
-    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
+    {
+      name: "sort_order",
+      label: "Display order",
+      type: "number",
+      helpText: "Lower numbers appear first.",
+    },
   ],
 };
 
@@ -81,7 +91,7 @@ export default async function AdminVideosPage() {
     <div>
       <PageHeader
         title="Videos"
-        subtitle="Founder message, OP Kids parent reviews, and Institute student experiences. Prefer YouTube links."
+        subtitle="Founder message (About), OP Kids parent reviews, and Institute student experiences. Prefer YouTube links."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>

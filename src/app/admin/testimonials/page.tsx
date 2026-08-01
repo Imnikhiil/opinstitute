@@ -11,12 +11,43 @@ const config: CrudConfig = {
   subtitleField: "content",
   imageField: "image_url",
   brandField: "category",
+  emptyHint:
+    "Add a parent or student review. Pick the brand so it shows on Home, Courses, Institute, or OP Kids.",
   fields: [
-    { name: "image_url", label: "Photo (optional)", type: "image" },
-    { name: "name", label: "Name", type: "text", required: true, placeholder: "Mrs. Rekha Patel" },
-    { name: "role", label: "Role", type: "text", placeholder: "Parent – OP Kids Nursery" },
-    { name: "content", label: "Review", type: "textarea", required: true, fullWidth: true, placeholder: "Write their review here…" },
-    { name: "rating", label: "Rating (1-5)", type: "number", placeholder: "5" },
+    {
+      name: "image_url",
+      label: "Photo (optional)",
+      type: "image",
+    },
+    {
+      name: "name",
+      label: "Name",
+      type: "text",
+      required: true,
+      placeholder: "Mrs. Rekha Patel",
+    },
+    {
+      name: "role",
+      label: "Role",
+      type: "text",
+      placeholder: "Parent – OP Kids Nursery",
+      helpText: "e.g. Parent, CMA student, B.Com alumni.",
+    },
+    {
+      name: "content",
+      label: "Review",
+      type: "textarea",
+      required: true,
+      fullWidth: true,
+      placeholder: "Write their review here…",
+    },
+    {
+      name: "rating",
+      label: "Rating (1–5)",
+      type: "number",
+      placeholder: "5",
+      helpText: "Usually 5.",
+    },
     {
       name: "category",
       label: "Brand",
@@ -28,7 +59,12 @@ const config: CrudConfig = {
       },
       required: true,
     },
-    { name: "sort_order", label: "Order (lower shows first)", type: "number" },
+    {
+      name: "sort_order",
+      label: "Display order",
+      type: "number",
+      helpText: "Lower numbers appear first.",
+    },
   ],
 };
 
@@ -36,7 +72,10 @@ export default async function AdminTestimonialsPage() {
   const rows = await fetchRows("testimonials");
   return (
     <div>
-      <PageHeader title="Testimonials" subtitle="Manage reviews from parents and students." />
+      <PageHeader
+        title="Testimonials"
+        subtitle="Parent and student reviews on Home, Courses, Institute, and OP Kids pages."
+      />
       <CrudManager config={config} initialRows={rows} />
     </div>
   );
