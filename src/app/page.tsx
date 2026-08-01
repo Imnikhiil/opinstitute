@@ -10,7 +10,9 @@ import { FAQs } from "@/components/sections/FAQs";
 import { CTABand } from "@/components/sections/CTABand";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { FrontDeskHighlight } from "@/components/sections/FrontDeskHighlight";
+import { EventsCarousel } from "@/components/sections/EventsCarousel";
 import {
+  getEvents,
   getFrontDeskPhoto,
   getKidsShowcaseImages,
   getLeadership,
@@ -27,12 +29,14 @@ export default async function HomePage() {
     frontDeskPhoto,
     receptionPhoto,
     leaders,
+    events,
   ] = await Promise.all([
     getTestimonials(),
     getKidsShowcaseImages(4),
     getFrontDeskPhoto(),
     getReceptionPhoto(),
     getLeadership(),
+    getEvents(),
   ]);
 
   return (
@@ -43,6 +47,7 @@ export default async function HomePage() {
       <AboutInstitute frontDeskPhoto={frontDeskPhoto} leaders={leaders} />
       <AboutKids showcaseImages={kidsShowcase} />
       <WhyChooseUs />
+      <EventsCarousel events={events} />
       <Testimonials testimonials={testimonials} />
       <AdmissionProcess />
       <FrontDeskHighlight photo={receptionPhoto} />

@@ -26,6 +26,7 @@ export type FieldType =
   | "select"
   | "tags"
   | "image"
+  | "images"
   | "video";
 
 export interface CrudField {
@@ -108,7 +109,7 @@ export function CrudManager({
           f.name === "active" ||
           f.name === "show_on_main" ||
           f.name === "popular";
-      } else if (f.type === "tags") {
+      } else if (f.type === "tags" || f.type === "images") {
         blank[f.name] = [];
       } else {
         blank[f.name] = "";
@@ -120,7 +121,27 @@ export function CrudManager({
   };
 
   const openEdit = (row: Row) => {
-    setForm({ ...row });
+    const next = { ...row };
+    config.fields.forEach((f) => {
+      if (f.type === "images") {
+        const raw = next[f.name];
+        if (Array.isArray(raw)) {
+          next[f.name] = raw.map(String);
+        } else if (typeof raw === "string" && raw.trim()) {
+          try {
+            const parsed = JSON.parse(raw) as unknown;
+            next[f.name] = Array.isArray(parsed)
+              ? parsed.map(String)
+              : [];
+          } catch {
+            next[f.name] = [];
+          }
+        } else {
+          next[f.name] = [];
+        }
+      }
+    });
+    setForm(next);
     setEditing(row);
     setIsOpen(true);
   };
@@ -182,6 +203,49 @@ export function CrudManager({
     }
   };
 
+  const uploadAlbumImages = async (files: FileList, fieldName: string) => {
+    const list = Array.from(files);
+    if (!list.length) return;
+    setUploading(true);
+    try {
+      const supabase = createClient();
+      const uploaded: string[] = [];
+      for (const file of list) {
+        const ext = file.name.split(".").pop() || "jpg";
+        const path = `${config.table}/${Date.now()}-${Math.random()
+          .toString(36)
+          .slice(2)}.${ext}`;
+        const { error } = await supabase.storage
+          .from("media")
+          .upload(path, file, { upsert: true });
+        if (error) {
+          alert("Image upload failed: " + error.message);
+          continue;
+        }
+        const { data } = supabase.storage.from("media").getPublicUrl(path);
+        uploaded.push(data.publicUrl);
+      }
+      if (uploaded.length) {
+        const prev = Array.isArray(form[fieldName])
+          ? (form[fieldName] as string[])
+          : [];
+        setField(fieldName, [...prev, ...uploaded]);
+      }
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeAlbumImage = (fieldName: string, url: string) => {
+    const prev = Array.isArray(form[fieldName])
+      ? (form[fieldName] as string[])
+      : [];
+    setField(
+      fieldName,
+      prev.filter((u) => u !== url)
+    );
+  };
+
   const save = async () => {
     setSaving(true);
     const supabase = createClient();
@@ -197,6 +261,10 @@ export function CrudManager({
             .map((s) => s.trim())
             .filter(Boolean);
         }
+      }
+      if (f.type === "images") {
+        if (!Array.isArray(v)) v = [];
+        v = (v as unknown[]).map(String).filter(Boolean);
       }
       payload[f.name] = v ?? null;
     });
@@ -563,6 +631,63 @@ export function CrudManager({
                               if (file) {
                                 setCropFile(file);
                                 setCropFieldName(f.name);
+                              }
+                              e.target.value = "";
+                            }}
+                          />
+                        </label>
+                      </div>
+                    )}
+
+                    {f.type === "images" && (
+                      <div className="space-y-3">
+                        {Array.isArray(value) &&
+                        (value as string[]).length > 0 ? (
+                          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                            {(value as string[]).map((url) => (
+                              <div
+                                key={url}
+                                className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 group"
+                              >
+                                <Image
+                                  src={url}
+                                  alt=""
+                                  fill
+                                  sizes="120px"
+                                  className="object-cover"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => removeAlbumImage(f.name, url)}
+                                  className="absolute top-1 right-1 p-1 rounded-lg bg-black/60 text-white opacity-0 group-hover:opacity-100 transition"
+                                  aria-label="Remove photo"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground">
+                            No album photos yet — upload several at once.
+                          </p>
+                        )}
+                        <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition text-sm">
+                          {uploading ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Upload className="w-4 h-4" />
+                          )}
+                          Add album photos
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            className="hidden"
+                            onChange={(e) => {
+                              const files = e.target.files;
+                              if (files?.length) {
+                                uploadAlbumImages(files, f.name);
                               }
                               e.target.value = "";
                             }}

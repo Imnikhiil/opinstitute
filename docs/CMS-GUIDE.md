@@ -37,7 +37,7 @@ Admin URL: **`/admin/login`** on your live site
 | **Leadership** | Founder & heads (+ photos) | About / home founder strip |
 | **Faculty** | Teachers | Faculty page |
 | **Testimonials** | Parent / student text reviews | Home & brand pages |
-| **Events** | Events list | Events page |
+| **Events** | Event albums (cover + many photos) | Events page — click to open album |
 | **Gallery** | Photos (front desk, Kids collage, etc.) | Gallery + home About photo |
 | **Videos** | Founder / parent / student videos | About, OP Kids, Institute |
 | **Settings** | Phones, emails, WhatsApp, address, hours, social links | Whole site |
@@ -82,6 +82,13 @@ Use for admissions open, holidays, special notices.
   - **institute** = OP Institute  
 - Use **sort order** (if shown) so important items appear first.
 - Prefer **real photos** of campus and teachers over stock images.
+
+### Events (albums)
+
+- **Cover photo** = card on the Events page.
+- **Album photos** = all photos shown when someone **clicks** the event.
+- Set **Brand** = OP Kids or Institute so the right filter shows it.
+- You can upload many album photos at once (Add album photos).
 
 ### Faculty photos
 

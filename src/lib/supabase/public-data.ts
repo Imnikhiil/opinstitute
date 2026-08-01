@@ -136,14 +136,32 @@ function resolveContentBrand(
 function mapEvent(row: Row): Event {
   const image = str(row.image_url);
   const type = (str(row.type) as Event["type"]) || "academic";
+  const cover =
+    image ||
+    "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80";
+
+  let photos: string[] = [];
+  if (Array.isArray(row.photos)) {
+    photos = row.photos.map(String).filter(Boolean);
+  } else if (typeof row.photos === "string" && row.photos.trim()) {
+    try {
+      const parsed = JSON.parse(row.photos) as unknown;
+      if (Array.isArray(parsed)) {
+        photos = parsed.map(String).filter(Boolean);
+      }
+    } catch {
+      photos = [];
+    }
+  }
+  if (photos.length === 0 && cover) photos = [cover];
+
   return {
     id: str(row.id),
     title: str(row.title),
     date: str(row.event_date),
     description: str(row.description),
-    image:
-      image ||
-      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80",
+    image: cover,
+    photos,
     type,
     brand: resolveContentBrand(row, type),
   };

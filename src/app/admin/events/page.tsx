@@ -12,7 +12,17 @@ const config: CrudConfig = {
   imageField: "image_url",
   brandField: "brand",
   fields: [
-    { name: "image_url", label: "Photo", type: "image" },
+    {
+      name: "image_url",
+      label: "Cover photo (card)",
+      type: "image",
+    },
+    {
+      name: "photos",
+      label: "Album photos (shown when visitors click the event)",
+      type: "images",
+      fullWidth: true,
+    },
     {
       name: "title",
       label: "Event Title",
@@ -65,7 +75,7 @@ export default async function AdminEventsPage() {
     <div>
       <PageHeader
         title="Events"
-        subtitle="Set Brand first (Kids or Institute), then Type — so each event shows in the right filter."
+        subtitle="Cover = timeline card. Album photos = open when someone clicks the event. Set Brand (Kids / Institute) so filters work."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>

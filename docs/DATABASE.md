@@ -32,6 +32,7 @@ Run only pending files under `supabase/migrations/` in this order:
 | 6 | `migrations/fix_faculty_categories.sql` | Optional one-shot data fix |
 | 7 | `migrations/split_management_heads.sql` | Optional leadership split |
 | 8 | `migrations/add_videos.sql` | Videos table |
+| 9 | `migrations/add_event_photos.sql` | Events album photos jsonb |
 
 Files using `IF NOT EXISTS` / `ADD COLUMN IF NOT EXISTS` are generally safe to re-run. One-shot data fixes: run once and skip if already applied.
 
@@ -70,7 +71,7 @@ Reviews. `category`: `preschool` \| `institute`. `rating` default 5.
 
 ### `events`
 
-`type` (e.g. academic / cultural / sports / preschool), `brand` (`preschool` \| `institute`), `event_date` as text, `image_url`.
+`type` (e.g. academic / cultural / sports / preschool), `brand` (`preschool` \| `institute`), `event_date` as text, `image_url` (cover), `photos` (jsonb URL array for album modal).
 
 ### `gallery`
 

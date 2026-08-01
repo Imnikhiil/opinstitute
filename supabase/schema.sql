@@ -68,6 +68,7 @@ create table if not exists public.events (
   event_date   text,
   description  text,
   image_url    text,
+  photos       jsonb default '[]'::jsonb,            -- album URLs (click to open)
   type         text default 'academic',              -- academic | cultural | sports | preschool
   brand        text default 'institute',             -- preschool | institute
   sort_order   int default 0,
