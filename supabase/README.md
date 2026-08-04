@@ -22,6 +22,7 @@ Run any migrations you have **not** applied yet, in order:
 | `migrations/split_management_heads.sql` | One-shot leadership split (optional) |
 | `migrations/add_videos.sql` | Videos table (founder / parent / student) |
 | `migrations/add_event_photos.sql` | Events album `photos` jsonb |
+| `migrations/add_site_copy_fields.sql` | Front Desk + home CTA fields on `site_settings` |
 
 Safe to re-run files that use `IF NOT EXISTS` / `ADD COLUMN IF NOT EXISTS`.
 

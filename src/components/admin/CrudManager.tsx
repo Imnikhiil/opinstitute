@@ -474,13 +474,13 @@ export function CrudManager({
                 className="rounded-2xl bg-white dark:bg-gray-900/80 border border-gray-200/80 dark:border-white/10 p-4 flex flex-col hover:shadow-md hover:border-brand-200 dark:hover:border-brand-800 transition-all"
               >
                 {config.imageField && row[config.imageField] ? (
-                  <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3 bg-gray-100 dark:bg-gray-800">
+                  <div className="relative w-full aspect-square max-h-52 rounded-xl overflow-hidden mb-3 bg-gray-100 dark:bg-gray-800">
                     <Image
                       src={row[config.imageField] as string}
                       alt=""
                       fill
                       sizes="300px"
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                 ) : null}
@@ -701,13 +701,13 @@ export function CrudManager({
                     {f.type === "image" && (
                       <div>
                         {value ? (
-                          <div className="relative w-full h-40 rounded-xl overflow-hidden mb-2 bg-gray-100 dark:bg-gray-800">
+                          <div className="relative mb-2 w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200/80 dark:border-white/10">
                             <Image
                               src={value as string}
                               alt=""
                               fill
-                              sizes="400px"
-                              className="object-cover"
+                              sizes="280px"
+                              className="object-contain"
                             />
                           </div>
                         ) : null}
