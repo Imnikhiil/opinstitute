@@ -4,8 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { Lock, Mail, LogIn, AlertCircle, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { AdminPwaInstall } from "@/components/admin/AdminPwaInstall";
+import { useAdminStandalone } from "@/components/admin/useAdminStandalone";
 
 export default function AdminLoginPage() {
+  const standalone = useAdminStandalone();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -47,7 +50,17 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 py-10">
+    <div
+      className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 py-10"
+      style={
+        standalone
+          ? {
+              paddingTop: "max(2.5rem, env(safe-area-inset-top))",
+              paddingBottom: "max(2.5rem, env(safe-area-inset-bottom))",
+            }
+          : undefined
+      }
+    >
       <div className="absolute inset-0 bg-[linear-gradient(145deg,#1d2951_0%,#3539b8_48%,#4b52e1_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.14),transparent_50%)]" />
       <div className="absolute inset-0 opacity-[0.07] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIvPgo8cGF0aCBkPSJNIDAgMCBMIDYwIDYwIE0gNjAgMCBMIDAgNjAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPgo8L3N2Zz4=')]" />
@@ -75,12 +88,18 @@ export default function AdminLoginPage() {
             </div>
           </div>
           <h1 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Admin Panel
+            OP Admin
           </h1>
           <p className="text-white/70 text-sm mt-1.5">
             OP Institute of Studies · OP Kids Pre School
           </p>
         </div>
+
+        {!standalone ? (
+          <div className="mb-4 admin-pwa-install">
+            <AdminPwaInstall variant="banner" />
+          </div>
+        ) : null}
 
         <form
           onSubmit={handleLogin}

@@ -24,6 +24,32 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
+  async headers() {
+    return [
+      {
+        source: "/admin-sw.js",
+        headers: [
+          {
+            key: "Service-Worker-Allowed",
+            value: "/admin",
+          },
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/admin-pwa/manifest.webmanifest",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/manifest+json",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

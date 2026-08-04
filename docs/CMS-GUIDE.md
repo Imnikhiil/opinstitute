@@ -44,6 +44,14 @@ Admin URL: **`/admin/login`** on your live site
 
 After you save, the public site usually updates within **about 1 minute** (sometimes a refresh is needed).
 
+### Install Admin on phone (optional)
+
+On a phone, open `/admin` → tap **Install app** / **Download / Install**.  
+This adds **OP Admin** to the home screen (admin only — not the public website).
+
+- **Android (Chrome):** Install prompt or browser menu → Install app  
+- **iPhone (Safari):** Share → Add to Home Screen  
+
 ---
 
 ## 3. Daily work: Queries (leads)

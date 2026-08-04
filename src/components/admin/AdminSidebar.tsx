@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   Inbox,
@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
+import { AdminPwaInstall } from "./AdminPwaInstall";
 
 const navGroups = [
   {
@@ -56,9 +57,28 @@ const navGroups = [
   },
 ];
 
-export function AdminSidebar({ email }: { email?: string }) {
+export function AdminSidebar({
+  email,
+  menuOpen,
+  onMenuOpenChange,
+  standalone = false,
+}: {
+  email?: string;
+  menuOpen?: boolean;
+  onMenuOpenChange?: (open: boolean) => void;
+  standalone?: boolean;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof menuOpen === "boolean") setOpen(menuOpen);
+  }, [menuOpen]);
+
+  const setMenu = (next: boolean) => {
+    setOpen(next);
+    onMenuOpenChange?.(next);
+  };
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
     <div className="space-y-5">
@@ -82,9 +102,9 @@ export function AdminSidebar({ email }: { email?: string }) {
                   key={item.href}
                   href={item.href}
                   prefetch
-                  onClick={() => setOpen(false)}
+                  onClick={() => setMenu(false)}
                   className={cn(
-                    "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-100",
+                    "admin-nav-link group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-100",
                     mobile
                       ? active
                         ? "bg-brand-600 text-white shadow-sm"
@@ -107,8 +127,13 @@ export function AdminSidebar({ email }: { email?: string }) {
 
   return (
     <>
-      {/* Mobile top bar */}
-      <div className="lg:hidden sticky top-0 z-40 flex items-center justify-between bg-[#1d2951] px-4 py-3 shadow-md">
+      {/* Mobile top bar — app header */}
+      <div
+        className={cn(
+          "admin-top-bar lg:hidden sticky top-0 z-40 flex items-center justify-between bg-[#1d2951] px-4 py-3",
+          standalone ? "shadow-lg" : "shadow-md"
+        )}
+      >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="flex -space-x-1.5 shrink-0">
             <div className="rounded-lg bg-white p-1 ring-2 ring-[#1d2951]">
@@ -132,41 +157,62 @@ export function AdminSidebar({ email }: { email?: string }) {
           </div>
           <div className="min-w-0">
             <p className="font-display font-bold text-sm text-white leading-tight">
-              Admin Panel
+              {standalone ? "OP Admin" : "Admin Panel"}
             </p>
             <p className="text-[10px] text-white/55 truncate">
               {email || "OP Institute · OP Kids"}
             </p>
           </div>
         </div>
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center hover:bg-white/15 transition shrink-0"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        {!standalone ? (
+          <button
+            type="button"
+            onClick={() => setMenu(!open)}
+            className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center hover:bg-white/15 transition shrink-0"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setMenu(!open)}
+            className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center active:bg-white/20 transition shrink-0"
+            aria-label="Menu"
+          >
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        )}
       </div>
 
       {/* Mobile drawer */}
       {open && (
         <div
-          className="lg:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
+          className="lg:hidden fixed inset-0 z-40 bg-black/55 backdrop-blur-sm"
+          onClick={() => setMenu(false)}
         >
           <div
-            className="absolute top-[60px] left-0 right-0 max-h-[calc(100vh-60px)] overflow-y-auto bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-4 space-y-4 shadow-xl rounded-b-2xl"
+            className={cn(
+              "admin-drawer absolute left-0 right-0 overflow-y-auto bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-4 space-y-4 shadow-xl rounded-b-2xl",
+              standalone
+                ? "top-[calc(3.25rem+env(safe-area-inset-top))]"
+                : "top-[60px] max-h-[calc(100vh-60px)]"
+            )}
             onClick={(e) => e.stopPropagation()}
           >
             <NavLinks mobile />
             <div className="pt-3 border-t border-gray-200 dark:border-gray-800 space-y-2">
+              <div className="admin-pwa-install">
+                <AdminPwaInstall variant="mobile" />
+              </div>
               <Link
                 href="/"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
               >
                 <ExternalLink className="w-4 h-4" />
-                View Website
+                View website
               </Link>
               <LogoutButton />
             </div>
@@ -200,7 +246,7 @@ export function AdminSidebar({ email }: { email?: string }) {
             </div>
             <div>
               <p className="font-display font-bold text-[15px] leading-tight tracking-tight">
-                Admin Panel
+                OP Admin
               </p>
               <p className="text-[11px] text-white/50 mt-0.5">
                 Institute · Kids
@@ -214,10 +260,14 @@ export function AdminSidebar({ email }: { email?: string }) {
         </div>
 
         <div className="px-3 pb-5 pt-3 border-t border-white/10 space-y-1.5">
+          <div className="admin-pwa-install">
+            <AdminPwaInstall variant="sidebar" />
+          </div>
           <div className="grid grid-cols-2 gap-1.5 px-1 mb-2">
             <Link
               href="/institute"
               target="_blank"
+              rel="noopener noreferrer"
               className="text-center text-[10px] font-semibold uppercase tracking-wide px-2 py-2 rounded-lg bg-white/10 text-white/80 hover:bg-white/15 hover:text-white transition"
             >
               Institute
@@ -225,6 +275,7 @@ export function AdminSidebar({ email }: { email?: string }) {
             <Link
               href="/op-kids"
               target="_blank"
+              rel="noopener noreferrer"
               className="text-center text-[10px] font-semibold uppercase tracking-wide px-2 py-2 rounded-lg bg-kids-500/20 text-kids-200 hover:bg-kids-500/30 hover:text-white transition"
             >
               Kids
@@ -233,6 +284,7 @@ export function AdminSidebar({ email }: { email?: string }) {
           <Link
             href="/"
             target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:bg-white/10 hover:text-white transition"
           >
             <ExternalLink className="w-4 h-4" />

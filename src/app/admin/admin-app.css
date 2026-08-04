@@ -1,0 +1,67 @@
+/* Admin PWA — native app feel when installed (standalone) */
+
+html.admin-standalone,
+body.admin-standalone {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  background: #1d2951;
+  /* Avoid browser pull-to-refresh feel where supported */
+  overscroll-behavior-y: none;
+}
+
+body.admin-standalone {
+  /* App canvas — no “website page” margins from browser chrome */
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+}
+
+.admin-standalone .admin-app-root {
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  /* Notch / Dynamic Island */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+.admin-standalone .admin-top-bar {
+  padding-top: max(0.65rem, env(safe-area-inset-top));
+  /* Sticky app header under status bar */
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+}
+
+.admin-standalone .admin-main-pad {
+  /* Room for bottom tab bar + home indicator */
+  padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+}
+
+.admin-standalone .admin-drawer {
+  top: calc(3.5rem + env(safe-area-inset-top));
+  max-height: calc(
+    100dvh - 3.5rem - env(safe-area-inset-top) - 4.5rem -
+      env(safe-area-inset-bottom)
+  );
+}
+
+/* Hide install CTAs once running as installed app */
+.admin-standalone .admin-pwa-install {
+  display: none !important;
+}
+
+/* Soften “web link” affordances inside the installed app */
+.admin-standalone a[target="_blank"] {
+  /* still usable, less “browser tab” vibe */
+}
+
+.admin-standalone button,
+.admin-standalone a,
+.admin-standalone [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Slightly denser, app-like list taps */
+@media (max-width: 1023px) {
+  .admin-standalone .admin-nav-link {
+    min-height: 44px;
+  }
+}
