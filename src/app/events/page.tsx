@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 type EventsPageProps = {
-  searchParams?: Promise<{ brand?: string }> | { brand?: string };
+  searchParams?: Promise<{ brand?: string }>;
 };
 
 export default async function EventsPage({ searchParams }: EventsPageProps) {
   const events = await getEvents();
-  const params = await Promise.resolve(searchParams ?? {});
+  const params = (await searchParams) ?? {};
   const initialBrand = parseBrandFilter(params.brand);
 
   return (

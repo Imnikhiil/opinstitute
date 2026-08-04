@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 type FacultyPageProps = {
-  searchParams?: Promise<{ category?: string }> | { category?: string };
+  searchParams?: Promise<{ category?: string }>;
 };
 
 export default async function FacultyPage({ searchParams }: FacultyPageProps) {
@@ -27,7 +27,7 @@ export default async function FacultyPage({ searchParams }: FacultyPageProps) {
     (m) => !leaderNames.has(m.name.trim().toLowerCase())
   );
 
-  const params = await Promise.resolve(searchParams ?? {});
+  const params = (await searchParams) ?? {};
   const raw = params.category;
   const initialCategory =
     raw === "preschool" || raw === "institute" ? raw : "all";

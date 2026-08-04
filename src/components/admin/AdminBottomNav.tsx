@@ -11,12 +11,17 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const tabs = [
+const tabs: {
+  href: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  exact?: boolean;
+}[] = [
   { href: "/admin", label: "Home", icon: LayoutDashboard, exact: true },
   { href: "/admin/queries", label: "Queries", icon: Inbox },
   { href: "/admin/events", label: "Events", icon: CalendarDays },
   { href: "/admin/gallery", label: "Gallery", icon: Images },
-] as const;
+];
 
 /**
  * Native-style bottom tabs — shown on phone when Admin is installed as an app.
