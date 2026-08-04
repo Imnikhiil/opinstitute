@@ -59,26 +59,28 @@ const navGroups = [
 
 export function AdminSidebar({
   email,
-  menuOpen,
-  onMenuOpenChange,
   standalone = false,
 }: {
   email?: string;
-  menuOpen?: boolean;
-  onMenuOpenChange?: (open: boolean) => void;
   standalone?: boolean;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // Close drawer on route change
   useEffect(() => {
-    if (typeof menuOpen === "boolean") setOpen(menuOpen);
-  }, [menuOpen]);
+    setOpen(false);
+  }, [pathname]);
 
-  const setMenu = (next: boolean) => {
-    setOpen(next);
-    onMenuOpenChange?.(next);
-  };
+  // Lock body scroll while drawer is open (mobile)
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
     <div className="space-y-5">
@@ -102,7 +104,7 @@ export function AdminSidebar({
                   key={item.href}
                   href={item.href}
                   prefetch
-                  onClick={() => setMenu(false)}
+                  onClick={() => setOpen(false)}
                   className={cn(
                     "admin-nav-link group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-100",
                     mobile
@@ -127,7 +129,7 @@ export function AdminSidebar({
 
   return (
     <>
-      {/* Mobile top bar — app header */}
+      {/* Mobile top bar */}
       <div
         className={cn(
           "admin-top-bar lg:hidden sticky top-0 z-40 flex items-center justify-between bg-[#1d2951] px-4 py-3",
@@ -164,42 +166,67 @@ export function AdminSidebar({
             </p>
           </div>
         </div>
-        {!standalone ? (
-          <button
-            type="button"
-            onClick={() => setMenu(!open)}
-            className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center hover:bg-white/15 transition shrink-0"
-            aria-label="Toggle menu"
-          >
-            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setMenu(!open)}
-            className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center active:bg-white/20 transition shrink-0"
-            aria-label="Menu"
-          >
-            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center hover:bg-white/15 active:bg-white/20 transition shrink-0"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
+          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </div>
 
-      {/* Mobile drawer */}
-      {open && (
-        <div
-          className="lg:hidden fixed inset-0 z-40 bg-black/55 backdrop-blur-sm"
-          onClick={() => setMenu(false)}
+      {/* Mobile left drawer — does not cover full screen */}
+      <div
+        className={cn(
+          "lg:hidden fixed inset-0 z-50 transition-[visibility] duration-200",
+          open ? "visible" : "invisible pointer-events-none"
+        )}
+        aria-hidden={!open}
+      >
+        <button
+          type="button"
+          className={cn(
+            "absolute inset-0 bg-black/40 transition-opacity duration-200",
+            open ? "opacity-100" : "opacity-0"
+          )}
+          aria-label="Close menu"
+          onClick={() => setOpen(false)}
+        />
+        <aside
+          className={cn(
+            "admin-drawer absolute top-0 left-0 bottom-0 flex w-[min(82vw,300px)] flex-col bg-white dark:bg-gray-900 shadow-2xl border-r border-gray-200/80 dark:border-white/10 transition-transform duration-250 ease-out",
+            open ? "translate-x-0" : "-translate-x-full"
+          )}
+          style={{
+            paddingTop: standalone
+              ? "max(0.75rem, env(safe-area-inset-top))"
+              : undefined,
+            paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
+            paddingLeft: "env(safe-area-inset-left)",
+          }}
         >
-          <div
-            className={cn(
-              "admin-drawer absolute left-0 right-0 overflow-y-auto bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-4 space-y-4 shadow-xl rounded-b-2xl",
-              standalone
-                ? "top-[calc(3.25rem+env(safe-area-inset-top))]"
-                : "top-[60px] max-h-[calc(100vh-60px)]"
-            )}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-gray-100 dark:border-white/10">
+            <div className="min-w-0">
+              <p className="font-display font-bold text-sm text-[#1d2951] dark:text-white truncate">
+                Menu
+              </p>
+              <p className="text-[10px] text-muted-foreground truncate">
+                {email || "Staff panel"}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-foreground shrink-0"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4">
             <NavLinks mobile />
             <div className="pt-3 border-t border-gray-200 dark:border-gray-800 space-y-2">
               <div className="admin-pwa-install">
@@ -217,8 +244,8 @@ export function AdminSidebar({
               <LogoutButton />
             </div>
           </div>
-        </div>
-      )}
+        </aside>
+      </div>
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col w-[268px] shrink-0 h-screen sticky top-0 bg-gradient-to-b from-[#1d2951] via-[#1a2548] to-[#141b3d] text-white">

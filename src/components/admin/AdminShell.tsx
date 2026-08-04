@@ -2,11 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminPwaInstall } from "@/components/admin/AdminPwaInstall";
-import { AdminBottomNav } from "@/components/admin/AdminBottomNav";
 import { useAdminStandalone } from "@/components/admin/useAdminStandalone";
+import { cn } from "@/lib/utils";
 
 export function AdminShell({
   email,
@@ -17,23 +16,16 @@ export function AdminShell({
 }) {
   const pathname = usePathname();
   const standalone = useAdminStandalone();
-  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div
-      className="admin-app-root min-h-screen lg:flex bg-[linear-gradient(160deg,#eef1f8_0%,#f5f6fa_45%,#f0f4fb_100%)] dark:bg-gradient-to-br dark:from-gray-950 dark:via-gray-950 dark:to-[#141b3d]"
-    >
-      <AdminSidebar
-        email={email}
-        menuOpen={menuOpen}
-        onMenuOpenChange={setMenuOpen}
-        standalone={standalone}
-      />
+    <div className="admin-app-root min-h-screen lg:flex bg-[linear-gradient(160deg,#eef1f8_0%,#f5f6fa_45%,#f0f4fb_100%)] dark:bg-gradient-to-br dark:from-gray-950 dark:via-gray-950 dark:to-[#141b3d]">
+      <AdminSidebar email={email} standalone={standalone} />
       <main className="flex-1 min-w-0 min-h-screen">
         <div
-          className={`mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 xl:p-10 ${
-            standalone ? "admin-main-pad" : ""
-          }`}
+          className={cn(
+            "mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 xl:p-10",
+            standalone && "admin-main-pad"
+          )}
         >
           {pathname === "/admin" && !standalone ? (
             <div className="lg:hidden mb-4 admin-pwa-install">
@@ -50,9 +42,6 @@ export function AdminShell({
           </motion.div>
         </div>
       </main>
-      {standalone ? (
-        <AdminBottomNav onOpenMenu={() => setMenuOpen(true)} />
-      ) : null}
     </div>
   );
 }

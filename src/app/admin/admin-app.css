@@ -30,16 +30,8 @@ body.admin-standalone {
 }
 
 .admin-standalone .admin-main-pad {
-  /* Room for bottom tab bar + home indicator */
-  padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
-}
-
-.admin-standalone .admin-drawer {
-  top: calc(3.5rem + env(safe-area-inset-top));
-  max-height: calc(
-    100dvh - 3.5rem - env(safe-area-inset-top) - 4.5rem -
-      env(safe-area-inset-bottom)
-  );
+  /* Home indicator / safe bottom only (no bottom nav) */
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 /* Hide install CTAs once running as installed app */
