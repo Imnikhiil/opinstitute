@@ -129,12 +129,16 @@ export function AdminSidebar({
 
   return (
     <>
-      {/* Mobile top bar */}
+      {/* Mobile top bar — safe-area for iPhone notch / Dynamic Island / PWA */}
       <div
         className={cn(
-          "admin-top-bar lg:hidden sticky top-0 z-40 flex items-center justify-between bg-[#1d2951] px-4 py-3",
-          standalone ? "shadow-lg" : "shadow-md"
+          "admin-top-bar lg:hidden sticky top-0 z-40 flex items-center justify-between bg-[#1d2951] px-4 pb-3 shadow-md",
+          standalone && "shadow-lg"
         )}
+        style={{
+          // Inline fallback for iOS — CSS file also sets this; keep in sync
+          paddingTop: "calc(0.75rem + env(safe-area-inset-top, 0px))",
+        }}
       >
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="flex -space-x-1.5 shrink-0">
@@ -200,11 +204,9 @@ export function AdminSidebar({
             open ? "translate-x-0" : "-translate-x-full"
           )}
           style={{
-            paddingTop: standalone
-              ? "max(0.75rem, env(safe-area-inset-top))"
-              : undefined,
-            paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
-            paddingLeft: "env(safe-area-inset-left)",
+            paddingTop: "max(0.75rem, env(safe-area-inset-top, 0px))",
+            paddingBottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))",
+            paddingLeft: "env(safe-area-inset-left, 0px)",
           }}
         >
           <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-gray-100 dark:border-white/10">

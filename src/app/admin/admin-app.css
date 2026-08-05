@@ -1,16 +1,14 @@
-/* Admin PWA — native app feel when installed (standalone) */
+/* Admin PWA — native app feel + iPhone safe areas */
 
 html.admin-standalone,
 body.admin-standalone {
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
   background: #1d2951;
-  /* Avoid browser pull-to-refresh feel where supported */
   overscroll-behavior-y: none;
 }
 
 body.admin-standalone {
-  /* App canvas — no “website page” margins from browser chrome */
   min-height: 100dvh;
   min-height: -webkit-fill-available;
 }
@@ -18,30 +16,40 @@ body.admin-standalone {
 .admin-standalone .admin-app-root {
   min-height: 100dvh;
   min-height: -webkit-fill-available;
-  /* Notch / Dynamic Island */
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/*
+  iPhone PWA: status bar overlays content (black-translucent).
+  Use constant() then env() — do NOT add both in one calc (would double).
+*/
+.admin-top-bar {
+  /* older iOS */
+  padding-top: calc(0.75rem + constant(safe-area-inset-top));
+  /* modern iOS / Safari */
+  padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
 }
 
 .admin-standalone .admin-top-bar {
-  padding-top: max(0.65rem, env(safe-area-inset-top));
-  /* Sticky app header under status bar */
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
 }
 
 .admin-standalone .admin-main-pad {
-  /* Home indicator / safe bottom only (no bottom nav) */
-  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
 }
 
-/* Hide install CTAs once running as installed app */
+.admin-drawer {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  padding-left: env(safe-area-inset-left, 0px);
+}
+
 .admin-standalone .admin-pwa-install {
   display: none !important;
-}
-
-/* Soften “web link” affordances inside the installed app */
-.admin-standalone a[target="_blank"] {
-  /* still usable, less “browser tab” vibe */
 }
 
 .admin-standalone button,
@@ -51,7 +59,6 @@ body.admin-standalone {
   touch-action: manipulation;
 }
 
-/* Slightly denser, app-like list taps */
 @media (max-width: 1023px) {
   .admin-standalone .admin-nav-link {
     min-height: 44px;

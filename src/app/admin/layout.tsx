@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   manifest: "/admin-pwa/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    // default = solid status bar (safer on iPhone). Content stays below clock/battery.
+    statusBarStyle: "default",
     title: "OP Admin",
   },
   formatDetection: {
