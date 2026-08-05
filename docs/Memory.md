@@ -15,7 +15,7 @@ Short-term project brain: facts, decisions, and gotchas that are easy to forget.
 - Brands: **OP Institute of Studies** (coaching since 2003) + **OP Kids Pre School**.
 - Stack: **Next.js App Router + Supabase** (content, auth, storage, leads).
 - Conversion path: **Call / WhatsApp / forms** → Admin **Queries**.
-- Hosting target: **Vercel**; current canonical in code: `https://opinstitute.vercel.app` (`siteConfig.url` — change when custom domain is live).
+- Hosting target: **Vercel**; canonical URL: `https://www.opkidsschool.in` (`siteConfig.url`). Apex `opkidsschool.in` redirects to www.
 
 ---
 
