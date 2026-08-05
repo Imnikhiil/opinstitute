@@ -69,13 +69,15 @@ const config: CrudConfig = {
       name: "starts_on",
       label: "Start date (optional)",
       type: "date",
-      helpText: "Leave empty to start immediately.",
+      helpText:
+        "Leave empty to show NOW. If you set 15 August, it will stay hidden until that day.",
     },
     {
       name: "ends_on",
       label: "End date (optional)",
       type: "date",
-      helpText: "Leave empty to keep showing until you turn it off.",
+      helpText:
+        "Leave empty to keep showing. After this date it auto-hides.",
     },
     {
       name: "sort_order",
@@ -92,7 +94,7 @@ export default async function AdminAnnouncementsPage() {
     <div>
       <PageHeader
         title="Announcements"
-        subtitle="Top site banner notices (Admissions Open, new batches, offers). Pick where each one appears: Main, Kids, or Institute."
+        subtitle="Top site banner for any notice (Independence Day, Admissions Open, holidays — not only admissions). Tick Enabled + where to show (Main / Kids / Institute). Leave Start date empty to show immediately."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>
