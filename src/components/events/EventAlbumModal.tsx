@@ -73,14 +73,14 @@ function PhotoLightbox({
           </button>
         </div>
 
-        <div className="relative w-full h-[70vh] sm:h-[78vh]">
+        <div className="relative w-full max-w-[min(92vw,720px)] aspect-square mx-auto rounded-2xl overflow-hidden bg-black/40 ring-1 ring-white/10">
           <Image
             src={src}
             alt={`${title} — photo ${index + 1}`}
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 92vw, 720px"
             quality={95}
-            className="object-contain"
+            className="object-cover"
             priority
           />
         </div>

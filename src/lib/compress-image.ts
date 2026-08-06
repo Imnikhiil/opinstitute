@@ -21,11 +21,16 @@ function loadImage(file: File): Promise<HTMLImageElement> {
 
 /**
  * Shrink large camera photos to ~1600px JPEG so album uploads finish faster.
- * Skips tiny files already under ~400KB when dimensions are small enough.
+ * Optional `aspectRatio` (width/height) center-crops so every album photo matches.
  */
 export async function compressImageForUpload(
   file: File,
-  options?: { maxEdge?: number; quality?: number }
+  options?: {
+    maxEdge?: number;
+    quality?: number;
+    /** e.g. 1 = square, 4/3 = landscape. Omit to keep original aspect. */
+    aspectRatio?: number;
+  }
 ): Promise<File> {
   if (!file.type.startsWith("image/") || file.type === "image/gif") {
     return file;
@@ -33,6 +38,7 @@ export async function compressImageForUpload(
 
   const maxEdge = options?.maxEdge ?? DEFAULT_MAX_EDGE;
   const quality = options?.quality ?? DEFAULT_QUALITY;
+  const aspectRatio = options?.aspectRatio;
 
   try {
     const img = await loadImage(file);
@@ -40,27 +46,53 @@ export async function compressImageForUpload(
     const h = img.naturalHeight || img.height;
     if (!w || !h) return file;
 
-    const longest = Math.max(w, h);
-    // Already small enough — upload as-is
-    if (longest <= maxEdge && file.size <= 400_000) {
-      return file;
+    let sx = 0;
+    let sy = 0;
+    let sw = w;
+    let sh = h;
+
+    if (aspectRatio && aspectRatio > 0) {
+      const srcAspect = w / h;
+      if (srcAspect > aspectRatio) {
+        // Wider than target — crop sides
+        sw = Math.round(h * aspectRatio);
+        sx = Math.round((w - sw) / 2);
+      } else if (srcAspect < aspectRatio) {
+        // Taller than target — crop top/bottom
+        sh = Math.round(w / aspectRatio);
+        sy = Math.round((h - sh) / 2);
+      }
     }
 
+    const cropW = sw;
+    const cropH = sh;
+    const longest = Math.max(cropW, cropH);
     const scale = longest > maxEdge ? maxEdge / longest : 1;
-    const outW = Math.max(1, Math.round(w * scale));
-    const outH = Math.max(1, Math.round(h * scale));
+    const outW = Math.max(1, Math.round(cropW * scale));
+    const outH = Math.max(1, Math.round(cropH * scale));
+
+    // Already small + same aspect — skip re-encode when no crop needed
+    if (
+      !aspectRatio &&
+      longest <= maxEdge &&
+      file.size <= 400_000
+    ) {
+      return file;
+    }
 
     const canvas = document.createElement("canvas");
     canvas.width = outW;
     canvas.height = outH;
     const ctx = canvas.getContext("2d");
     if (!ctx) return file;
-    ctx.drawImage(img, 0, 0, outW, outH);
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
 
     const blob = await new Promise<Blob | null>((resolve) =>
       canvas.toBlob((b) => resolve(b), "image/jpeg", quality)
     );
-    if (!blob || blob.size >= file.size) {
+    if (!blob) return file;
+    // When cropping to a fixed aspect, always prefer the cropped file
+    if (!aspectRatio && blob.size >= file.size) {
       return file;
     }
 

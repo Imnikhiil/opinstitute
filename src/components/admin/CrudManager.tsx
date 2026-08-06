@@ -282,6 +282,7 @@ export function CrudManager({
         const compressed = await compressImageForUpload(file, {
           maxEdge: 1600,
           quality: 0.78,
+          aspectRatio: 1, // square — same size when browsing the album
         });
         const path = `${config.table}/${Date.now()}-${index}-${Math.random()
           .toString(36)
@@ -832,6 +833,10 @@ export function CrudManager({
                             }}
                           />
                         </label>
+                        <p className="text-xs text-muted-foreground">
+                          Photos are saved as matching squares so the album
+                          looks even when opened.
+                        </p>
                         {uploading && uploadProgress ? (
                           <p className="text-xs text-muted-foreground">
                             Compressing & uploading in parallel — usually much
