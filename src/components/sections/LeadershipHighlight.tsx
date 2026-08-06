@@ -167,6 +167,7 @@ function FounderFeature({ leader }: { leader: Leader }) {
 
 function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number }) {
   const isBrand = leader.accent === "brand";
+  const isKids = !isBrand;
 
   return (
     <ScrollReveal delay={delay}>
@@ -175,132 +176,148 @@ function ManagementCard({ leader, delay = 0 }: { leader: Leader; delay?: number 
           "relative h-full overflow-hidden rounded-2xl border bg-white dark:bg-gray-900 shadow-sm",
           isBrand
             ? "border-brand-200/80 dark:border-brand-800/50"
-            : "border-gold-200/80 dark:border-gold-800/40"
+            : "border-kids-200/70 dark:border-kids-800/40"
         )}
       >
         <div
           className={cn(
-            "absolute top-0 left-0 right-0 h-1",
+            "absolute top-0 left-0 right-0 h-0.5",
             isBrand
               ? "bg-gradient-to-r from-brand-600 to-brand-400"
-              : "bg-gradient-to-r from-gold-600 to-gold-400"
+              : "bg-gradient-to-r from-kids-500 to-accent-pink"
           )}
         />
 
-        <div className="px-5 sm:px-6 pt-5 sm:pt-6 flex flex-col items-center text-center">
-          <Avatar leader={leader} size="xl" />
-          <span
-            className={cn(
-              "inline-block mt-4 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.12em]",
-              isBrand
-                ? "bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300"
-                : "bg-kids-50 text-kids-700 dark:bg-kids-950/40 dark:text-kids-300"
-            )}
-          >
-            {leader.organization}
-          </span>
-          <p
-            className={cn(
-              "text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] mt-3 mb-0.5",
-              isBrand
-                ? "text-brand-600 dark:text-brand-400"
-                : "text-gold-700 dark:text-gold-400"
-            )}
-          >
-            {leader.title}
-          </p>
-          <h3 className="font-display text-lg sm:text-xl font-bold text-[#1d2951] dark:text-white leading-tight">
-            {leader.name}
-          </h3>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-1.5 px-5 sm:px-6 mt-3">
-          {leader.credentials.map((c) => (
-            <span
-              key={c}
-              className={cn(
-                "px-2.5 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold",
-                isBrand
-                  ? "bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300"
-                  : "bg-gold-50 text-gold-800 dark:bg-gold-950/30 dark:text-gold-300"
-              )}
-            >
-              {c}
-            </span>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 px-5 sm:px-6 mt-4">
-          <div className="flex items-start gap-2">
-            <Briefcase className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-foreground/70" />
-            <div>
-              <span className="block text-[10px] uppercase tracking-wide text-muted-foreground/70">
-                Experience
-              </span>
-              <span className="text-sm font-semibold text-foreground">
-                {leader.experience}
-              </span>
+        <div className="relative grid sm:grid-cols-[auto_1fr] gap-4 sm:gap-5 p-4 sm:p-5">
+          {/* Portrait */}
+          <div className="flex sm:flex-col items-center gap-3 sm:gap-2 sm:w-[120px] shrink-0">
+            <Avatar leader={leader} size="lg" />
+            <div className="sm:text-center min-w-0 sm:hidden">
+              <p
+                className={cn(
+                  "text-[10px] font-bold uppercase tracking-[0.12em]",
+                  isKids
+                    ? "text-kids-600 dark:text-kids-400"
+                    : "text-brand-600 dark:text-brand-400"
+                )}
+              >
+                {leader.organization}
+              </p>
+              <h3 className="font-display text-base font-bold text-[#1d2951] dark:text-white leading-tight">
+                {leader.name}
+              </h3>
+              <p
+                className={cn(
+                  "text-[11px] font-semibold mt-0.5",
+                  isKids
+                    ? "text-gold-700 dark:text-gold-400"
+                    : "text-brand-600 dark:text-brand-400"
+                )}
+              >
+                {leader.title}
+              </p>
             </div>
           </div>
-          <div className="flex items-start gap-2">
-            {leader.since ? (
-              <Clock className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-foreground/70" />
-            ) : (
-              <GraduationCap className="w-3.5 h-3.5 mt-0.5 shrink-0 text-muted-foreground/70" />
-            )}
-            <div>
-              <span className="block text-[10px] uppercase tracking-wide text-muted-foreground/70">
-                {leader.since ? "Since" : "Education"}
+
+          {/* Details */}
+          <div className="min-w-0 flex flex-col">
+            <div className="hidden sm:block">
+              <p
+                className={cn(
+                  "text-[10px] font-bold uppercase tracking-[0.12em] mb-0.5",
+                  isKids
+                    ? "text-kids-600 dark:text-kids-400"
+                    : "text-brand-600 dark:text-brand-400"
+                )}
+              >
+                {leader.organization}
+              </p>
+              <h3 className="font-display text-lg font-bold text-[#1d2951] dark:text-white leading-tight">
+                {leader.name}
+              </h3>
+              <p
+                className={cn(
+                  "text-xs font-semibold mt-0.5",
+                  isKids
+                    ? "text-gold-700 dark:text-gold-400"
+                    : "text-brand-600 dark:text-brand-400"
+                )}
+              >
+                {leader.title}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-1 mt-2.5">
+              {leader.credentials.map((c) => (
+                <span
+                  key={c}
+                  className={cn(
+                    "px-2 py-0.5 rounded-md text-[10px] font-semibold",
+                    isBrand
+                      ? "bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300"
+                      : "bg-kids-50 text-kids-700 dark:bg-kids-950/30 dark:text-kids-300"
+                  )}
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5 font-medium text-foreground/80">
+                <Briefcase className="w-3.5 h-3.5 shrink-0 opacity-60" />
+                {leader.experience}
               </span>
-              <span className="text-sm font-semibold text-foreground">
+              <span className="inline-flex items-center gap-1.5 font-medium text-foreground/80">
+                {leader.since ? (
+                  <Clock className="w-3.5 h-3.5 shrink-0 opacity-60" />
+                ) : (
+                  <GraduationCap className="w-3.5 h-3.5 shrink-0 opacity-60" />
+                )}
                 {leader.since || leader.education}
               </span>
             </div>
-          </div>
-        </div>
 
-        {leader.stats.length > 0 && (
-          <div className="grid grid-cols-2 gap-2.5 px-5 sm:px-6 mt-4">
-            {leader.stats.map((stat) => (
-              <div
-                key={stat.label}
-                className={cn(
-                  "rounded-xl px-3 py-2.5 text-center",
-                  isBrand
-                    ? "bg-brand-50/80 dark:bg-brand-950/30"
-                    : "bg-gold-50/80 dark:bg-gold-950/20"
-                )}
-              >
-                <p
-                  className={cn(
-                    "font-display text-lg sm:text-xl font-bold",
-                    isBrand
-                      ? "text-brand-700 dark:text-brand-400"
-                      : "text-gold-700 dark:text-gold-400"
-                  )}
-                >
-                  {stat.value}
-                </p>
-                <p className="text-[10px] sm:text-[11px] text-muted-foreground font-medium mt-0.5">
-                  {stat.label}
-                </p>
+            {leader.stats.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {leader.stats.map((stat) => (
+                  <span
+                    key={stat.label}
+                    className={cn(
+                      "inline-flex items-baseline gap-1 rounded-lg px-2.5 py-1.5 text-xs",
+                      isBrand
+                        ? "bg-brand-50/90 dark:bg-brand-950/30"
+                        : "bg-kids-50/90 dark:bg-kids-950/25"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "font-display font-bold text-sm",
+                        isBrand
+                          ? "text-brand-700 dark:text-brand-400"
+                          : "text-kids-700 dark:text-kids-400"
+                      )}
+                    >
+                      {stat.value}
+                    </span>
+                    <span className="text-muted-foreground">{stat.label}</span>
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-
-        <div className="px-5 sm:px-6 py-5 mt-2">
-          <div
-            className={cn(
-              "rounded-xl p-4 border-l-4",
-              isBrand
-                ? "bg-brand-50/60 dark:bg-brand-950/20 border-brand-500"
-                : "bg-gold-50/60 dark:bg-gold-950/20 border-gold-500"
             )}
-          >
-            <p className="text-foreground/80 leading-relaxed text-sm sm:text-base">
-              &ldquo;{leader.message}&rdquo;
-            </p>
+
+            <blockquote
+              className={cn(
+                "mt-3 sm:mt-4 pl-3 border-l-[3px]",
+                isBrand
+                  ? "border-brand-400 dark:border-brand-500"
+                  : "border-kids-400 dark:border-kids-500"
+              )}
+            >
+              <p className="text-xs sm:text-sm leading-relaxed text-foreground/75 dark:text-gray-300 line-clamp-4 sm:line-clamp-5">
+                &ldquo;{leader.message}&rdquo;
+              </p>
+            </blockquote>
           </div>
         </div>
       </article>
@@ -371,8 +388,10 @@ export function LeadershipHighlight({
         {founder && others.length > 0 && (
           <div
             className={cn(
-              "grid gap-6 lg:gap-8",
-              others.length === 1 ? "max-w-2xl mx-auto w-full" : "md:grid-cols-2"
+              "grid gap-4 sm:gap-5",
+              others.length === 1
+                ? "max-w-3xl mx-auto w-full"
+                : "md:grid-cols-2"
             )}
           >
             {others.map((leader, i) => (
