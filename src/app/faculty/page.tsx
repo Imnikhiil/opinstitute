@@ -16,16 +16,10 @@ type FacultyPageProps = {
 };
 
 export default async function FacultyPage({ searchParams }: FacultyPageProps) {
-  const [allFaculty, leaders] = await Promise.all([
+  const [faculty, leaders] = await Promise.all([
     getFaculty(),
     getLeadership(),
   ]);
-  const leaderNames = new Set(
-    leaders.map((l) => l.name.trim().toLowerCase())
-  );
-  const faculty = allFaculty.filter(
-    (m) => !leaderNames.has(m.name.trim().toLowerCase())
-  );
 
   const params = (await searchParams) ?? {};
   const raw = params.category;
