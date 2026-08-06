@@ -532,6 +532,47 @@ export async function getAnnouncements(): Promise<Announcement[]> {
     .sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
+/**
+ * Find an announcement for a deep-link slug — includes scheduled (future) notices
+ * so /events/parent-orientation still shows a preview instead of 404.
+ */
+export async function findAnnouncementForSlug(
+  slug: string
+): Promise<Announcement | null> {
+  const key = slug
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (!key) return null;
+
+  const rows = await fetchTable("announcements");
+  if (!rows.length) return null;
+
+  const list = rows
+    .map(mapAnnouncement)
+    .filter((a) => a.active)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  const titleSlug = (title: string) =>
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  return (
+    list.find((a) => titleSlug(a.title) === key) ||
+    list.find((a) => {
+      const t = titleSlug(a.title);
+      return t.startsWith(key) || key.startsWith(t);
+    }) ||
+    list.find((a) => {
+      const url = a.linkUrl.toLowerCase();
+      return url.includes(`/${key}`) || url.endsWith(key);
+    }) ||
+    null
+  );
+}
+
 export type SiteConfig = typeof staticSiteConfig;
 
 export async function getSiteConfig(): Promise<SiteConfig> {

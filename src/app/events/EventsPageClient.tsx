@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { Calendar, Camera } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -18,7 +18,7 @@ import {
 } from "@/data/brands";
 import type { Event } from "@/data/events";
 import { useSiteBrand } from "@/components/providers/SiteBrandProvider";
-import { cn } from "@/lib/utils";
+import { cn, matchEventSlug } from "@/lib/utils";
 
 export function EventsPageClient({
   events,
@@ -32,6 +32,14 @@ export function EventsPageClient({
   const searchParams = useSearchParams();
   const { isKids, isInstitute } = useSiteBrand();
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
+
+  // Deep link: /events?event=parent-orientation (or /events/parent-orientation)
+  useEffect(() => {
+    const raw = searchParams.get("event");
+    if (!raw || events.length === 0) return;
+    const match = matchEventSlug(events, raw);
+    if (match) setActiveEvent(match);
+  }, [searchParams, events]);
 
   const brandFilters = useMemo(() => {
     if (isKids) return contentBrandFilters.filter((b) => b.id === "preschool");

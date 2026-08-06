@@ -33,7 +33,8 @@ const config: CrudConfig = {
       label: "Button link (optional)",
       type: "text",
       placeholder: "/admissions",
-      helpText: "Example: /admissions or a full https://… link.",
+      helpText:
+        "Only for real pages: /admissions, /contact, /events. Leave empty (or any other text) — visitors tap Learn more and see this notice’s details on the same popup (no 404).",
     },
     {
       name: "link_label",

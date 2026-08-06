@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 type EventsPageProps = {
-  searchParams?: Promise<{ brand?: string }>;
+  searchParams?: Promise<{ brand?: string; event?: string }>;
 };
 
 export default async function EventsPage({ searchParams }: EventsPageProps) {

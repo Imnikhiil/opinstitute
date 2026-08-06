@@ -19,6 +19,10 @@ export async function POST() {
   // Announcements live in the root layout — revalidate the full tree
   revalidatePath("/", "layout");
   revalidatePath("/");
+  revalidatePath("/op-kids");
+  revalidatePath("/institute");
+  revalidatePath("/admissions");
+  revalidatePath("/events");
 
   return NextResponse.json({ revalidated: true, at: Date.now() });
 }

@@ -28,9 +28,7 @@ export function SiteChrome({
   return (
     <>
       <ScrollProgress />
-      {announcements.length > 0 && (
-        <SiteAnnouncements announcements={announcements} />
-      )}
+      <SiteAnnouncements announcements={announcements} />
       <Suspense fallback={null}>
         <Navbar />
       </Suspense>
