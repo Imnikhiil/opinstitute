@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Save, Loader2, CheckCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { revalidatePublicSite } from "@/lib/revalidate-site";
 import { cn } from "@/lib/utils";
 
 type Settings = Record<string, string | null>;
@@ -219,6 +220,7 @@ export function SettingsForm({ initial }: { initial: Settings }) {
       );
       return;
     }
+    await revalidatePublicSite();
     setSaved(true);
     setTimeout(() => setSaved(false), 4000);
   };
@@ -316,7 +318,7 @@ export function SettingsForm({ initial }: { initial: Settings }) {
         {saved && (
           <span className="inline-flex items-center gap-1.5 text-green-600 text-sm font-medium">
             <CheckCircle className="w-4 h-4" />
-            Saved — live site will update shortly
+            Saved — live site updated
           </span>
         )}
       </div>

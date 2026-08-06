@@ -19,6 +19,7 @@ import {
   compressImageForUpload,
   mapPool,
 } from "@/lib/compress-image";
+import { revalidatePublicSite } from "@/lib/revalidate-site";
 import { ImageCropper } from "@/components/admin/ImageCropper";
 import { FACULTY_PHOTO_ASPECT } from "@/data/faculty";
 
@@ -169,6 +170,8 @@ export function CrudManager({
         blank[f.name] =
           f.name === "active" ||
           f.name === "show_on_main" ||
+          f.name === "show_on_kids" ||
+          f.name === "show_on_institute" ||
           f.name === "popular";
       } else if (f.type === "tags" || f.type === "images") {
         blank[f.name] = [];
@@ -388,6 +391,7 @@ export function CrudManager({
       }
       setRows((prev) => [data, ...prev]);
     }
+    await revalidatePublicSite();
     setSaving(false);
     close();
   };
@@ -399,7 +403,10 @@ export function CrudManager({
       .from(config.table)
       .delete()
       .eq("id", row.id as string);
-    if (!error) setRows((prev) => prev.filter((r) => r.id !== row.id));
+    if (!error) {
+      setRows((prev) => prev.filter((r) => r.id !== row.id));
+      await revalidatePublicSite();
+    }
   };
 
   const formatSubtitle = (row: Row) => {

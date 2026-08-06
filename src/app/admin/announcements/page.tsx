@@ -94,7 +94,7 @@ export default async function AdminAnnouncementsPage() {
     <div>
       <PageHeader
         title="Announcements"
-        subtitle="Top site banner for any notice (Independence Day, Admissions Open, holidays — not only admissions). Tick Enabled + where to show (Main / Kids / Institute). Leave Start date empty to show immediately."
+        subtitle="Top site banner for any notice (Independence Day, Admissions Open, holidays — not only admissions). Tick Enabled + where to show (Main / Kids / Institute). Leave Start date empty to show immediately after Save (hard refresh the site if needed)."
       />
       <CrudManager config={config} initialRows={rows} />
     </div>
