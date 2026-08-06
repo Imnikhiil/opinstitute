@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -135,8 +135,8 @@ function FacultyGrid({ members }: { members: FacultyMember[] }) {
 }
 
 export function FacultyPageClient({
-  faculty,
-  leaders,
+  faculty: initialFaculty,
+  leaders: initialLeaders,
   initialCategory = "all",
 }: {
   faculty: FacultyMember[];
@@ -147,6 +147,44 @@ export function FacultyPageClient({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { isKids, isInstitute } = useSiteBrand();
+  const [faculty, setFaculty] = useState(initialFaculty);
+  const [leaders, setLeaders] = useState(initialLeaders);
+
+  // Fresh list after admin adds — bypass page ISR cache
+  useEffect(() => {
+    let cancelled = false;
+    async function refresh() {
+      try {
+        const res = await fetch("/api/faculty", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          faculty?: FacultyMember[];
+          leaders?: Leader[];
+        };
+        if (cancelled) return;
+        if (Array.isArray(data.faculty)) setFaculty(data.faculty);
+        if (Array.isArray(data.leaders)) setLeaders(data.leaders);
+      } catch {
+        /* keep SSR seed */
+      }
+    }
+    refresh();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") refresh();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", refresh);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", refresh);
+    };
+  }, []);
+
+  useEffect(() => {
+    setFaculty(initialFaculty);
+    setLeaders(initialLeaders);
+  }, [initialFaculty, initialLeaders]);
 
   const urlCategory = parseCategory(
     searchParams.get("category") ?? initialCategory

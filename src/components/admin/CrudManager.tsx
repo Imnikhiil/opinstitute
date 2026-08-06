@@ -173,6 +173,8 @@ export function CrudManager({
           f.name === "show_on_kids" ||
           f.name === "show_on_institute" ||
           f.name === "popular";
+      } else if (f.type === "select" && f.name === "category" && f.options?.length) {
+        blank[f.name] = f.options[0];
       } else if (f.type === "tags" || f.type === "images") {
         blank[f.name] = [];
       } else if (f.type === "stat_lines") {

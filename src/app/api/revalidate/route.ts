@@ -23,6 +23,9 @@ export async function POST() {
   revalidatePath("/institute");
   revalidatePath("/admissions");
   revalidatePath("/events");
+  revalidatePath("/faculty");
+  revalidatePath("/gallery");
+  revalidatePath("/about");
 
   return NextResponse.json({ revalidated: true, at: Date.now() });
 }

@@ -35,11 +35,13 @@ function stripWrappingQuotes(text: string): string {
   return text.replace(/^[\"'\u201C\u2018]+|[\"'\u201D\u2019]+$/g, "").trim();
 }
 
-/** Prefer department brand over a mistaken category value in the DB. */
+/** Prefer explicit CMS category; only use department/subject as fallback. */
 function resolveFacultyCategory(row: Row): FacultyMember["category"] {
+  const raw = str(row.category).toLowerCase();
+  if (raw === "preschool" || raw === "institute") return raw;
+
   const department = str(row.department).toLowerCase();
   const subject = str(row.subject).toLowerCase();
-  const raw = str(row.category).toLowerCase();
   const hint = `${department} ${subject}`;
 
   if (
@@ -57,7 +59,6 @@ function resolveFacultyCategory(row: Row): FacultyMember["category"] {
   ) {
     return "preschool";
   }
-  if (raw === "preschool" || raw === "institute") return raw;
   return "institute";
 }
 
