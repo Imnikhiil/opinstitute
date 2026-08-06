@@ -15,6 +15,10 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import {
+  compressImageForUpload,
+  mapPool,
+} from "@/lib/compress-image";
 import { ImageCropper } from "@/components/admin/ImageCropper";
 import { FACULTY_PHOTO_ASPECT } from "@/data/faculty";
 
@@ -132,6 +136,10 @@ export function CrudManager({
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{
+    done: number;
+    total: number;
+  } | null>(null);
   const [form, setForm] = useState<Row>({});
   const [cropFile, setCropFile] = useState<File | null>(null);
   const [cropFieldName, setCropFieldName] = useState("");
@@ -265,32 +273,52 @@ export function CrudManager({
     const list = Array.from(files);
     if (!list.length) return;
     setUploading(true);
+    setUploadProgress({ done: 0, total: list.length });
     try {
       const supabase = createClient();
-      const uploaded: string[] = [];
-      for (const file of list) {
-        const ext = file.name.split(".").pop() || "jpg";
-        const path = `${config.table}/${Date.now()}-${Math.random()
+      let done = 0;
+
+      const results = await mapPool(list, 4, async (file, index) => {
+        const compressed = await compressImageForUpload(file, {
+          maxEdge: 1600,
+          quality: 0.78,
+        });
+        const path = `${config.table}/${Date.now()}-${index}-${Math.random()
           .toString(36)
-          .slice(2)}.${ext}`;
+          .slice(2)}.jpg`;
         const { error } = await supabase.storage
           .from("media")
-          .upload(path, file, { upsert: true });
+          .upload(path, compressed, {
+            upsert: true,
+            contentType: compressed.type || "image/jpeg",
+          });
+        done += 1;
+        setUploadProgress({ done, total: list.length });
         if (error) {
-          alert("Image upload failed: " + error.message);
-          continue;
+          console.error("Album upload failed:", error.message);
+          return null;
         }
         const { data } = supabase.storage.from("media").getPublicUrl(path);
-        uploaded.push(data.publicUrl);
-      }
+        return data.publicUrl;
+      });
+
+      const uploaded = results.filter((u): u is string => Boolean(u));
       if (uploaded.length) {
-        const prev = Array.isArray(form[fieldName])
-          ? (form[fieldName] as string[])
-          : [];
-        setField(fieldName, [...prev, ...uploaded]);
+        setForm((f) => {
+          const prev = Array.isArray(f[fieldName])
+            ? (f[fieldName] as string[])
+            : [];
+          return { ...f, [fieldName]: [...prev, ...uploaded] };
+        });
+      }
+      if (uploaded.length < list.length) {
+        alert(
+          `Uploaded ${uploaded.length} of ${list.length} photos. Some failed — try again for the rest.`
+        );
       }
     } finally {
       setUploading(false);
+      setUploadProgress(null);
     }
   };
 
@@ -775,17 +803,25 @@ export function CrudManager({
                             anytime.
                           </p>
                         ) : null}
-                        <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition text-sm">
+                        <label
+                          className={cn(
+                            "inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition text-sm",
+                            uploading && "pointer-events-none opacity-70"
+                          )}
+                        >
                           {uploading ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
                           ) : (
                             <Upload className="w-4 h-4" />
                           )}
-                          Add album photos
+                          {uploading && uploadProgress
+                            ? `Uploading ${uploadProgress.done}/${uploadProgress.total}…`
+                            : "Add album photos"}
                           <input
                             type="file"
                             accept="image/*"
                             multiple
+                            disabled={uploading}
                             className="hidden"
                             onChange={(e) => {
                               const files = e.target.files;
@@ -796,6 +832,12 @@ export function CrudManager({
                             }}
                           />
                         </label>
+                        {uploading && uploadProgress ? (
+                          <p className="text-xs text-muted-foreground">
+                            Compressing & uploading in parallel — usually much
+                            faster than before.
+                          </p>
+                        ) : null}
                       </div>
                     )}
 
