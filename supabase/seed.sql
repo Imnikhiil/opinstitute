@@ -65,7 +65,7 @@ insert into public.events (title, event_date, description, image_url, type, bran
 ('CMA Test Series', 'Every Sunday', 'Full-length mock tests for CMA students with detailed analysis and performance feedback.', 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80', 'academic', 'institute', 3),
 ('Sports Day 2025', 'January 26, 2025', 'Inter-house sports competitions including athletics, cricket, football, and fun races for all age groups.', 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&q=80', 'sports', 'institute', 4),
 ('Parent-Teacher Meet', 'First Saturday Monthly', 'Regular parent-teacher meetings to discuss student progress and collaborative learning strategies.', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', 'academic', 'institute', 5),
-('Festival Celebrations', 'Throughout the Year', 'Diwali, Holi, Christmas, and Independence Day celebrations teaching cultural values and unity.', 'https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=600&q=80', 'cultural', 'institute', 6),
+('Festival Celebrations', 'Throughout the Year', 'Diwali, Holi, Christmas, and Independence Day celebrations teaching cultural values and unity.', 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80', 'cultural', 'institute', 6),
 ('Science Exhibition', 'February 28, 2025', 'Students showcase innovative science projects and experiments in our annual science fair.', 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80', 'academic', 'institute', 7),
 ('OP Kids Fancy Dress', 'November 14, 2025', 'Adorable fancy dress competition for preschoolers celebrating Children''s Day with creativity and fun.', 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80', 'preschool', 'preschool', 8);
 
@@ -80,6 +80,6 @@ insert into public.gallery (image_url, alt, category, brand, sort_order) values
 ('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80', 'Award ceremony', 'achievements', 'institute', 7),
 ('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80', 'Sports day activities', 'events', 'institute', 8),
 ('https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80', 'Science exhibition', 'classroom', 'institute', 9),
-('https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=800&q=80', 'Festival celebration', 'events', 'institute', 10),
+('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80', 'Festival celebration', 'events', 'institute', 10),
 ('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', 'Library and study zone', 'campus', 'institute', 11),
 ('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80', 'Computer lab', 'classroom', 'institute', 12);

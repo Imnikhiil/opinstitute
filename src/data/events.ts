@@ -89,7 +89,7 @@ const rawEvents = [
     description:
       "Diwali, Holi, Christmas, Independence Day, and Republic Day celebrations fostering cultural values and unity.",
     image:
-      "https://images.unsplash.com/photo-1605810230434-7631ac76ecb0?w=600&q=80",
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80",
     type: "cultural" as const,
     brand: "institute" as const,
   },

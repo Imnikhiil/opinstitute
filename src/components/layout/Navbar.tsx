@@ -30,19 +30,21 @@ export function Navbar() {
   const hasDarkHero = DARK_HERO_ROUTES.has(pathname);
   const overHero = hasDarkHero && !isScrolled;
 
-  const phone = isKids ? siteConfig.kidsPhone : siteConfig.phone;
+  const phone = isKids || isMixed ? siteConfig.kidsPhone : siteConfig.phone;
   const logoHref = isKids ? "/op-kids" : isInstitute ? "/institute" : "/";
-  const logoSrc = isKids
-    ? "/logos/op-kids-logo.png"
-    : "/logos/op-institute-logo.png";
-  const brandTitle = isKids
-    ? "OP Kids Pre School"
-    : "OP Institute of Studies";
+  // Main mixed home is Kids-first in the header
+  const logoSrc =
+    isKids || isMixed
+      ? "/logos/op-kids-logo.png"
+      : "/logos/op-institute-logo.png";
+  const brandTitle =
+    isKids || isMixed ? "OP Kids Pre School" : "OP Institute of Studies";
   const brandSubtitle = isKids
     ? "Joyful early learning"
     : isInstitute
       ? "Since 2003"
-      : "Since 2003 · OP Kids Pre School";
+      : "Joyful early learning · Mahavir Enclave";
+  const useKidsLogo = isKids || isMixed;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 16);
@@ -142,7 +144,7 @@ export function Navbar() {
               "flex items-center justify-center rounded-xl transition-all duration-300",
               overHero
                 ? "bg-white/10 ring-1 ring-white/20 p-0.5 sm:p-1"
-                : isKids
+                : useKidsLogo
                   ? "bg-white ring-1 ring-kids-100 p-0.5"
                   : "bg-transparent p-0"
             )}
@@ -150,12 +152,12 @@ export function Navbar() {
             <Image
               src={logoSrc}
               alt={`${brandTitle} logo`}
-              width={isKids ? 120 : 56}
-              height={isKids ? 64 : 56}
+              width={useKidsLogo ? 120 : 56}
+              height={useKidsLogo ? 64 : 56}
               priority
               className={cn(
                 "object-contain transition-transform duration-300 group-hover:scale-105",
-                isKids
+                useKidsLogo
                   ? "h-8 w-auto sm:h-9"
                   : "h-9 w-9 sm:h-11 sm:w-11"
               )}
@@ -165,7 +167,13 @@ export function Navbar() {
             <p
               className={cn(
                 "font-display font-bold text-[15px] leading-tight transition-colors",
-                overHero ? "text-white" : "text-brand-900 dark:text-white"
+                overHero
+                  ? isMixed || isKids
+                    ? "text-white drop-shadow-sm"
+                    : "text-white"
+                  : isMixed || isKids
+                    ? "text-kids-600 dark:text-kids-400"
+                    : "text-brand-900 dark:text-white"
               )}
             >
               {brandTitle}
@@ -176,21 +184,7 @@ export function Navbar() {
                 overHero ? "text-white/70" : "text-gray-500 dark:text-gray-400"
               )}
             >
-              {isMixed ? (
-                <>
-                  Since 2003
-                  <span
-                    className={cn(
-                      "font-semibold",
-                      overHero ? "text-kids-200" : "text-kids-500"
-                    )}
-                  >
-                    {" · OP Kids Pre School"}
-                  </span>
-                </>
-              ) : (
-                brandSubtitle
-              )}
+              {brandSubtitle}
             </p>
           </div>
         </Link>
