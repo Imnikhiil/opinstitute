@@ -15,13 +15,6 @@ function matchesSurface(a: Announcement, mode: SiteBrandMode): boolean {
   return a.showOnMain;
 }
 
-function barKey(id: string) {
-  return `op-announce-bar:${id}`;
-}
-function popupKey(id: string) {
-  return `op-announce-popup:${id}`;
-}
-
 /** Real pages users can visit — everything else = show details in the popup */
 function isActionLink(url: string): boolean {
   if (!url.trim()) return false;
@@ -94,7 +87,6 @@ export function SiteAnnouncements({
   const { brand } = useSiteBrand();
   /** Live list — refreshed from API so ISR/page cache cannot hide new posts */
   const [announcements, setAnnouncements] = useState<Announcement[]>(initial);
-  const [ready, setReady] = useState(false);
   const [barDismissed, setBarDismissed] = useState<Record<string, boolean>>({});
   const [popupDismissed, setPopupDismissed] = useState<Record<string, boolean>>(
     {}
@@ -153,31 +145,33 @@ export function SiteAnnouncements({
     };
   }, []);
 
+  // Clear old permanent dismiss flags (from previous site version) once
   useEffect(() => {
-    const bars: Record<string, boolean> = {};
-    const pops: Record<string, boolean> = {};
-    forSurface.forEach((a) => {
-      try {
-        if (localStorage.getItem(barKey(a.id)) === "1") bars[a.id] = true;
-        if (localStorage.getItem(popupKey(a.id)) === "1") pops[a.id] = true;
-      } catch {
-        /* ignore */
+    try {
+      const keys: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (
+          k &&
+          (k.startsWith("op-announce-popup:") ||
+            k.startsWith("op-announce-bar:"))
+        ) {
+          keys.push(k);
+        }
       }
-    });
-    setBarDismissed(bars);
-    setPopupDismissed(pops);
-    setReady(true);
-  }, [forSurface]);
+      keys.forEach((k) => localStorage.removeItem(k));
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   const barActive = useMemo(() => {
-    if (!ready) return null;
     return forSurface.find((a) => !barDismissed[a.id]) ?? null;
-  }, [ready, forSurface, barDismissed]);
+  }, [forSurface, barDismissed]);
 
   const popupQueue = useMemo(() => {
-    if (!ready) return [] as Announcement[];
     return forSurface.filter((a) => !popupDismissed[a.id]);
-  }, [ready, forSurface, popupDismissed]);
+  }, [forSurface, popupDismissed]);
 
   const queueHead = popupQueue[0] ?? null;
   const popupActive = forcedPopup ?? queueHead;
@@ -221,32 +215,17 @@ export function SiteAnnouncements({
 
   const dismissBar = () => {
     if (!barActive) return;
-    try {
-      localStorage.setItem(barKey(barActive.id), "1");
-    } catch {
-      /* ignore */
-    }
     setBarDismissed((d) => ({ ...d, [barActive.id]: true }));
   };
 
   const dismissPopup = () => {
     if (!popupActive) return;
     const id = popupActive.id;
-    const wasForced = Boolean(forcedPopup);
-    try {
-      localStorage.setItem(popupKey(id), "1");
-    } catch {
-      /* ignore */
-    }
     setPopupOpen(false);
     setShowDetails(false);
     setForcedPopup(null);
     window.setTimeout(() => {
       setPopupDismissed((d) => ({ ...d, [id]: true }));
-      // If it was forced from bar and queue still has others, resume queue later
-      if (wasForced) {
-        /* queue head effect will reopen next undismissed */
-      }
     }, 220);
   };
 
@@ -256,7 +235,7 @@ export function SiteAnnouncements({
     setPopupOpen(true);
   };
 
-  if (!ready || forSurface.length === 0) return null;
+  if (forSurface.length === 0) return null;
 
   const isKids = brand === "preschool";
   const showBar = Boolean(barActive);
