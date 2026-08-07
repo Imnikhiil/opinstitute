@@ -11,6 +11,7 @@ import { CTABand } from "@/components/sections/CTABand";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { FrontDeskHighlight } from "@/components/sections/FrontDeskHighlight";
 import { EventsCarousel } from "@/components/sections/EventsCarousel";
+import { HomeIntro } from "@/components/sections/HomeIntro";
 import {
   getEvents,
   getFrontDeskPhoto,
@@ -57,6 +58,7 @@ export default async function HomePage() {
     <>
       <SplitHero />
       <Marquee />
+      <HomeIntro />
       <LearningJourney />
       <AboutInstitute frontDeskPhoto={frontDeskPhoto} leaders={leaders} />
       <AboutKids showcaseImages={kidsShowcase} />
