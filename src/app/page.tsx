@@ -56,9 +56,22 @@ export default async function HomePage() {
 
   return (
     <>
-      <SplitHero />
-      <Marquee />
-      <HomeIntro />
+      {/*
+        DOM order for SEO tools: H1 + paragraphs first, then hero H2s.
+        Visual order stays Hero → Marquee → Intro via CSS order.
+      */}
+      <div className="flex flex-col">
+        <div className="order-3">
+          <HomeIntro />
+        </div>
+        <div className="order-1">
+          <SplitHero />
+        </div>
+        <div className="order-2">
+          <Marquee />
+        </div>
+      </div>
+
       <LearningJourney />
       <AboutInstitute frontDeskPhoto={frontDeskPhoto} leaders={leaders} />
       <AboutKids showcaseImages={kidsShowcase} />

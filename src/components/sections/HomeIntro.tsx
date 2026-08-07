@@ -1,4 +1,4 @@
-/** Readable intro for SEO + parents — one H1, real paragraphs (server-rendered). */
+/** Server-rendered H1 + paragraphs for Page quality / Page structure SEO. */
 export function HomeIntro() {
   return (
     <section className="section-padding bg-white dark:bg-gray-950">
@@ -9,42 +9,38 @@ export function HomeIntro() {
         </h1>
         <div className="mt-5 sm:mt-6 space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
           <p>
-            Welcome to OP Kids Pre School and OP Institute of Studies — two
-            connected learning worlds under one roof at Mahavir Enclave Part 2,
-            New Delhi. Families visit us for joyful early childhood education and
-            for structured coaching that supports school and college goals.
-            Whether you are looking for Playgroup, Nursery, LKG and UKG seats, or
-            for CMA, B.Com and Class I–XII tuition, our teachers focus on clear
-            explanations, caring guidance, and steady progress that parents can
-            see over time.
+            Welcome to OP Kids Pre School and OP Institute of Studies, two
+            connected learning worlds that share one trusted campus at Mahavir
+            Enclave Part 2 in New Delhi, where families come for joyful early
+            childhood education as well as structured coaching that supports
+            school results and long-term academic confidence.
           </p>
           <p>
-            OP Kids Pre School is designed so young children feel safe, curious,
-            and excited to learn every day. Classrooms, daily routines, and close
-            parent communication are built around strong foundations in the early
-            years, from language and numbers to social skills and confidence. At
-            OP Institute of Studies, students receive focused support for commerce
-            and school subjects, with an emphasis on concept clarity, regular
-            practice, doubt clearing, and readiness for exams as well as future
-            careers. Together, we help learners grow from their first school days
-            through higher studies under one trusted education family.
+            At OP Kids Pre School, young children from Playgroup through Nursery,
+            LKG and UKG learn in a safe, caring environment with clear routines,
+            playful classrooms, and regular parent updates, so every child can
+            build language, numbers, social skills, and the confidence to love
+            coming to school each day.
           </p>
           <p>
-            Parents often choose our campus because it is easy to reach in
-            Mahavir Enclave, the staff stays approachable, and the admissions
-            process is simple to understand. You can explore recent events and
-            gallery moments, meet our faculty online, or send an enquiry for the
-            new academic session. If you want a preschool seat for your child or
-            coaching for CMA, B.Com, or school tuition nearby, we are ready to
-            welcome your family and answer questions with honesty and care.
+            At OP Institute of Studies, students receive focused guidance for
+            CMA preparation, B.Com mentoring, and Class I–XII tuition, with an
+            emphasis on concept clarity, regular practice, doubt clearing, and
+            exam readiness that helps learners improve steadily under experienced
+            teachers.
+          </p>
+          <p>
+            Parents often choose our Mahavir Enclave campus because it is easy to
+            reach, the admissions process is simple to understand, and the staff
+            remains approachable when you have questions about preschool seats or
+            coaching programmes for the new session.
           </p>
           <p>
             Since 2003, OP Institute of Studies has guided students with
             disciplined teaching and personal attention, while OP Kids Pre School
-            continues that same spirit for the youngest learners. Visit us to see
-            the classrooms, talk to the team, and find the right programme for
-            your child or student — from early childhood through professional
-            pathways in New Delhi.
+            continues that same spirit for the youngest learners, inviting you to
+            explore events, gallery moments, and faculty profiles before you visit
+            the campus and find the right programme for your child or student.
           </p>
         </div>
       </div>
