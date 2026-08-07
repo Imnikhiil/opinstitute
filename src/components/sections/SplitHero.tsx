@@ -87,12 +87,12 @@ export function SplitHero() {
               <Baby className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Ages 2 – 6
             </span>
-            <h1 className="font-display text-[1.75rem] sm:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-sm">
+            <h2 className="font-display text-[1.75rem] sm:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-sm">
               OP Kids
               <span className="block text-white/90 text-lg sm:text-2xl lg:text-3xl mt-0.5 sm:mt-1">
                 Pre School
               </span>
-            </h1>
+            </h2>
             <p className="mt-2 sm:mt-4 text-white/90 text-sm sm:text-lg font-medium leading-relaxed">
               Where kids love to learn — joyful, safe & playful early childhood.
             </p>

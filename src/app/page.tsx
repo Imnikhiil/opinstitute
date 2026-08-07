@@ -25,11 +25,11 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    absolute: `${siteConfig.kidsName} & ${siteConfig.name} | Mahavir Enclave, Delhi`,
+    absolute: "OP Kids Pre School | Mahavir Enclave, Delhi",
   },
   description: siteConfig.description,
   openGraph: {
-    title: `${siteConfig.kidsName} & ${siteConfig.name}`,
+    title: "OP Kids Pre School | Mahavir Enclave, Delhi",
     description: siteConfig.description,
     url: siteConfig.url,
   },
