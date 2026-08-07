@@ -27,6 +27,10 @@ export function SplitHero() {
 
   return (
     <section className="relative w-full min-h-[100svh] flex flex-col lg:flex-row overflow-hidden bg-brand-950">
+      <h1 className="sr-only">
+        OP Kids Pre School and OP Institute of Studies in Mahavir Enclave, New
+        Delhi — preschool, CMA coaching, B.Com and school tuition
+      </h1>
       {/* ---------------- OP KIDS SIDE ---------------- */}
       <motion.div
         onMouseEnter={() => setActive("kids")}

@@ -7,7 +7,7 @@ export const siteConfig = {
     "Excellence in Education Since 2003 — CMA, B.Com & School Tuition",
   kidsTagline: "Where Kids Love to Learn",
   description:
-    "OP Institute of Studies (since 2003) — expert coaching for CMA, B.Com (Pass/Hons) and school tuition for Classes I–XII, along with OP Kids Pre School for joyful, safe early childhood learning.",
+    "OP Kids Pre School & OP Institute of Studies in Mahavir Enclave, New Delhi — preschool (Playgroup–UKG), CMA, B.Com & Class I–XII tuition. Admissions open.",
   url: "https://www.opkidsschool.in",
   phone: "+91 92136 10182",
   phoneRaw: "919213610182",

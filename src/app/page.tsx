@@ -19,6 +19,20 @@ import {
   getReceptionPhoto,
   getTestimonials,
 } from "@/lib/supabase/public-data";
+import { siteConfig } from "@/data/site";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: `${siteConfig.kidsName} & ${siteConfig.name} | Mahavir Enclave, Delhi`,
+  },
+  description: siteConfig.description,
+  openGraph: {
+    title: `${siteConfig.kidsName} & ${siteConfig.name}`,
+    description: siteConfig.description,
+    url: siteConfig.url,
+  },
+};
 
 export const revalidate = 60;
 
