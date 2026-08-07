@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Contact Us",
   description:
     "Visit OP Institute of Studies and OP Kids Pre School at Mahavir Enclave Part 2, New Delhi. Call, WhatsApp, or send an enquiry.",
+  alternates: { canonical: "/contact" },
 };
 
 export const revalidate = 60;

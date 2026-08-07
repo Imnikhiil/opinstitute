@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Courses",
   description:
     "CMA, B.Com and school tuition programs at OP Institute of Studies — structured coaching for academic and career success.",
+  alternates: { canonical: "/courses" },
 };
 
 export const revalidate = 60;

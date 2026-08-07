@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Admissions",
   description:
     "Apply for admission at OP Institute of Studies and OP Kids Pre School. Simple 4-step process with online enquiry form.",
+  alternates: { canonical: "/admissions" },
 };
 
 export const revalidate = 60;

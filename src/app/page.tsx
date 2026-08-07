@@ -25,11 +25,15 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "OP Kids Pre School | Mahavir Enclave, Delhi",
+    // 51 chars — SEO tools want ~50–60
+    absolute: "OP Kids Pre School | Preschool near Mahavir Enclave",
   },
   description: siteConfig.description,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "OP Kids Pre School | Mahavir Enclave, Delhi",
+    title: "OP Kids Pre School | Preschool near Mahavir Enclave",
     description: siteConfig.description,
     url: siteConfig.url,
   },

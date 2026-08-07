@@ -7,6 +7,7 @@ import { SiteBrandProvider } from "@/components/providers/SiteBrandProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { siteConfig } from "@/data/site";
 import { getSiteConfig, getAnnouncements } from "@/lib/supabase/public-data";
+import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -96,6 +97,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
+        <LocalBusinessJsonLd />
         <ThemeProvider>
           <SiteConfigProvider config={config}>
             <SiteBrandProvider>

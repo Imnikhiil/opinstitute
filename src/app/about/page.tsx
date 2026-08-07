@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "About Us",
   description:
     "Learn about OP Institute of Studies — our history, vision, mission, and values. Meet Founder Om Prakash and Academic & Management Head Meenakshi.",
+  alternates: { canonical: "/about" },
 };
 
 export const revalidate = 60;

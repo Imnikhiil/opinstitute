@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "OP Institute of Studies",
   description:
     "OP Institute of Studies — CMA coaching, B.Com mentoring and Class I–XII tuition in Mahavir Enclave, New Delhi. Excellence since 2003.",
+  alternates: { canonical: "/institute" },
 };
 
 export const revalidate = 60;

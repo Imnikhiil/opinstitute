@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Events",
   description:
     "Upcoming and past events at OP Institute of Studies — academic programs, cultural celebrations, sports day, and OP Kids Pre School activities.",
+  alternates: { canonical: "/events" },
 };
 
 export const revalidate = 60;

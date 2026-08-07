@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "OP Kids Pre School",
   description:
     "OP Kids Pre School — joyful, safe and playful early childhood education. Play Group, Nursery, LKG & UKG in Mahavir Enclave, New Delhi.",
+  alternates: { canonical: "/op-kids" },
 };
 
 export const revalidate = 60;

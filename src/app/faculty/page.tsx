@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Faculty",
   description:
     "Meet our leadership and expert faculty at OP Institute of Studies — Founder Om Prakash, Academic & Management Heads, and our dedicated teaching team.",
+  alternates: { canonical: "/faculty" },
 };
 
 export const revalidate = 60;
